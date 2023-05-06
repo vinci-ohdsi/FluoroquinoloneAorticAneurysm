@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Use targets</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for use_targets {targets}"><tr><td>use_targets {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Use targets</h2>
+
+<h3>Description</h3>
+
+<p>Set up <code>targets</code> for an existing project.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+use_targets(
+  script = targets::tar_config_get("script"),
+  scheduler = targets::use_targets_scheduler(),
+  open = interactive(),
+  overwrite = FALSE,
+  job_name = targets::tar_random_name()
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>script</code></td>
+<td>
+<p>Character of length 1, where to write
+the target script file. Defaults to <code>tar_config_get("script")</code>,
+which in turn defaults to <code style="white-space: pre;">_targets.R</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>scheduler</code></td>
+<td>
+<p>Character of length 1, type of scheduler
+for parallel computing. See &lt;books.ropensci.org/targets/hpc.html&gt;
+for details. The default is automatically detected from your system
+(but PBS and Torque cannot be distinguished from SGE, and SGE
+is the default among the three).
+Possible values:
+</p>
+
+<ul>
+<li> <p><code>"multicore"</code>: local forked processes on Linux-like systems
+(but same as <code>"multiprocess"</code> for <code><a href="../../targets/help/tar_make_future.html">tar_make_future()</a></code> options).
+</p>
+</li>
+<li> <p><code>"multiprocess"</code>: local platform-independent and multi-process.
+</p>
+</li>
+<li> <p><code>"slurm"</code>: SLURM clusters.
+</p>
+</li>
+<li> <p><code>"sge"</code>: Sun Grid Engine clusters.
+</p>
+</li>
+<li> <p><code>"lsf"</code>: LSF clusters.
+</p>
+</li>
+<li> <p><code>"pbs"</code>: PBS clusters. (<code>batchtools</code> template file not available.)
+</p>
+</li>
+<li> <p><code>"torque"</code>: Torque clusters.
+</p>
+</li></ul>
+</td></tr>
+<tr valign="top"><td><code>open</code></td>
+<td>
+<p>Logical, whether to open the file for editing
+in the RStudio IDE.</p>
+</td></tr>
+<tr valign="top"><td><code>overwrite</code></td>
+<td>
+<p>Logical of length 1, whether to overwrite
+the targets file and supporting files if they already exist.</p>
+</td></tr>
+<tr valign="top"><td><code>job_name</code></td>
+<td>
+<p>Character of length 1, job name to supply to
+schedulers like SLURM.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>To set up a project-oriented function-oriented
+workflow for <code>targets</code>, <code>use_targets()</code> writes:
+</p>
+
+<ol>
+<li><p> A target script <code style="white-space: pre;">_targets.R</code> tailored to your system.
+</p>
+</li>
+<li><p> Template files <code>"clustermq.tmpl"</code> and <code>"future.tmpl"</code>
+to configure <code><a href="../../targets/help/tar_make_clustermq.html">tar_make_clustermq()</a></code> and <code><a href="../../targets/help/tar_make_future.html">tar_make_future()</a></code>
+to a resource manager if detected on your system.
+They should work out of the box on most systems, but
+you may need to modify them by hand if you encounter errors.
+</p>
+</li>
+<li><p> Script <code>run.R</code> to conveniently execute the pipeline using
+<code><a href="../../targets/help/tar_make.html">tar_make()</a></code>. You can change this to <code><a href="../../targets/help/tar_make_clustermq.html">tar_make_clustermq()</a></code>
+or <code><a href="../../targets/help/tar_make_future.html">tar_make_future()</a></code> and supply the <code>workers</code> argument to either.
+</p>
+</li>
+<li><p> Script <code>run.sh</code> to conveniently call <code>run.R</code> in a persistent
+background process. Enter <code>./run.sh</code> in the shell to run it.
+</p>
+</li>
+<li><p> If you have a high-performance computing scheduler
+like Sun Grid Engine (SGE) (or select one using the
+<code>scheduler</code> argument of <code>use_targets()</code>), then
+script <code>job.sh</code> is created. <code>job.sh</code> conveniently executes <code>run.R</code>
+as a job on a cluster. For example, to run the pipeline as a
+job on an SGE cluster, enter <code style="white-space: pre;">qsub job.sh</code> in the terminal.
+<code>job.sh</code> should work out of the box on most systems, but
+you may need to modify it by hand if you encounter errors.
+</p>
+</li></ol>
+
+<p>After you call <code>use_targets()</code>, there is still configuration left to do:
+</p>
+
+<ol>
+<li><p> Open <code style="white-space: pre;">_targets.R</code> and edit by hand. Follow the comments to
+write any options, packages, and target definitions
+that your pipeline requires.
+</p>
+</li>
+<li><p> Edit <code>run.R</code> and choose which pipeline function to execute
+(<code><a href="../../targets/help/tar_make.html">tar_make()</a></code>, <code><a href="../../targets/help/tar_make_clustermq.html">tar_make_clustermq()</a></code>, or <code><a href="../../targets/help/tar_make_future.html">tar_make_future()</a></code>).
+</p>
+</li>
+<li><p> If applicable, edit <code>clustermq.tmpl</code> and/or <code>future.tmpl</code>
+to configure settings for your resource manager.
+</p>
+</li>
+<li><p> If applicable, configure <code>job.sh</code>, <code>"clustermq.tmpl"</code>, and/or
+<code>"future.tmpl"</code> for your resource manager.
+</p>
+</li></ol>
+
+<p>After you finished configuring your project, follow the steps at
+<a href="https://books.ropensci.org/targets/walkthrough.html#inspect-the-pipeline">https://books.ropensci.org/targets/walkthrough.html#inspect-the-pipeline</a>: # nolint
+</p>
+
+<ol>
+<li><p> Run <code><a href="../../targets/help/tar_glimpse.html">tar_glimpse()</a></code> and <code><a href="../../targets/help/tar_manifest.html">tar_manifest()</a></code> to check that the
+targets in the pipeline are defined correctly.
+</p>
+</li>
+<li><p> Run the pipeline. You may wish to call a <code style="white-space: pre;">tar_make*()</code> function
+directly, or you may run <code>run.R</code> or <code>run.sh</code>.
+</p>
+</li>
+<li><p> Inspect the target output using <code><a href="../../targets/help/tar_read.html">tar_read()</a></code> and/or <code><a href="../../targets/help/tar_load.html">tar_load()</a></code>.
+</p>
+</li>
+<li><p> Develop the pipeline as needed by manually editing <code style="white-space: pre;">_targets.R</code>
+and the scripts in <code style="white-space: pre;">R/</code> and repeating steps (1) through (3).
+</p>
+</li></ol>
+
+
+
+<h3>Value</h3>
+
+<p><code>NULL</code> (invisibly).
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other help: 
+<code><a href="../../targets/help/tar_reprex.html">tar_reprex</a>()</code>,
+<code><a href="../../targets/help/targets-package.html">targets-package</a></code>,
+<code><a href="../../targets/help/use_targets_rmd.html">use_targets_rmd</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+if (identical(Sys.getenv("TAR_INTERACTIVE_EXAMPLES"), "true")) {
+tar_dir({ # tar_dir() runs code from a temp dir for CRAN.
+use_targets(open = FALSE)
+})
+}
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

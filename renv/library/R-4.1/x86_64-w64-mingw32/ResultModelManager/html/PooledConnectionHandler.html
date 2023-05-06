@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Pooled Connection Handler</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for PooledConnectionHandler {ResultModelManager}"><tr><td>PooledConnectionHandler {ResultModelManager}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Pooled Connection Handler</h2>
+
+<h3>Description</h3>
+
+<p>Transparently works the same way as a standard connection handler but stores pooled connections.
+Useful for long running applications that serve multiple concurrent requests.
+</p>
+
+
+<h3>Super class</h3>
+
+<p><code><a href="../help/ConnectionHandler.html">ResultModelManager::ConnectionHandler</a></code> -&gt; <code>PooledConnectionHandler</code>
+</p>
+
+
+<h3>Methods</h3>
+
+
+
+<h4>Public methods</h4>
+
+
+<ul>
+<li> <p><a href="#method-PooledConnectionHandler-new"><code>PooledConnectionHandler$new()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-PooledConnectionHandler-initConnection"><code>PooledConnectionHandler$initConnection()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-PooledConnectionHandler-dbms"><code>PooledConnectionHandler$dbms()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-PooledConnectionHandler-closeConnection"><code>PooledConnectionHandler$closeConnection()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-PooledConnectionHandler-queryFunction"><code>PooledConnectionHandler$queryFunction()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-PooledConnectionHandler-executeFunction"><code>PooledConnectionHandler$executeFunction()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-PooledConnectionHandler-clone"><code>PooledConnectionHandler$clone()</code></a>
+</p>
+</li></ul>
+
+
+
+<details><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="ResultModelManager" data-topic="ConnectionHandler" data-id="dbIsValid"><a href='../../ResultModelManager/html/ConnectionHandler.html#method-ConnectionHandler-dbIsValid'><code>ResultModelManager::ConnectionHandler$dbIsValid()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="ResultModelManager" data-topic="ConnectionHandler" data-id="executeSql"><a href='../../ResultModelManager/html/ConnectionHandler.html#method-ConnectionHandler-executeSql'><code>ResultModelManager::ConnectionHandler$executeSql()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="ResultModelManager" data-topic="ConnectionHandler" data-id="finalize"><a href='../../ResultModelManager/html/ConnectionHandler.html#method-ConnectionHandler-finalize'><code>ResultModelManager::ConnectionHandler$finalize()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="ResultModelManager" data-topic="ConnectionHandler" data-id="getConnection"><a href='../../ResultModelManager/html/ConnectionHandler.html#method-ConnectionHandler-getConnection'><code>ResultModelManager::ConnectionHandler$getConnection()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="ResultModelManager" data-topic="ConnectionHandler" data-id="queryDb"><a href='../../ResultModelManager/html/ConnectionHandler.html#method-ConnectionHandler-queryDb'><code>ResultModelManager::ConnectionHandler$queryDb()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="ResultModelManager" data-topic="ConnectionHandler" data-id="renderTranslateSql"><a href='../../ResultModelManager/html/ConnectionHandler.html#method-ConnectionHandler-renderTranslateSql'><code>ResultModelManager::ConnectionHandler$renderTranslateSql()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="ResultModelManager" data-topic="ConnectionHandler" data-id="tbl"><a href='../../ResultModelManager/html/ConnectionHandler.html#method-ConnectionHandler-tbl'><code>ResultModelManager::ConnectionHandler$tbl()</code></a></span></li>
+</ul>
+</details>
+
+<hr>
+<a id="method-PooledConnectionHandler-new"></a>
+
+
+
+<h4>Method <code>new()</code></h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>PooledConnectionHandler$new(...)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>...</code></dt><dd><p>Elisis @seealso<a href="../../ResultModelManager/help/ConnectionHandler.html">ConnectionHandler</a>
+initialize pooled db connection</p>
+</dd>
+</dl>
+
+</div>
+
+
+<hr>
+<a id="method-PooledConnectionHandler-initConnection"></a>
+
+
+
+<h4>Method <code>initConnection()</code></h4>
+
+<p>Overrides ConnectionHandler Call
+get dbms
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>PooledConnectionHandler$initConnection()</pre></div>
+
+
+<hr>
+<a id="method-PooledConnectionHandler-dbms"></a>
+
+
+
+<h4>Method <code>dbms()</code></h4>
+
+<p>Get the dbms type of the connection
+Close Connection
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>PooledConnectionHandler$dbms()</pre></div>
+
+
+<hr>
+<a id="method-PooledConnectionHandler-closeConnection"></a>
+
+
+
+<h4>Method <code>closeConnection()</code></h4>
+
+<p>Overrides ConnectionHandler Call
+query Function
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>PooledConnectionHandler$closeConnection()</pre></div>
+
+
+<hr>
+<a id="method-PooledConnectionHandler-queryFunction"></a>
+
+
+
+<h4>Method <code>queryFunction()</code></h4>
+
+<p>Overrides ConnectionHandler Call. Does not translate or render sql.
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>PooledConnectionHandler$queryFunction(
+  sql,
+  snakeCaseToCamelCase = self$snakeCaseToCamelCase
+)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>sql</code></dt><dd><p>sql query string</p>
+</dd>
+<dt><code>snakeCaseToCamelCase</code></dt><dd><p>(Optional) Boolean. return the results columns in camel case (default)
+query Function</p>
+</dd>
+</dl>
+
+</div>
+
+
+<hr>
+<a id="method-PooledConnectionHandler-executeFunction"></a>
+
+
+
+<h4>Method <code>executeFunction()</code></h4>
+
+<p>Overrides ConnectionHandler Call. Does not translate or render sql.
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>PooledConnectionHandler$executeFunction(sql)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>sql</code></dt><dd><p>sql query string</p>
+</dd>
+</dl>
+
+</div>
+
+
+<hr>
+<a id="method-PooledConnectionHandler-clone"></a>
+
+
+
+<h4>Method <code>clone()</code></h4>
+
+<p>The objects of this class are cloneable with this method.
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>PooledConnectionHandler$clone(deep = FALSE)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p>
+</dd>
+</dl>
+
+</div>
+
+
+
+<hr /><div style="text-align: center;">[Package <em>ResultModelManager</em> version 0.4.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

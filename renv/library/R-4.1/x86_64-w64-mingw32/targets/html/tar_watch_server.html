@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Shiny module server for tar_watch()</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_watch_server {targets}"><tr><td>tar_watch_server {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Shiny module server for tar_watch()</h2>
+
+<h3>Description</h3>
+
+<p>Use <code><a href="../../targets/help/tar_watch_ui.html">tar_watch_ui()</a></code> and <code>tar_watch_server()</code>
+to include <code><a href="../../targets/help/tar_watch.html">tar_watch()</a></code> as a Shiny module in an app.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_watch_server(
+  id,
+  height = "650px",
+  exclude = ".Random.seed",
+  config = Sys.getenv("TAR_CONFIG", "_targets.yaml"),
+  project = Sys.getenv("TAR_PROJECT", "main")
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>id</code></td>
+<td>
+<p>Character of length 1, ID corresponding to the UI function
+of the module.</p>
+</td></tr>
+<tr valign="top"><td><code>height</code></td>
+<td>
+<p>Character of length 1,
+height of the <code>visNetwork</code> widget and branches table.</p>
+</td></tr>
+<tr valign="top"><td><code>exclude</code></td>
+<td>
+<p>Character vector of nodes to omit from the graph.</p>
+</td></tr>
+<tr valign="top"><td><code>config</code></td>
+<td>
+<p>Character of length 1, file path of the YAML
+configuration file with <code>targets</code> project settings.
+The <code>config</code> argument specifies which YAML configuration
+file that <code>tar_config_get()</code> reads from or <code>tar_config_set()</code>
+writes to in a single function call.
+It does not globally change which configuration file is used
+in subsequent function calls. The default file path of the YAML
+file is always <code style="white-space: pre;">_targets.yaml</code> unless you set another
+default path using the <code>TAR_CONFIG</code> environment variable,
+e.g. <code>Sys.setenv(TAR_CONFIG = "custom.yaml")</code>. This also has the
+effect of temporarily modifying the default arguments to other functions
+such as <code><a href="../../targets/help/tar_make.html">tar_make()</a></code> because the default arguments
+to those functions are controlled by <code>tar_config_get()</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>project</code></td>
+<td>
+<p>Character of length 1, name of the current
+<code>targets</code> project. Thanks to the <code>config</code> R package,
+<code>targets</code> YAML configuration files can store multiple
+sets of configuration settings, with each set corresponding
+to its own project. The <code>project</code> argument allows you to
+set or get a configuration setting for a specific project
+for a given call to <code>tar_config_set()</code> or <code>tar_config_get()</code>.
+The default project is always called <code>"main"</code>
+unless you set another
+default project using the <code>TAR_PROJECT</code> environment variable,
+e.g. <code>Sys.setenv(tar_project = "custom")</code>. This also has the
+effect of temporarily modifying the default arguments to other functions
+such as <code><a href="../../targets/help/tar_make.html">tar_make()</a></code> because the default arguments
+to those functions are controlled by <code>tar_config_get()</code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A Shiny module server.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other progress: 
+<code><a href="../../targets/help/tar_built.html">tar_built</a>()</code>,
+<code><a href="../../targets/help/tar_canceled.html">tar_canceled</a>()</code>,
+<code><a href="../../targets/help/tar_errored.html">tar_errored</a>()</code>,
+<code><a href="../../targets/help/tar_poll.html">tar_poll</a>()</code>,
+<code><a href="../../targets/help/tar_progress_branches.html">tar_progress_branches</a>()</code>,
+<code><a href="../../targets/help/tar_progress_summary.html">tar_progress_summary</a>()</code>,
+<code><a href="../../targets/help/tar_progress.html">tar_progress</a>()</code>,
+<code><a href="../../targets/help/tar_skipped.html">tar_skipped</a>()</code>,
+<code><a href="../../targets/help/tar_started.html">tar_started</a>()</code>,
+<code><a href="../../targets/help/tar_watch_ui.html">tar_watch_ui</a>()</code>,
+<code><a href="../../targets/help/tar_watch.html">tar_watch</a>()</code>
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

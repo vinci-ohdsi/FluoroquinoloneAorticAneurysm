@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Code dependencies</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_deps {targets}"><tr><td>tar_deps {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Code dependencies</h2>
+
+<h3>Description</h3>
+
+<p>List the dependencies of a function or expression.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_deps(expr)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>expr</code></td>
+<td>
+<p>A quoted R expression or function.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p><code>targets</code> detects the dependencies of commands using
+static code analysis. Use <code>tar_deps()</code> to run the
+code analysis and see the dependencies for yourself.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Character vector of the dependencies of a function or expression.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other inspect: 
+<code><a href="../../targets/help/tar_deps_raw.html">tar_deps_raw</a>()</code>,
+<code><a href="../../targets/help/tar_manifest.html">tar_manifest</a>()</code>,
+<code><a href="../../targets/help/tar_network.html">tar_network</a>()</code>,
+<code><a href="../../targets/help/tar_outdated.html">tar_outdated</a>()</code>,
+<code><a href="../../targets/help/tar_sitrep.html">tar_sitrep</a>()</code>,
+<code><a href="../../targets/help/tar_validate.html">tar_validate</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+tar_deps(x &lt;- y + z)
+tar_deps({
+  x &lt;- 1
+  x + a
+})
+tar_deps(function(a = b) map_dfr(data, ~do_row(.x)))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

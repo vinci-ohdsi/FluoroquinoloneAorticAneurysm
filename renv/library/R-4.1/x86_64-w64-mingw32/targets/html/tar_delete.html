@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Delete locally stored target return values.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_delete {targets}"><tr><td>tar_delete {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Delete locally stored target return values.</h2>
+
+<h3>Description</h3>
+
+<p>Delete the return values of targets in <code style="white-space: pre;">_targets/objects/</code>.
+but keep the records in <code style="white-space: pre;">_targets/meta/meta</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_delete(names, cloud = TRUE, store = targets::tar_config_get("store"))
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>names</code></td>
+<td>
+<p>Names of the targets to remove from <code style="white-space: pre;">_targets/objects/</code>.
+You can supply symbols
+or <code>tidyselect</code> helpers like <code><a href="../../targets/help/any_of.html">any_of()</a></code> and <code><a href="../../targets/help/starts_with.html">starts_with()</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>cloud</code></td>
+<td>
+<p>Logical of length 1, whether to delete objects
+from the cloud if applicable (e.g. AWS, GCP). If <code>FALSE</code>,
+files are not deleted from the cloud.</p>
+</td></tr>
+<tr valign="top"><td><code>store</code></td>
+<td>
+<p>Character of length 1, path to the
+<code>targets</code> data store. Defaults to <code>tar_config_get("store")</code>,
+which in turn defaults to <code style="white-space: pre;">_targets/</code>.
+When you set this argument, the value of <code>tar_config_get("store")</code>
+is temporarily changed for the current function call.
+See <code><a href="../../targets/help/tar_config_get.html">tar_config_get()</a></code> and <code><a href="../../targets/help/tar_config_set.html">tar_config_set()</a></code> for details
+about how to set the data store path persistently
+for a project.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>If you have a small number of data-heavy targets you
+need to discard to conserve storage, this function can help.
+Local external files files (i.e. <code>format = "file"</code>
+and <code>repository = "local"</code>) are not deleted.
+For targets with <code>repository</code> not equal <code>"local"</code>, <code>tar_delete()</code> attempts
+to delete the file and errors out if the deletion is unsuccessful.
+If deletion fails, either log into the cloud platform
+and manually delete the file (e.g. the AWS web console
+in the case of <code>repository = "aws"</code>) or call
+<code><a href="../../targets/help/tar_invalidate.html">tar_invalidate()</a></code> on that target so that <code>targets</code>
+does not try to delete the object.
+For patterns recorded in the metadata, all the branches
+will be deleted. For patterns no longer in the metadata,
+branches are left alone.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other clean: 
+<code><a href="../../targets/help/tar_destroy.html">tar_destroy</a>()</code>,
+<code><a href="../../targets/help/tar_invalidate.html">tar_invalidate</a>()</code>,
+<code><a href="../../targets/help/tar_prune.html">tar_prune</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+if (identical(Sys.getenv("TAR_EXAMPLES"), "true")) { # for CRAN
+tar_dir({ # tar_dir() runs code from a temp dir for CRAN.
+tar_script({
+  list(
+    tar_target(y1, 1 + 1),
+    tar_target(y2, 1 + 1),
+    tar_target(z, y1 + y2)
+  )
+}, ask = FALSE)
+tar_make()
+tar_delete(starts_with("y")) # Only deletes y1 and y2.
+tar_make() # y1 and y2 rebuild but return same values, so z is up to date.
+})
+}
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

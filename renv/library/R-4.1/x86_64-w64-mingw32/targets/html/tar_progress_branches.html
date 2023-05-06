@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Tabulate the progress of dynamic branches.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_progress_branches {targets}"><tr><td>tar_progress_branches {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Tabulate the progress of dynamic branches.</h2>
+
+<h3>Description</h3>
+
+<p>Read a project's target progress data for the most recent
+run of the pipeline and display the tabulated status
+of dynamic branches. Only the most recent record is shown.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_progress_branches(
+  names = NULL,
+  fields = NULL,
+  store = targets::tar_config_get("store")
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>names</code></td>
+<td>
+<p>Optional, names of the targets. If supplied, <code>tar_progress()</code>
+only returns progress information on these targets.
+You can supply symbols
+or <code>tidyselect</code> helpers like <code><a href="../../targets/help/starts_with.html">starts_with()</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>fields</code></td>
+<td>
+<p>Optional, names of progress data columns to read.
+Set to <code>NULL</code> to read all fields.</p>
+</td></tr>
+<tr valign="top"><td><code>store</code></td>
+<td>
+<p>Character of length 1, path to the
+<code>targets</code> data store. Defaults to <code>tar_config_get("store")</code>,
+which in turn defaults to <code style="white-space: pre;">_targets/</code>.
+When you set this argument, the value of <code>tar_config_get("store")</code>
+is temporarily changed for the current function call.
+See <code><a href="../../targets/help/tar_config_get.html">tar_config_get()</a></code> and <code><a href="../../targets/help/tar_config_set.html">tar_config_set()</a></code> for details
+about how to set the data store path persistently
+for a project.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A data frame with one row per target per progress status
+and the following columns.
+</p>
+
+<ul>
+<li> <p><code>name</code>: name of the pattern.
+</p>
+</li>
+<li> <p><code>progress</code>: progress status: <code>"started"</code>, <code>"built"</code>, <code>"cancelled"</code>,
+or <code>"errored"</code>.
+</p>
+</li>
+<li> <p><code>branches</code>: number of branches in the progress category.
+</p>
+</li>
+<li> <p><code>total</code>: total number of branches planned for the whole pattern.
+Values within the same pattern should all be equal.
+</p>
+</li></ul>
+
+
+
+<h3>See Also</h3>
+
+<p>Other progress: 
+<code><a href="../../targets/help/tar_built.html">tar_built</a>()</code>,
+<code><a href="../../targets/help/tar_canceled.html">tar_canceled</a>()</code>,
+<code><a href="../../targets/help/tar_errored.html">tar_errored</a>()</code>,
+<code><a href="../../targets/help/tar_poll.html">tar_poll</a>()</code>,
+<code><a href="../../targets/help/tar_progress_summary.html">tar_progress_summary</a>()</code>,
+<code><a href="../../targets/help/tar_progress.html">tar_progress</a>()</code>,
+<code><a href="../../targets/help/tar_skipped.html">tar_skipped</a>()</code>,
+<code><a href="../../targets/help/tar_started.html">tar_started</a>()</code>,
+<code><a href="../../targets/help/tar_watch_server.html">tar_watch_server</a>()</code>,
+<code><a href="../../targets/help/tar_watch_ui.html">tar_watch_ui</a>()</code>,
+<code><a href="../../targets/help/tar_watch.html">tar_watch</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+if (identical(Sys.getenv("TAR_EXAMPLES"), "true")) { # for CRAN
+tar_dir({ # tar_dir() runs code from a temp dir for CRAN.
+tar_script({
+  list(
+    tar_target(x, seq_len(2)),
+    tar_target(y, x, pattern = map(x)),
+    tar_target(z, stopifnot(y &lt; 1.5), pattern = map(y))
+  )
+}, ask = FALSE)
+try(tar_make())
+tar_progress_branches()
+})
+}
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: List saved target workspaces.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_workspaces {targets}"><tr><td>tar_workspaces {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>List saved target workspaces.</h2>
+
+<h3>Description</h3>
+
+<p>List target workspaces currently saved to
+<code style="white-space: pre;">_targets/workspaces/</code>. See <code><a href="../../targets/help/tar_workspace.html">tar_workspace()</a></code> for more information.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_workspaces(names = NULL, store = targets::tar_config_get("store"))
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>names</code></td>
+<td>
+<p>Optional <code>tidyselect</code> selector to return
+a tactical subset of workspace names.
+If <code>NULL</code>, all names are selected.</p>
+</td></tr>
+<tr valign="top"><td><code>store</code></td>
+<td>
+<p>Character of length 1, path to the
+<code>targets</code> data store. Defaults to <code>tar_config_get("store")</code>,
+which in turn defaults to <code style="white-space: pre;">_targets/</code>.
+When you set this argument, the value of <code>tar_config_get("store")</code>
+is temporarily changed for the current function call.
+See <code><a href="../../targets/help/tar_config_get.html">tar_config_get()</a></code> and <code><a href="../../targets/help/tar_config_set.html">tar_config_set()</a></code> for details
+about how to set the data store path persistently
+for a project.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>Character vector of available workspaces to load with
+<code><a href="../../targets/help/tar_workspace.html">tar_workspace()</a></code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other debug: 
+<code><a href="../../targets/help/tar_load_globals.html">tar_load_globals</a>()</code>,
+<code><a href="../../targets/help/tar_traceback.html">tar_traceback</a>()</code>,
+<code><a href="../../targets/help/tar_workspace.html">tar_workspace</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+if (identical(Sys.getenv("TAR_EXAMPLES"), "true")) { # for CRAN
+tar_dir({ # tar_dir() runs code from a temp dir for CRAN.
+tar_script({
+  tar_option_set(workspace_on_error = TRUE)
+  list(
+    tar_target(x, "value"),
+    tar_target(y, x)
+  )
+}, ask = FALSE)
+tar_make()
+tar_workspaces()
+tar_workspaces(contains("x"))
+})
+}
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

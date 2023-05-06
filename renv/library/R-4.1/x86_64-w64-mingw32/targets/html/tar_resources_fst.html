@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Target resources: 'fst' storage formats</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_resources_fst {targets}"><tr><td>tar_resources_fst {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Target resources: <code>fst</code> storage formats</h2>
+
+<h3>Description</h3>
+
+<p>Create the <code>fst</code> argument of <code>tar_resources()</code>
+to specify optional settings for big data frame storage formats
+powered by the <code>fst</code> R package.
+See the <code>format</code> argument of <code><a href="../../targets/help/tar_target.html">tar_target()</a></code> for details.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_resources_fst(compress = targets::tar_option_get("resources")$fst$compress)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>compress</code></td>
+<td>
+<p>Numeric of length 1, <code>compress</code>
+argument of <code>fst::write_fst()</code>. Defaults to <code>50</code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>Object of class <code>"tar_resources_fst"</code>, to be supplied
+to the <code>fst</code> argument of <code>tar_resources()</code>.
+</p>
+
+
+<h3>Resources</h3>
+
+<p>Functions <code><a href="../../targets/help/tar_target.html">tar_target()</a></code> and <code><a href="../../targets/help/tar_option_set.html">tar_option_set()</a></code>
+each takes an optional <code>resources</code> argument to supply
+non-default settings of various optional backends for data storage
+and high-performance computing. The <code>tar_resources()</code> function
+is a helper to supply those settings in the correct manner.
+</p>
+<p>In <code>targets</code> version 0.12.2 and above, resources are inherited one-by-one
+in nested fashion from <code>tar_option_get("resources")</code>.
+For example, suppose you set
+<code>tar_option_set(resources = tar_resources(aws = my_aws))</code>,
+where <code>my_aws</code> equals <code>tar_resources_aws(bucket = "x", prefix = "y")</code>.
+Then, <code style="white-space: pre;">tar_target(data, get_data()</code> will have bucket <code>"x"</code> and
+prefix <code>"y"</code>. In addition, if <code>new_resources</code> equals
+<code style="white-space: pre;">tar_resources(aws = tar_resources_aws(bucket = "z")))</code>, then
+<code>tar_target(data, get_data(), resources = new_resources)</code>
+will use the new bucket <code>"z"</code>, but it will still use the prefix <code>"y"</code>
+supplied through <code>tar_option_set()</code>. (In <code>targets</code> 0.12.1 and below,
+options like <code>prefix</code> do not carry over from <code>tar_option_set()</code> if you
+supply non-default resources to <code>tar_target()</code>.)
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other resources: 
+<code><a href="../../targets/help/tar_resources_aws.html">tar_resources_aws</a>()</code>,
+<code><a href="../../targets/help/tar_resources_clustermq.html">tar_resources_clustermq</a>()</code>,
+<code><a href="../../targets/help/tar_resources_crew.html">tar_resources_crew</a>()</code>,
+<code><a href="../../targets/help/tar_resources_feather.html">tar_resources_feather</a>()</code>,
+<code><a href="../../targets/help/tar_resources_future.html">tar_resources_future</a>()</code>,
+<code><a href="../../targets/help/tar_resources_gcp.html">tar_resources_gcp</a>()</code>,
+<code><a href="../../targets/help/tar_resources_parquet.html">tar_resources_parquet</a>()</code>,
+<code><a href="../../targets/help/tar_resources_qs.html">tar_resources_qs</a>()</code>,
+<code><a href="../../targets/help/tar_resources_url.html">tar_resources_url</a>()</code>,
+<code><a href="../../targets/help/tar_resources.html">tar_resources</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Somewhere in you target script file (usually _targets.R):
+tar_target(
+  name,
+  command(),
+  format = "fst_tbl",
+  resources = tar_resources(
+    fst = tar_resources_fst(compress = 100)
+  )
+)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

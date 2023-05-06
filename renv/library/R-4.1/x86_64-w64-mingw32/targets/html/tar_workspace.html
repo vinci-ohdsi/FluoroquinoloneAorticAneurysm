@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Load a saved workspace and seed for debugging.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_workspace {targets}"><tr><td>tar_workspace {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Load a saved workspace and seed for debugging.</h2>
+
+<h3>Description</h3>
+
+<p>Load the packages, workspace, and random number generator seed
+of target attempted with a workspace file.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_workspace(
+  name,
+  envir = parent.frame(),
+  packages = TRUE,
+  source = TRUE,
+  script = targets::tar_config_get("script"),
+  store = targets::tar_config_get("store")
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>name</code></td>
+<td>
+<p>Symbol, name of the target whose workspace to read.</p>
+</td></tr>
+<tr valign="top"><td><code>envir</code></td>
+<td>
+<p>Environment in which to put the objects.</p>
+</td></tr>
+<tr valign="top"><td><code>packages</code></td>
+<td>
+<p>Logical, whether to load the required packages
+of the target.</p>
+</td></tr>
+<tr valign="top"><td><code>source</code></td>
+<td>
+<p>Logical, whether to run <code style="white-space: pre;">_targets.R</code> to load user-defined
+global object dependencies into <code>envir</code>. If <code>TRUE</code>, then <code>envir</code>
+should either be the global environment or inherit from the
+global environment.</p>
+</td></tr>
+<tr valign="top"><td><code>script</code></td>
+<td>
+<p>Character of length 1, path to the
+target script file. Defaults to <code>tar_config_get("script")</code>,
+which in turn defaults to <code style="white-space: pre;">_targets.R</code>. When you set
+this argument, the value of <code>tar_config_get("script")</code>
+is temporarily changed for the current function call.
+See <code><a href="../../targets/help/tar_script.html">tar_script()</a></code>,
+<code><a href="../../targets/help/tar_config_get.html">tar_config_get()</a></code>, and <code><a href="../../targets/help/tar_config_set.html">tar_config_set()</a></code> for details
+about the target script file and how to set it
+persistently for a project.</p>
+</td></tr>
+<tr valign="top"><td><code>store</code></td>
+<td>
+<p>Character of length 1, path to the
+<code>targets</code> data store. Defaults to <code>tar_config_get("store")</code>,
+which in turn defaults to <code style="white-space: pre;">_targets/</code>.
+When you set this argument, the value of <code>tar_config_get("store")</code>
+is temporarily changed for the current function call.
+See <code><a href="../../targets/help/tar_config_get.html">tar_config_get()</a></code> and <code><a href="../../targets/help/tar_config_set.html">tar_config_set()</a></code> for details
+about how to set the data store path persistently
+for a project.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>If you activate workspaces through the <code>workspaces</code> argument
+of <code><a href="../../targets/help/tar_option_set.html">tar_option_set()</a></code>, then under the circumstances you specify,
+<code>targets</code> will save a special workspace file to a location in
+in <code style="white-space: pre;">_targets/workspaces/</code>. The workspace file is a compact reference
+that allows <code>tar_workspace()</code> to load the target's dependencies
+and random number generator seed as long as the data objects
+are still in the data store (usually files in <code style="white-space: pre;">_targets/objects/</code>).
+When you are done debugging, you can remove the workspace files
+using <code>tar_destroy(destroy = "workspaces")</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>This function returns <code>NULL</code>, but it does load
+the target's required packages, as well as multiple objects
+into the environment (<code>envir</code> argument) in order to replicate the
+workspace where the error happened. These objects include
+the global objects at the time <code><a href="../../targets/help/tar_make.html">tar_make()</a></code> was called and the
+dependency targets. The random number generator seed for the
+target is also assigned with <code>set.seed()</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other debug: 
+<code><a href="../../targets/help/tar_load_globals.html">tar_load_globals</a>()</code>,
+<code><a href="../../targets/help/tar_traceback.html">tar_traceback</a>()</code>,
+<code><a href="../../targets/help/tar_workspaces.html">tar_workspaces</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+if (identical(Sys.getenv("TAR_EXAMPLES"), "true")) { # for CRAN
+tar_dir({ # tar_dir() runs code from a temp dir for CRAN.
+tmp &lt;- sample(1)
+tar_script({
+  tar_option_set(workspace_on_error = TRUE)
+  list(
+    tar_target(x, "loaded"),
+    tar_target(y, stop(x))
+  )
+}, ask = FALSE)
+# The following code throws an error for demonstration purposes.
+try(tar_make())
+exists("x") # Should be FALSE.
+tail(.Random.seed) # for comparison to the RNG state after tar_workspace(y)
+tar_workspace(y)
+exists("x") # Should be TRUE.
+print(x) # "loaded"
+# Should be different: tar_workspace() runs set.seed(tar_meta(y, seed)$seed)
+tail(.Random.seed)
+})
+}
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

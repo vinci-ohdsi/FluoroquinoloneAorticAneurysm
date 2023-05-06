@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: List new targets</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_newer {targets}"><tr><td>tar_newer {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>List new targets</h2>
+
+<h3>Description</h3>
+
+<p>List all the targets whose last successful run occurred
+after a certain point in time.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_newer(
+  time,
+  names = NULL,
+  inclusive = FALSE,
+  store = targets::tar_config_get("store")
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>time</code></td>
+<td>
+<p>A <code>POSIXct</code> object of length 1, time threshold.
+Targets newer than this time stamp are returned.
+For example, if <code>time = Sys.time - as.difftime(1, units = "weeks")</code>
+then <code>tar_newer()</code> returns targets newer than one week ago.</p>
+</td></tr>
+<tr valign="top"><td><code>names</code></td>
+<td>
+<p>Names of eligible targets. Targets excluded from <code>names</code>
+will not be returned even if they are newer than the given <code>time</code>.
+You can supply symbols
+or <code>tidyselect</code> helpers like <code><a href="../../targets/help/any_of.html">any_of()</a></code> and <code><a href="../../targets/help/starts_with.html">starts_with()</a></code>.
+If <code>NULL</code>, all names are eligible.</p>
+</td></tr>
+<tr valign="top"><td><code>inclusive</code></td>
+<td>
+<p>Logical of length 1, whether to include targets
+built at exactly the <code>time</code> given.</p>
+</td></tr>
+<tr valign="top"><td><code>store</code></td>
+<td>
+<p>Character of length 1, path to the
+<code>targets</code> data store. Defaults to <code>tar_config_get("store")</code>,
+which in turn defaults to <code style="white-space: pre;">_targets/</code>.
+When you set this argument, the value of <code>tar_config_get("store")</code>
+is temporarily changed for the current function call.
+See <code><a href="../../targets/help/tar_config_get.html">tar_config_get()</a></code> and <code><a href="../../targets/help/tar_config_set.html">tar_config_set()</a></code> for details
+about how to set the data store path persistently
+for a project.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Only applies to targets with recorded time stamps:
+just non-branching targets and individual dynamic branches.
+As of <code>targets</code> version 0.6.0, these time
+stamps are available for these targets regardless of
+storage format. Earlier versions of <code>targets</code> do not record
+time stamps for remote storage such as <code>format = "url"</code>
+or <code>repository = "aws"</code> in <code><a href="../../targets/help/tar_target.html">tar_target()</a></code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A character vector of names of old targets with recorded
+timestamp metadata.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other time: 
+<code><a href="../../targets/help/tar_older.html">tar_older</a>()</code>,
+<code><a href="../../targets/help/tar_timestamp_raw.html">tar_timestamp_raw</a>()</code>,
+<code><a href="../../targets/help/tar_timestamp.html">tar_timestamp</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+if (identical(Sys.getenv("TAR_EXAMPLES"), "true")) { # for CRAN
+tar_dir({ # tar_dir() runs code from a temp dir for CRAN.
+tar_script({
+  list(tar_target(x, seq_len(2)))
+}, ask = FALSE)
+tar_make()
+# targets newer than 1 week ago
+tar_newer(Sys.time() - as.difftime(1, units = "weeks"))
+# targets newer than 1 week from now
+tar_newer(Sys.time() + as.difftime(1, units = "weeks"))
+# Everything is still up to date.
+tar_make()
+# Invalidate all targets targets newer than 1 week ago
+# so they run on the next tar_make().
+invalidate_these &lt;- tar_newer(Sys.time() - as.difftime(1, units = "weeks"))
+tar_invalidate(any_of(invalidate_these))
+tar_make()
+})
+}
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

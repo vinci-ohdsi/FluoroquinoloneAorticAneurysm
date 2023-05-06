@@ -1,0 +1,587 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Set target options.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_option_set {targets}"><tr><td>tar_option_set {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Set target options.</h2>
+
+<h3>Description</h3>
+
+<p>Set target options, including default arguments to
+<code><a href="../../targets/help/tar_target.html">tar_target()</a></code> such as packages, storage format,
+iteration type, and cue. Only the non-null arguments are actually
+set as options. See currently set options with <code><a href="../../targets/help/tar_option_get.html">tar_option_get()</a></code>.
+To use <code>tar_option_set()</code> effectively, put it in your workflow's
+target script file (default: <code style="white-space: pre;">_targets.R</code>)
+before calls to <code><a href="../../targets/help/tar_target.html">tar_target()</a></code> or <code><a href="../../targets/help/tar_target_raw.html">tar_target_raw()</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_option_set(
+  tidy_eval = NULL,
+  packages = NULL,
+  imports = NULL,
+  library = NULL,
+  envir = NULL,
+  format = NULL,
+  repository = NULL,
+  iteration = NULL,
+  error = NULL,
+  memory = NULL,
+  garbage_collection = NULL,
+  deployment = NULL,
+  priority = NULL,
+  backoff = NULL,
+  resources = NULL,
+  storage = NULL,
+  retrieval = NULL,
+  cue = NULL,
+  debug = NULL,
+  workspaces = NULL,
+  workspace_on_error = NULL,
+  seed = NULL,
+  controller = NULL
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>tidy_eval</code></td>
+<td>
+<p>Logical, whether to enable tidy evaluation
+when interpreting <code>command</code> and <code>pattern</code>. If <code>TRUE</code>, you can use the
+&quot;bang-bang&quot; operator <code style="white-space: pre;">!!</code> to programmatically insert
+the values of global objects.</p>
+</td></tr>
+<tr valign="top"><td><code>packages</code></td>
+<td>
+<p>Character vector of packages to load right before
+the target builds or the output data is reloaded for
+downstream targets. Use <code>tar_option_set()</code> to set packages
+globally for all subsequent targets you define.</p>
+</td></tr>
+<tr valign="top"><td><code>imports</code></td>
+<td>
+<p>Character vector of package names.
+For every package listed, <code>targets</code> tracks every
+dataset and every object in the package namespace
+as if it were part of the global namespace.
+As an example, say you have a package called <code>customAnalysisPackage</code>
+which contains an object called <code>analysis_function()</code>.
+If you write <code>tar_option_set(imports = "yourAnalysisPackage")</code> in your
+target script file (default: <code style="white-space: pre;">_targets.R</code>),
+then a function called <code>"analysis_function"</code> will show up in the
+<code><a href="../../targets/help/tar_visnetwork.html">tar_visnetwork()</a></code> graph, and any targets or functions
+referring to the symbol <code>"analysis_function"</code> will depend on the
+function <code>analysis_function()</code> from package <code>yourAnalysisPackage</code>.
+This is best combined with
+<code>tar_option_set(packages = "yourAnalysisPackage")</code> so
+that <code>analysis_function()</code> can actually be called in your code.
+</p>
+<p>There are several important limitations:
+1. Namespaced calls, e.g. <code>yourAnalysisPackage::analysis_function()</code>,
+are ignored because of the limitations in <code>codetools::findGlobals()</code>
+which powers the static code analysis capabilities of <code>targets</code>.
+2. The <code>imports</code> option only looks at R objects and R code.
+It not account for low-level compiled code
+such as C/C++ or Fortran.
+3. If you supply multiple packages,
+e.g. <code>tar_option_set(imports = c("p1", "p2"))</code>, then the objects in
+<code>p1</code> override the objects in <code>p2</code> if there are name conflicts.
+4. Similarly, objects in <code>tar_option_get("envir")</code> override
+everything in <code>tar_option_get("imports")</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>library</code></td>
+<td>
+<p>Character vector of library paths to try
+when loading <code>packages</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>envir</code></td>
+<td>
+<p>Environment containing functions and global objects
+common to all targets in the pipeline.
+The <code>envir</code> argument of <code><a href="../../targets/help/tar_make.html">tar_make()</a></code> and related functions
+always overrides the current value of <code>tar_option_get("envir")</code>
+in the current R session just before running the target script file,
+so whenever you need to set an alternative <code>envir</code>, you should always set
+it with <code>tar_option_set()</code> from within the target script file.
+In other words, if you call <code>tar_option_set(envir = envir1)</code> in an
+interactive session and then
+<code>tar_make(envir = envir2, callr_function = NULL)</code>,
+then <code>envir2</code> will be used.
+</p>
+<p>If <code>envir</code> is the global environment, all the promise objects
+are diffused before sending the data to parallel workers
+in <code><a href="../../targets/help/tar_make_future.html">tar_make_future()</a></code> and <code><a href="../../targets/help/tar_make_clustermq.html">tar_make_clustermq()</a></code>,
+but otherwise the environment is unmodified.
+This behavior improves performance by decreasing
+the size of data sent to workers.
+</p>
+<p>If <code>envir</code> is not the global environment, then it should at least inherit
+from the global environment or base environment
+so <code>targets</code> can access attached packages.
+In the case of a non-global <code>envir</code>, <code>targets</code> attempts to remove
+potentially high memory objects that come directly from <code>targets</code>.
+That includes <code>tar_target()</code> objects of class <code>"tar_target"</code>,
+as well as objects of class <code>"tar_pipeline"</code> or <code>"tar_algorithm"</code>.
+This behavior improves performance by decreasing
+the size of data sent to workers.
+</p>
+<p>Package environments should not be assigned to <code>envir</code>.
+To include package objects as upstream dependencies in the pipeline,
+assign the package to the <code>packages</code> and <code>imports</code> arguments
+of <code>tar_option_set()</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>format</code></td>
+<td>
+<p>Optional storage format for the target's return value.
+With the exception of <code>format = "file"</code>, each target
+gets a file in <code style="white-space: pre;">_targets/objects</code>, and each format is a different
+way to save and load this file. See the &quot;Storage formats&quot; section
+for a detailed list of possible data storage formats.</p>
+</td></tr>
+<tr valign="top"><td><code>repository</code></td>
+<td>
+<p>Character of length 1, remote repository for target
+storage. Choices:
+</p>
+
+<ul>
+<li> <p><code>"local"</code>: file system of the local machine.
+</p>
+</li>
+<li> <p><code>"aws"</code>: Amazon Web Services (AWS) S3 bucket. Can be configured
+with a non-AWS S3 bucket using the <code>endpoint</code> argument of
+<code><a href="../../targets/help/tar_resources_aws.html">tar_resources_aws()</a></code>, but versioning capabilities may be lost
+in doing so.
+See the cloud storage section of
+<a href="https://books.ropensci.org/targets/data.html">https://books.ropensci.org/targets/data.html</a>
+for details for instructions.
+</p>
+</li>
+<li> <p><code>"gcp"</code>: Google Cloud Platform storage bucket.
+See the cloud storage section of
+<a href="https://books.ropensci.org/targets/data.html">https://books.ropensci.org/targets/data.html</a>
+for details for instructions.
+</p>
+</li></ul>
+
+<p>Note: if <code>repository</code> is not <code>"local"</code> and <code>format</code> is <code>"file"</code>
+then the target should create a single output file.
+That output file is uploaded to the cloud and tracked for changes
+where it exists in the cloud. The local file is deleted after
+the target runs.</p>
+</td></tr>
+<tr valign="top"><td><code>iteration</code></td>
+<td>
+<p>Character of length 1, name of the iteration mode
+of the target. Choices:
+</p>
+
+<ul>
+<li> <p><code>"vector"</code>: branching happens with <code>vctrs::vec_slice()</code> and
+aggregation happens with <code>vctrs::vec_c()</code>.
+</p>
+</li>
+<li> <p><code>"list"</code>, branching happens with <code style="white-space: pre;">[[]]</code> and aggregation happens with
+<code>list()</code>.
+</p>
+</li>
+<li> <p><code>"group"</code>: <code>dplyr::group_by()</code>-like functionality to branch over
+subsets of a data frame. The target's return value must be a data
+frame with a special <code>tar_group</code> column of consecutive integers
+from 1 through the number of groups. Each integer designates a group,
+and a branch is created for each collection of rows in a group.
+See the <code><a href="../../targets/help/tar_group.html">tar_group()</a></code> function to see how you can
+create the special <code>tar_group</code> column with <code>dplyr::group_by()</code>.
+</p>
+</li></ul>
+</td></tr>
+<tr valign="top"><td><code>error</code></td>
+<td>
+<p>Character of length 1, what to do if the target
+stops and throws an error. Options:
+</p>
+
+<ul>
+<li> <p><code>"stop"</code>: the whole pipeline stops and throws an error.
+</p>
+</li>
+<li> <p><code>"continue"</code>: the whole pipeline keeps going.
+</p>
+</li>
+<li> <p><code>"abridge"</code>: any currently running targets keep running,
+but no new targets launch after that.
+(Visit <a href="https://books.ropensci.org/targets/debugging.html">https://books.ropensci.org/targets/debugging.html</a>
+to learn how to debug targets using saved workspaces.)
+</p>
+</li>
+<li> <p><code>"null"</code>: The errored target continues and returns <code>NULL</code>.
+The data hash is deliberately wrong so the target is not
+up to date for the next run of the pipeline.
+</p>
+</li></ul>
+</td></tr>
+<tr valign="top"><td><code>memory</code></td>
+<td>
+<p>Character of length 1, memory strategy.
+If <code>"persistent"</code>, the target stays in memory
+until the end of the pipeline (unless <code>storage</code> is <code>"worker"</code>,
+in which case <code>targets</code> unloads the value from memory
+right after storing it in order to avoid sending
+copious data over a network).
+If <code>"transient"</code>, the target gets unloaded
+after every new target completes.
+Either way, the target gets automatically loaded into memory
+whenever another target needs the value.
+For cloud-based dynamic files
+(e.g. <code>format = "file"</code> with <code>repository = "aws"</code>),
+this memory strategy applies to the
+temporary local copy of the file:
+<code>"persistent"</code> means it remains until the end of the pipeline
+and is then deleted,
+and <code>"transient"</code> means it gets deleted as soon as possible.
+The former conserves bandwidth,
+and the latter conserves local storage.</p>
+</td></tr>
+<tr valign="top"><td><code>garbage_collection</code></td>
+<td>
+<p>Logical, whether to run <code>base::gc()</code>
+just before the target runs.</p>
+</td></tr>
+<tr valign="top"><td><code>deployment</code></td>
+<td>
+<p>Character of length 1, only relevant to
+<code><a href="../../targets/help/tar_make_clustermq.html">tar_make_clustermq()</a></code> and <code><a href="../../targets/help/tar_make_future.html">tar_make_future()</a></code>. If <code>"worker"</code>,
+the target builds on a parallel worker. If <code>"main"</code>,
+the target builds on the host machine / process managing the pipeline.</p>
+</td></tr>
+<tr valign="top"><td><code>priority</code></td>
+<td>
+<p>Numeric of length 1 between 0 and 1. Controls which
+targets get deployed first when multiple competing targets are ready
+simultaneously. Targets with priorities closer to 1 get built earlier
+(and polled earlier in <code><a href="../../targets/help/tar_make_future.html">tar_make_future()</a></code>).</p>
+</td></tr>
+<tr valign="top"><td><code>backoff</code></td>
+<td>
+<p>Numeric of length 1, must be greater than or equal to 0.01.
+Maximum upper bound of the random polling interval
+for the priority queue (seconds).
+In high-performance computing (e.g. <code><a href="../../targets/help/tar_make_clustermq.html">tar_make_clustermq()</a></code>
+and <code><a href="../../targets/help/tar_make_future.html">tar_make_future()</a></code>) it can be expensive to repeatedly poll the
+priority queue if no targets are ready to process. The number of seconds
+between polls is <code>runif(1, 0.001, max(backoff, 0.001 * 1.5 ^ index))</code>,
+where <code>index</code> is the number of consecutive polls so far that found
+no targets ready to skip or run.
+(If no target is ready, <code>index</code> goes up by 1. If a target is ready,
+<code>index</code> resets to 0. For more information on exponential,
+backoff, visit <a href="https://en.wikipedia.org/wiki/Exponential_backoff">https://en.wikipedia.org/wiki/Exponential_backoff</a>).
+Raising <code>backoff</code> is kinder to the CPU etc. but may incur delays
+in some instances.</p>
+</td></tr>
+<tr valign="top"><td><code>resources</code></td>
+<td>
+<p>Object returned by <code>tar_resources()</code>
+with optional settings for high-performance computing
+functionality, alternative data storage formats,
+and other optional capabilities of <code>targets</code>.
+See <code>tar_resources()</code> for details.</p>
+</td></tr>
+<tr valign="top"><td><code>storage</code></td>
+<td>
+<p>Character of length 1, only relevant to
+<code><a href="../../targets/help/tar_make_clustermq.html">tar_make_clustermq()</a></code> and <code><a href="../../targets/help/tar_make_future.html">tar_make_future()</a></code>.
+Must be one of the following values:
+</p>
+
+<ul>
+<li> <p><code>"main"</code>: the target's return value is sent back to the
+host machine and saved/uploaded locally.
+</p>
+</li>
+<li> <p><code>"worker"</code>: the worker saves/uploads the value.
+</p>
+</li>
+<li> <p><code>"none"</code>: almost never recommended. It is only for
+niche situations, e.g. the data needs to be loaded
+explicitly from another language. If you do use it,
+then the return value of the target is totally ignored
+when the target ends, but
+each downstream target still attempts to load the data file
+(except when <code>retrieval = "none"</code>).
+</p>
+<p>If you select <code>storage = "none"</code>, then
+the return value of the target's command is ignored,
+and the data is not saved automatically.
+As with dynamic files (<code>format = "file"</code>) it is the
+responsibility of the user to write to
+the data store from inside the target.
+</p>
+<p>The distinguishing feature of <code>storage = "none"</code>
+(as opposed to <code>format = "file"</code>)
+is that in the general case,
+downstream targets will automatically try to load the data
+from the data store as a dependency. As a corollary, <code>storage = "none"</code>
+is completely unnecessary if <code>format</code> is <code>"file"</code>.
+</p>
+</li></ul>
+</td></tr>
+<tr valign="top"><td><code>retrieval</code></td>
+<td>
+<p>Character of length 1, only relevant to
+<code><a href="../../targets/help/tar_make_clustermq.html">tar_make_clustermq()</a></code> and <code><a href="../../targets/help/tar_make_future.html">tar_make_future()</a></code>.
+Must be one of the following values:
+</p>
+
+<ul>
+<li> <p><code>"main"</code>: the target's dependencies are loaded on the host machine
+and sent to the worker before the target builds.
+</p>
+</li>
+<li> <p><code>"worker"</code>: the worker loads the targets dependencies.
+</p>
+</li>
+<li> <p><code>"none"</code>: the dependencies are not loaded at all.
+This choice is almost never recommended. It is only for
+niche situations, e.g. the data needs to be loaded
+explicitly from another language.
+</p>
+</li></ul>
+</td></tr>
+<tr valign="top"><td><code>cue</code></td>
+<td>
+<p>An optional object from <code>tar_cue()</code> to customize the
+rules that decide whether the target is up to date.</p>
+</td></tr>
+<tr valign="top"><td><code>debug</code></td>
+<td>
+<p>Character vector of names of targets to run in debug mode.
+To use effectively, you must set <code>callr_function = NULL</code> and
+restart your R session just before running. You should also
+<code><a href="../../targets/help/tar_make.html">tar_make()</a></code>, <code><a href="../../targets/help/tar_make_clustermq.html">tar_make_clustermq()</a></code>, or <code><a href="../../targets/help/tar_make_future.html">tar_make_future()</a></code>.
+For any target mentioned in <code>debug</code>, <code>targets</code> will force the target to
+build locally (with <code>tar_cue(mode = "always")</code> and <code>deployment = "main"</code>
+in the settings) and pause in an interactive debugger to help you diagnose
+problems. This is like inserting a <code>browser()</code> statement at the
+beginning of the target's expression, but without invalidating any
+targets.</p>
+</td></tr>
+<tr valign="top"><td><code>workspaces</code></td>
+<td>
+<p>Character vector of target names.
+Could be non-branching targets, whole dynamic branching targets,
+or individual branch names. <code><a href="../../targets/help/tar_make.html">tar_make()</a></code> and friends
+will save workspace files for these targets even if
+the targets are skipped. Workspace files help with debugging.
+See <code><a href="../../targets/help/tar_workspace.html">tar_workspace()</a></code> for details about workspaces.</p>
+</td></tr>
+<tr valign="top"><td><code>workspace_on_error</code></td>
+<td>
+<p>Logical of length 1, whether to save
+a workspace file for each target that throws an error.
+Workspace files help with debugging.
+See <code><a href="../../targets/help/tar_workspace.html">tar_workspace()</a></code> for details about workspaces.</p>
+</td></tr>
+<tr valign="top"><td><code>seed</code></td>
+<td>
+<p>Integer of length 1, seed for generating
+target-specific pseudo-random number generator seeds.
+These target-specific seeds are deterministic and depend on
+<code>tar_option_get("seed")</code> and the target name. Target-specific seeds
+are applied to each target's command using <code>withr::with_seed()</code>,
+and they are stored in the metadata and retrievable with
+<code><a href="../../targets/help/tar_meta.html">tar_meta()</a></code> or <code><a href="../../targets/help/tar_seed.html">tar_seed()</a></code>.
+</p>
+<p>Either the user or third-party packages built on top of <code>targets</code>
+may still set seeds inside the command of a target.
+For example, some target factories in the
+<code>tarchetypes</code> package assigns replicate-specific
+seeds for the purposes of reproducible within-target batched replication.
+In cases like these, the effect of the target-specific seed saved
+in the metadata becomes irrelevant and the seed defined in the command
+applies.
+</p>
+<p>The <code>seed</code> option can also be <code>NA</code> to disable
+automatic seed-setting. Any targets defined while
+<code>tar_option_get("seed")</code> is <code>NA</code> will not set a seed.
+In this case, those targets will never be up to date
+unless they have <code>cue = tar_cue(seed = FALSE)</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>controller</code></td>
+<td>
+<p>A controller or controller group object
+produced by the <code>crew</code> R package. <code>crew</code> brings auto-scaled
+distributed computing to <code><a href="../../targets/help/tar_make.html">tar_make()</a></code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p><code>NULL</code> (invisibly).
+</p>
+
+
+<h3>Storage formats</h3>
+
+
+<ul>
+<li> <p><code>"rds"</code>: Default, uses <code>saveRDS()</code> and <code>readRDS()</code>. Should work for
+most objects, but slow.
+</p>
+</li>
+<li> <p><code>"qs"</code>: Uses <code>qs::qsave()</code> and <code>qs::qread()</code>. Should work for
+most objects, much faster than <code>"rds"</code>. Optionally set the
+preset for <code>qsave()</code> through <code>tar_resources()</code> and <code>tar_resources_qs()</code>.
+</p>
+</li>
+<li> <p><code>"feather"</code>: Uses <code>arrow::write_feather()</code> and
+<code>arrow::read_feather()</code> (version 2.0). Much faster than <code>"rds"</code>,
+but the value must be a data frame. Optionally set
+<code>compression</code> and <code>compression_level</code> in <code>arrow::write_feather()</code>
+through <code>tar_resources()</code> and <code>tar_resources_feather()</code>.
+Requires the <code>arrow</code> package (not installed by default).
+</p>
+</li>
+<li> <p><code>"parquet"</code>: Uses <code>arrow::write_parquet()</code> and
+<code>arrow::read_parquet()</code> (version 2.0). Much faster than <code>"rds"</code>,
+but the value must be a data frame. Optionally set
+<code>compression</code> and <code>compression_level</code> in <code>arrow::write_parquet()</code>
+through <code>tar_resources()</code> and <code>tar_resources_parquet()</code>.
+Requires the <code>arrow</code> package (not installed by default).
+</p>
+</li>
+<li> <p><code>"fst"</code>: Uses <code>fst::write_fst()</code> and <code>fst::read_fst()</code>.
+Much faster than <code>"rds"</code>, but the value must be
+a data frame. Optionally set the compression level for
+<code>fst::write_fst()</code> through <code>tar_resources()</code> and <code>tar_resources_fst()</code>.
+Requires the <code>fst</code> package (not installed by default).
+</p>
+</li>
+<li> <p><code>"fst_dt"</code>: Same as <code>"fst"</code>, but the value is a <code>data.table</code>.
+Deep copies are made as appropriate in order to protect
+against the global effects of in-place modification.
+Optionally set the compression level the same way as for <code>"fst"</code>.
+</p>
+</li>
+<li> <p><code>"fst_tbl"</code>: Same as <code>"fst"</code>, but the value is a <code>tibble</code>.
+Optionally set the compression level the same way as for <code>"fst"</code>.
+</p>
+</li>
+<li> <p><code>"keras"</code>: superseded by <code><a href="../../targets/help/tar_format.html">tar_format()</a></code> and incompatible
+with <code>error = "null"</code> (in <code><a href="../../targets/help/tar_target.html">tar_target()</a></code> or <code><a href="../../targets/help/tar_option_set.html">tar_option_set()</a></code>).
+Uses <code>keras::save_model_hdf5()</code> and
+<code>keras::load_model_hdf5()</code>. The value must be a Keras model.
+Requires the <code>keras</code> package (not installed by default).
+</p>
+</li>
+<li> <p><code>"torch"</code>: superseded by <code><a href="../../targets/help/tar_format.html">tar_format()</a></code> and incompatible
+with <code>error = "null"</code> (in <code><a href="../../targets/help/tar_target.html">tar_target()</a></code> or <code><a href="../../targets/help/tar_option_set.html">tar_option_set()</a></code>).
+Uses <code>torch::torch_save()</code> and <code>torch::torch_load()</code>.
+The value must be an object from the <code>torch</code> package
+such as a tensor or neural network module.
+Requires the <code>torch</code> package (not installed by default).
+</p>
+</li>
+<li> <p><code>"file"</code>: A dynamic file. To use this format,
+the target needs to manually identify or save some data
+and return a character vector of paths
+to the data (must be a single file path if <code>repository</code>
+is not <code>"local"</code>). (These paths must be existing files
+and nonempty directories.)
+Then, <code>targets</code> automatically checks those files and cues
+the appropriate build decisions if those files are out of date.
+Those paths must point to files or directories,
+and they must not contain characters <code>|</code> or <code>*</code>.
+All the files and directories you return must actually exist,
+or else <code>targets</code> will throw an error. (And if <code>storage</code> is <code>"worker"</code>,
+<code>targets</code> will first stall out trying to wait for the file
+to arrive over a network file system.)
+If the target does not create any files, the return value should be
+<code>character(0)</code>.
+</p>
+<p>If <code>repository</code> is not <code>"local"</code> and <code>format</code> is <code>"file"</code>,
+then the character vector returned by the target must be of length 1
+and point to a single file. (Directories and vectors of multiple
+file paths are not supported for dynamic files on the cloud.)
+That output file is uploaded to the cloud and tracked for changes
+where it exists in the cloud. The local file is deleted after
+the target runs.
+</p>
+</li>
+<li> <p><code>"url"</code>: A dynamic input URL. For this storage format,
+<code>repository</code> is implicitly <code>"local"</code>,
+URL format is like <code>format = "file"</code>
+except the return value of the target is a URL that already exists
+and serves as input data for downstream targets. Optionally
+supply a custom <code>curl</code> handle through
+<code>tar_resources()</code> and <code>tar_resources_url()</code>.
+in <code>new_handle()</code>, <code>nobody = TRUE</code> is important because it
+ensures <code>targets</code> just downloads the metadata instead of
+the entire data file when it checks time stamps and hashes.
+The data file at the URL needs to have an ETag or a Last-Modified
+time stamp, or else the target will throw an error because
+it cannot track the data. Also, use extreme caution when
+trying to use <code>format = "url"</code> to track uploads. You must be absolutely
+certain the ETag and Last-Modified time stamp are fully updated
+and available by the time the target's command finishes running.
+<code>targets</code> makes no attempt to wait for the web server.
+</p>
+</li>
+<li><p> A custom format can be supplied with <code>tar_format()</code>. For this choice,
+it is the user's responsibility to provide methods for (un)serialization
+and (un)marshaling the return value of the target.
+</p>
+</li>
+<li><p> The formats starting with <code>"aws_"</code> are deprecated as of 2022-03-13
+(<code style="white-space: pre;">targets version &gt; 0.10.0). For cloud storage integration, use the </code>repository' argument instead.
+</p>
+</li></ul>
+
+
+
+<h3>See Also</h3>
+
+<p>Other configuration: 
+<code><a href="../../targets/help/tar_config_get.html">tar_config_get</a>()</code>,
+<code><a href="../../targets/help/tar_config_set.html">tar_config_set</a>()</code>,
+<code><a href="../../targets/help/tar_config_unset.html">tar_config_unset</a>()</code>,
+<code><a href="../../targets/help/tar_envvars.html">tar_envvars</a>()</code>,
+<code><a href="../../targets/help/tar_option_get.html">tar_option_get</a>()</code>,
+<code><a href="../../targets/help/tar_option_reset.html">tar_option_reset</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+tar_option_get("format") # default format before we set anything
+tar_target(x, 1)$settings$format
+tar_option_set(format = "fst_tbl") # new default format
+tar_option_get("format")
+tar_target(x, 1)$settings$format
+tar_option_reset() # reset the format
+tar_target(x, 1)$settings$format
+if (identical(Sys.getenv("TAR_EXAMPLES"), "true")) { # for CRAN
+tar_dir({ # tar_dir() runs code from a temp dir for CRAN.
+tar_script({
+  tar_option_set(cue = tar_cue(mode = "always")) # All targets always run.
+  list(tar_target(x, 1), tar_target(y, 2))
+})
+tar_make()
+tar_make()
+})
+}
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

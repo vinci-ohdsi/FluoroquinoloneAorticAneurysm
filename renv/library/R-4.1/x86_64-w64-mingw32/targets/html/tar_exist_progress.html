@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Check if progress metadata exists.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_exist_progress {targets}"><tr><td>tar_exist_progress {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Check if progress metadata exists.</h2>
+
+<h3>Description</h3>
+
+<p>Check if the progress metadata file <code style="white-space: pre;">_targets/meta/progress</code>
+exists for the current project.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_exist_progress(store = targets::tar_config_get("store"))
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>store</code></td>
+<td>
+<p>Character of length 1, path to the
+<code>targets</code> data store. Defaults to <code>tar_config_get("store")</code>,
+which in turn defaults to <code style="white-space: pre;">_targets/</code>.
+When you set this argument, the value of <code>tar_config_get("store")</code>
+is temporarily changed for the current function call.
+See <code><a href="../../targets/help/tar_config_get.html">tar_config_get()</a></code> and <code><a href="../../targets/help/tar_config_set.html">tar_config_set()</a></code> for details
+about how to set the data store path persistently
+for a project.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>To learn more about data storage in <code>targets</code>, visit
+<a href="https://books.ropensci.org/targets/data.html">https://books.ropensci.org/targets/data.html</a>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Logical of length 1, whether the current project's metadata exists.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other existence: 
+<code><a href="../../targets/help/tar_exist_meta.html">tar_exist_meta</a>()</code>,
+<code><a href="../../targets/help/tar_exist_objects.html">tar_exist_objects</a>()</code>,
+<code><a href="../../targets/help/tar_exist_process.html">tar_exist_process</a>()</code>,
+<code><a href="../../targets/help/tar_exist_script.html">tar_exist_script</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+tar_exist_progress()
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

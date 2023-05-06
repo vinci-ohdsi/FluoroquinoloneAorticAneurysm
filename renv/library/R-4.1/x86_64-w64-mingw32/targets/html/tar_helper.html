@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Write a helper R script.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_helper {targets}"><tr><td>tar_helper {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Write a helper R script.</h2>
+
+<h3>Description</h3>
+
+<p>Write a helper R script for a <code>targets</code> pipeline.
+Could be supporting functions or the target script file
+(default: <code style="white-space: pre;">_targets.R</code>) itself.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_helper(path = NULL, code = NULL, tidy_eval = TRUE, envir = parent.frame())
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>path</code></td>
+<td>
+<p>Character of length 1, path to write (or overwrite) <code>code</code>.
+If the parent directory does not exist, <code>tar_helper_raw()</code> creates it.</p>
+</td></tr>
+<tr valign="top"><td><code>code</code></td>
+<td>
+<p>Quoted code to write to <code>path</code>.
+<code>tar_helper()</code> overwrites the file if it already exists.</p>
+</td></tr>
+<tr valign="top"><td><code>tidy_eval</code></td>
+<td>
+<p>Logical, whether to use tidy evaluation on <code>code</code>. If
+turned on, you can substitute expressions and symbols using <code style="white-space: pre;">!!</code> and <code style="white-space: pre;">!!!</code>.
+See examples below.</p>
+</td></tr>
+<tr valign="top"><td><code>envir</code></td>
+<td>
+<p>Environment for tidy evaluation.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p><code>tar_helper()</code> is a specialized version of <code><a href="../../targets/help/tar_script.html">tar_script()</a></code>
+with flexible paths and tidy evaluation.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>NULL</code> (invisibly)
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other scripts: 
+<code><a href="../../targets/help/tar_edit.html">tar_edit</a>()</code>,
+<code><a href="../../targets/help/tar_github_actions.html">tar_github_actions</a>()</code>,
+<code><a href="../../targets/help/tar_helper_raw.html">tar_helper_raw</a>()</code>,
+<code><a href="../../targets/help/tar_renv.html">tar_renv</a>()</code>,
+<code><a href="../../targets/help/tar_script.html">tar_script</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Without tidy evaluation:
+path &lt;- tempfile()
+tar_helper(path, x &lt;- 1)
+writeLines(readLines(path))
+# With tidy evaluation:
+y &lt;- 123
+tar_helper(path, x &lt;- !!y)
+writeLines(readLines(path))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

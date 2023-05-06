@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Get configuration settings.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_config_get {targets}"><tr><td>tar_config_get {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Get configuration settings.</h2>
+
+<h3>Description</h3>
+
+<p>Read the custom settings for the current project
+in the optional YAML configuration file.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_config_get(
+  name,
+  config = Sys.getenv("TAR_CONFIG", "_targets.yaml"),
+  project = Sys.getenv("TAR_PROJECT", "main")
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>name</code></td>
+<td>
+<p>Character of length 1, name of the specific
+configuration setting to retrieve.</p>
+</td></tr>
+<tr valign="top"><td><code>config</code></td>
+<td>
+<p>Character of length 1, file path of the YAML
+configuration file with <code>targets</code> project settings.
+The <code>config</code> argument specifies which YAML configuration
+file that <code>tar_config_get()</code> reads from or <code>tar_config_set()</code>
+writes to in a single function call.
+It does not globally change which configuration file is used
+in subsequent function calls. The default file path of the YAML
+file is always <code style="white-space: pre;">_targets.yaml</code> unless you set another
+default path using the <code>TAR_CONFIG</code> environment variable,
+e.g. <code>Sys.setenv(TAR_CONFIG = "custom.yaml")</code>. This also has the
+effect of temporarily modifying the default arguments to other functions
+such as <code><a href="../../targets/help/tar_make.html">tar_make()</a></code> because the default arguments
+to those functions are controlled by <code>tar_config_get()</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>project</code></td>
+<td>
+<p>Character of length 1, name of the current
+<code>targets</code> project. Thanks to the <code>config</code> R package,
+<code>targets</code> YAML configuration files can store multiple
+sets of configuration settings, with each set corresponding
+to its own project. The <code>project</code> argument allows you to
+set or get a configuration setting for a specific project
+for a given call to <code>tar_config_set()</code> or <code>tar_config_get()</code>.
+The default project is always called <code>"main"</code>
+unless you set another
+default project using the <code>TAR_PROJECT</code> environment variable,
+e.g. <code>Sys.setenv(tar_project = "custom")</code>. This also has the
+effect of temporarily modifying the default arguments to other functions
+such as <code><a href="../../targets/help/tar_make.html">tar_make()</a></code> because the default arguments
+to those functions are controlled by <code>tar_config_get()</code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>The value of the configuration setting from
+the YAML configuration file (default: <code style="white-space: pre;">_targets.yaml</code>)
+or the default value if the setting is not available.
+The data type of the return value depends on your choice
+of <code>name</code>.
+</p>
+
+
+<h3>Configuration</h3>
+
+<p>For several key functions like <code><a href="../../targets/help/tar_make.html">tar_make()</a></code>, the
+default values of arguments are controlled though
+<code>tar_config_get()</code>. <code>tar_config_get()</code> retrieves data
+from an optional YAML configuration file.
+You can control the settings in the YAML
+file programmatically with <code>tar_config_set()</code>.
+The default file path of this YAML file is <code style="white-space: pre;">_targets.yaml</code>, and you can
+set another path globally using the <code>TAR_CONFIG</code>
+environment variable. The YAML file can store configuration
+settings for multiple projects, and you can globally
+set the default project with the <code>TAR_PROJECT</code> environment
+variable.
+The structure of the YAML file
+follows rules similar to the <code>config</code> R package, e.g.
+projects can inherit settings from one another using the <code>inherits</code> field.
+Exceptions include:
+</p>
+
+<ol>
+<li><p> There is no requirement to have a configuration named <code>"default"</code>.
+</p>
+</li>
+<li><p> Other projects do not inherit from the default project' automatically.
+</p>
+</li>
+<li><p> Not all fields need values because <code>targets</code> already has defaults.
+</p>
+</li></ol>
+
+<p><code>targets</code> does not actually invoke
+the <code>config</code> package. The implementation in <code>targets</code>
+was written from scratch without viewing or copying any
+part of the source code of <code>config</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other configuration: 
+<code><a href="../../targets/help/tar_config_set.html">tar_config_set</a>()</code>,
+<code><a href="../../targets/help/tar_config_unset.html">tar_config_unset</a>()</code>,
+<code><a href="../../targets/help/tar_envvars.html">tar_envvars</a>()</code>,
+<code><a href="../../targets/help/tar_option_get.html">tar_option_get</a>()</code>,
+<code><a href="../../targets/help/tar_option_reset.html">tar_option_reset</a>()</code>,
+<code><a href="../../targets/help/tar_option_set.html">tar_option_set</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+if (identical(Sys.getenv("TAR_EXAMPLES"), "true")) { # for CRAN
+tar_dir({ # tar_dir() runs code from a temp dir for CRAN.
+tar_script(list(tar_target(x, 1 + 1)))
+tar_config_get("store") # "_targets"
+store_path &lt;- tempfile()
+tar_config_set(store = store_path)
+tar_config_get("store") # Shows a temp file.
+tar_make() # Writes to the custom data store identified in _targets.yaml.
+tar_read(x) # tar_read() knows about _targets.yaml too.
+file.exists("_targets") # FALSE
+file.exists(store_path) # TRUE
+})
+}
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

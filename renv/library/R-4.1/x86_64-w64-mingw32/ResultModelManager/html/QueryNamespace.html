@@ -1,0 +1,412 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: QueryNamespace</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for QueryNamespace {ResultModelManager}"><tr><td>QueryNamespace {ResultModelManager}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>QueryNamespace</h2>
+
+<h3>Description</h3>
+
+<p>Given a results specification and ConnectionHandler instance - this class allow queries to be namespaced within
+any tables specified within a list of pre-determined tables. This allows the encapsulation of queries, using specific
+table names in a consistent manner that is striaghtforward to maintain over time.
+</p>
+
+
+<h3>Public fields</h3>
+
+<div class="r6-fields">
+
+<dl>
+<dt><code>tablePrefix</code></dt><dd><p>tablePrefix to use</p>
+</dd>
+</dl>
+
+</div>
+
+
+<h3>Methods</h3>
+
+
+
+<h4>Public methods</h4>
+
+
+<ul>
+<li> <p><a href="#method-QueryNamespace-new"><code>QueryNamespace$new()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-QueryNamespace-setConnectionHandler"><code>QueryNamespace$setConnectionHandler()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-QueryNamespace-getConnectionHandler"><code>QueryNamespace$getConnectionHandler()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-QueryNamespace-addReplacementVariable"><code>QueryNamespace$addReplacementVariable()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-QueryNamespace-addTableSpecification"><code>QueryNamespace$addTableSpecification()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-QueryNamespace-render"><code>QueryNamespace$render()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-QueryNamespace-queryDb"><code>QueryNamespace$queryDb()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-QueryNamespace-executeSql"><code>QueryNamespace$executeSql()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-QueryNamespace-getVars"><code>QueryNamespace$getVars()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-QueryNamespace-clone"><code>QueryNamespace$clone()</code></a>
+</p>
+</li></ul>
+
+
+<hr>
+<a id="method-QueryNamespace-new"></a>
+
+
+
+<h4>Method <code>new()</code></h4>
+
+<p>initialize class
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>QueryNamespace$new(
+  connectionHandler = NULL,
+  tableSpecification = NULL,
+  tablePrefix = "",
+  ...
+)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>connectionHandler</code></dt><dd><p>ConnectionHandler instance @seealso<a href="../../ResultModelManager/help/ConnectionHandler.html">ConnectionHandler</a></p>
+</dd>
+<dt><code>tableSpecification</code></dt><dd><p>tableSpecification data.frame</p>
+</dd>
+<dt><code>tablePrefix</code></dt><dd><p>constant string to prefix all tables with</p>
+</dd>
+<dt><code>...</code></dt><dd><p>additional replacement variables e.g. database_schema, vocabulary_schema etc
+Set Connection Handler</p>
+</dd>
+</dl>
+
+</div>
+
+
+<hr>
+<a id="method-QueryNamespace-setConnectionHandler"></a>
+
+
+
+<h4>Method <code>setConnectionHandler()</code></h4>
+
+<p>set connection handler object for object
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>QueryNamespace$setConnectionHandler(connectionHandler)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>connectionHandler</code></dt><dd><p>ConnectionHandler instance
+Get connection handler</p>
+</dd>
+</dl>
+
+</div>
+
+
+<hr>
+<a id="method-QueryNamespace-getConnectionHandler"></a>
+
+
+
+<h4>Method <code>getConnectionHandler()</code></h4>
+
+<p>get connection handler obeject or throw error if not set
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>QueryNamespace$getConnectionHandler()</pre></div>
+
+
+<hr>
+<a id="method-QueryNamespace-addReplacementVariable"></a>
+
+
+
+<h4>Method <code>addReplacementVariable()</code></h4>
+
+<p>add a variable to automatically be replaced in query strings (e.g. @database_schema.@table_name becomes 'database_schema.table_1')
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>QueryNamespace$addReplacementVariable(key, value, replace = FALSE)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>key</code></dt><dd><p>variable name string (without @) to be replaced, eg. &quot;table_name&quot;</p>
+</dd>
+<dt><code>value</code></dt><dd><p>atomic value for replacement</p>
+</dd>
+<dt><code>replace</code></dt><dd><p>if a variable of the same key is found, overwrite it
+add table specification</p>
+</dd>
+</dl>
+
+</div>
+
+
+<hr>
+<a id="method-QueryNamespace-addTableSpecification"></a>
+
+
+
+<h4>Method <code>addTableSpecification()</code></h4>
+
+<p>add a variable to automatically be replaced in query strings (e.g. @database_schema.@table_name becomes
+'database_schema.table_1')
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>QueryNamespace$addTableSpecification(
+  tableSpecification,
+  useTablePrefix = TRUE,
+  tablePrefix = self$tablePrefix,
+  replace = TRUE
+)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>tableSpecification</code></dt><dd><p>table specification data.frame conforming to column names tableName, columnName, dataType and primaryKey</p>
+</dd>
+<dt><code>useTablePrefix</code></dt><dd><p>prefix the results with the tablePrefix (TRUE)</p>
+</dd>
+<dt><code>tablePrefix</code></dt><dd><p>prefix string - defaults to class variable set during initialization</p>
+</dd>
+<dt><code>replace</code></dt><dd><p>replace existing variables of the same name
+Render</p>
+</dd>
+</dl>
+
+</div>
+
+
+<hr>
+<a id="method-QueryNamespace-render"></a>
+
+
+
+<h4>Method <code>render()</code></h4>
+
+<p>Call to SqlRender::render replacing names stored in this class
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>QueryNamespace$render(sql, ...)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>sql</code></dt><dd><p>query string</p>
+</dd>
+<dt><code>...</code></dt><dd><p>additional variables to be passed to SqlRender::render - will overwrite anything in namespace
+query Sql</p>
+</dd>
+</dl>
+
+</div>
+
+
+<hr>
+<a id="method-QueryNamespace-queryDb"></a>
+
+
+
+<h4>Method <code>queryDb()</code></h4>
+
+<p>Call to
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>QueryNamespace$queryDb(sql, ...)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>sql</code></dt><dd><p>query string</p>
+</dd>
+<dt><code>...</code></dt><dd><p>additional variables to send to SqlRender::render
+execute Sql</p>
+</dd>
+</dl>
+
+</div>
+
+
+<hr>
+<a id="method-QueryNamespace-executeSql"></a>
+
+
+
+<h4>Method <code>executeSql()</code></h4>
+
+<p>Call to execute sql within namespaced queries
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>QueryNamespace$executeSql(sql, ...)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>sql</code></dt><dd><p>query string</p>
+</dd>
+<dt><code>...</code></dt><dd><p>additional variables to send to SqlRender::render
+get vars</p>
+</dd>
+</dl>
+
+</div>
+
+
+<hr>
+<a id="method-QueryNamespace-getVars"></a>
+
+
+
+<h4>Method <code>getVars()</code></h4>
+
+<p>returns full list of variables that will be replaced
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>QueryNamespace$getVars()</pre></div>
+
+
+<hr>
+<a id="method-QueryNamespace-clone"></a>
+
+
+
+<h4>Method <code>clone()</code></h4>
+
+<p>The objects of this class are cloneable with this method.
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>QueryNamespace$clone(deep = FALSE)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p>
+</dd>
+</dl>
+
+</div>
+
+
+
+
+<h3>Examples</h3>
+
+<pre>
+## Not run: 
+library(ResultModelManager)
+connectionHandler &lt;- ConnectionHandler$new(connectionDetails = )
+
+tableSpecification &lt;- data.frame(
+  tableName = "cohort",
+  columnName = c(
+    "cohort_definition_id",
+    "cohort_name",
+    "json",
+    "sql"
+  ),
+  primaryKey = c(TRUE, FALSE, FALSE, FALSE),
+  dataType = c("int", "varchar", "varchar", "varchar")
+)
+
+cohortNamespace &lt;- QueryNamespace$new(
+  connnectionHandler = connnectionHandler,
+  tableSpecification = tableSpecification,
+  result_schema = "main",
+  tablePrefix = "cd_"
+)
+sql &lt;- "SELECT * FROM @result_schema.@cohort WHERE cohort_id = @cohort_id"
+# Returns : "SELECT * FROM main.cd_cohort WHERE cohort_id = @cohort_id"
+print(cohortNamespace$render(sql))
+# Returns query result
+result &lt;- cohortNamespace$querySql(sql, cohort_id = 1)
+
+## End(Not run)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>ResultModelManager</em> version 0.4.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

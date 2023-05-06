@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Write a target script file.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_script {targets}"><tr><td>tar_script {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Write a target script file.</h2>
+
+<h3>Description</h3>
+
+<p>The <code>tar_script()</code> function is a convenient
+way to create the required target script file (default: <code style="white-space: pre;">_targets.R</code>)
+in the current working directory.
+It always overwrites the existing target script,
+and it requires you to be in the working directory
+where you intend to write the file, so be careful.
+See the &quot;Target script&quot; section for details.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_script(
+  code = NULL,
+  library_targets = TRUE,
+  ask = NULL,
+  script = targets::tar_config_get("script")
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>code</code></td>
+<td>
+<p>R code to write to the target script file.
+If <code>NULL</code>, an example target script file is written instead.</p>
+</td></tr>
+<tr valign="top"><td><code>library_targets</code></td>
+<td>
+<p>logical, whether to write a <code>library(targets)</code>
+line at the top of the target script file automatically (recommended).
+If <code>TRUE</code>, you do not need to explicitly put <code>library(targets)</code>
+in <code>code</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>ask</code></td>
+<td>
+<p>Logical, whether to ask before writing if the
+target script file
+already exists. If <code>NULL</code>, defaults to <code>Sys.getenv("TAR_ASK")</code>.
+(Set to <code>"true"</code> or <code>"false"</code> with <code>Sys.setenv()</code>).
+If <code>ask</code> and the <code>TAR_ASK</code> environment variable are both
+indeterminate, defaults to <code>interactive()</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>script</code></td>
+<td>
+<p>Character of length 1, where to write
+the target script file. Defaults to <code>tar_config_get("script")</code>,
+which in turn defaults to <code style="white-space: pre;">_targets.R</code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p><code>NULL</code> (invisibly).
+</p>
+
+
+<h3>Target script file</h3>
+
+<p>Every <code>targets</code> project requires a target script file.
+The target script file is usually a file called <code style="white-space: pre;">_targets.R</code>
+Functions <code><a href="../../targets/help/tar_make.html">tar_make()</a></code> and friends look for the target script
+and run it to set up the pipeline just prior to the main task.
+Every target script file should run the following
+steps in the order below:
+1. Package: load the <code>targets</code> package. This step is automatically
+inserted at the top of the target script file produced by
+<code>tar_script()</code> if <code>library_targets</code> is <code>TRUE</code>,
+so you do not need to explicitly include it in <code>code</code>.
+1. Globals: load custom functions and global objects into memory.
+Usually, this section is a bunch of calls to <code>source()</code> that run
+scripts defining user-defined functions. These functions support
+the R commands of the targets.
+2. Options: call <code><a href="../../targets/help/tar_option_set.html">tar_option_set()</a></code> to set defaults for targets-specific
+settings such as the names of required packages. Even if you have no
+specific options to set, it is still recommended to call
+<code><a href="../../targets/help/tar_option_set.html">tar_option_set()</a></code> in order to register the proper environment.
+3. Targets: define one or more target objects using <code><a href="../../targets/help/tar_target.html">tar_target()</a></code>.
+4. Pipeline: call <code><a href="../../base/html/list.html">list()</a></code> to bring the targets from (3)
+together in a pipeline object. Every target script file must return
+a pipeline object, which usually means ending with a call to
+<code><a href="../../base/html/list.html">list()</a></code>. In practice, (3) and (4) can be combined together
+in the same function call.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other scripts: 
+<code><a href="../../targets/help/tar_edit.html">tar_edit</a>()</code>,
+<code><a href="../../targets/help/tar_github_actions.html">tar_github_actions</a>()</code>,
+<code><a href="../../targets/help/tar_helper_raw.html">tar_helper_raw</a>()</code>,
+<code><a href="../../targets/help/tar_helper.html">tar_helper</a>()</code>,
+<code><a href="../../targets/help/tar_renv.html">tar_renv</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+tar_dir({ # tar_dir() runs code from a temp dir for CRAN.
+tar_script() # Writes an example target script file.
+# Writes a user-defined target script:
+tar_script({
+  x &lt;- tar_target(x, 1 + 1)
+  tar_option_set()
+  list(x)
+}, ask = FALSE)
+writeLines(readLines("_targets.R"))
+})
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

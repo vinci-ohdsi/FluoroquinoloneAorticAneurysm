@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Load globals for debugging, testing, and prototyping</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_load_globals {targets}"><tr><td>tar_load_globals {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Load globals for debugging, testing, and prototyping</h2>
+
+<h3>Description</h3>
+
+<p>Load user-defined packages, functions, global objects, and
+settings defined in the target script file (default: <code style="white-space: pre;">_targets.R</code>).
+This function is for debugging, testing, and prototyping only.
+It is not recommended for use inside a serious pipeline
+or to report the results of a serious pipeline.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_load_globals(
+  envir = parent.frame(),
+  script = targets::tar_config_get("script")
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>envir</code></td>
+<td>
+<p>Environment to source the target script (default: <code style="white-space: pre;">_targets.R</code>).
+Defaults to the calling environment.</p>
+</td></tr>
+<tr valign="top"><td><code>script</code></td>
+<td>
+<p>Character of length 1, path to the target script file
+that defines the pipeline (<code style="white-space: pre;">_targets.R</code> by default).
+This path should be either
+an absolute path or a path relative to the project root where you will
+call <code><a href="../../targets/help/tar_make.html">tar_make()</a></code> and other functions. When <code><a href="../../targets/help/tar_make.html">tar_make()</a></code> and friends
+run the script from the current working directory.
+If the argument <code>NULL</code>, the setting is not modified.
+Use <code><a href="../../targets/help/tar_config_unset.html">tar_config_unset()</a></code> to delete a setting.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This function first sources the target script file
+(default: <code style="white-space: pre;">_targets.R</code>)
+to loads all user-defined functions, global objects, and settings
+into the current R process. Then, it loads all the packages defined
+in <code>tar_option_get("packages")</code> (default: <code>(.packages())</code>)
+using <code>library()</code> with <code>lib.loc</code> defined in <code>tar_option_get("library")</code>
+(default: <code>NULL</code>).
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>NULL</code> (invisibly).
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other debug: 
+<code><a href="../../targets/help/tar_traceback.html">tar_traceback</a>()</code>,
+<code><a href="../../targets/help/tar_workspaces.html">tar_workspaces</a>()</code>,
+<code><a href="../../targets/help/tar_workspace.html">tar_workspace</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+if (identical(Sys.getenv("TAR_EXAMPLES"), "true")) { # for CRAN
+tar_dir({ # tar_dir() runs code from a temp dir for CRAN.
+tar_script({
+  tar_option_set(packages = "callr")
+  analyze_data &lt;- function(data) {
+    summary(data)
+  }
+  list(
+    tar_target(x, 1 + 1),
+    tar_target(y, 1 + 1)
+  )
+}, ask = FALSE)
+tar_load_globals()
+print(analyze_data)
+print("callr" %in% (.packages()))
+})
+}
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

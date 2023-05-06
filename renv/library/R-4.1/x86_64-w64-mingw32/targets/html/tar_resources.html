@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Target resources</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_resources {targets}"><tr><td>tar_resources {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Target resources</h2>
+
+<h3>Description</h3>
+
+<p>Create a <code>resources</code> argument for <code><a href="../../targets/help/tar_target.html">tar_target()</a></code>
+or <code><a href="../../targets/help/tar_option_set.html">tar_option_set()</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_resources(
+  aws = tar_option_get("resources")$aws,
+  clustermq = tar_option_get("resources")$clustermq,
+  crew = tar_option_get("resources")$crew,
+  feather = tar_option_get("resources")$feather,
+  fst = tar_option_get("resources")$fst,
+  future = tar_option_get("resources")$future,
+  gcp = tar_option_get("resources")$gcp,
+  parquet = tar_option_get("resources")$parquet,
+  qs = tar_option_get("resources")$qs,
+  url = tar_option_get("resources")$url
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>aws</code></td>
+<td>
+<p>Output of function <code>tar_resources_aws()</code>.
+Amazon Web Services (AWS) S3 storage settings for
+<code>tar_target(..., repository = "aws")</code>.
+See the cloud storage section of
+<a href="https://books.ropensci.org/targets/data.html">https://books.ropensci.org/targets/data.html</a>
+for details for instructions.</p>
+</td></tr>
+<tr valign="top"><td><code>clustermq</code></td>
+<td>
+<p>Output of function <code>tar_resources_clustermq()</code>.
+Optional <code>clustermq</code> settings for <code>tar_make_clustermq()</code>,
+including the <code>log_worker</code> and <code>template</code> arguments of
+<code>clustermq::workers()</code>. <code>clustermq</code> workers are <em>persistent</em>,
+so there is not a one-to-one correspondence between workers and targets.
+The <code>clustermq</code> resources apply to the workers, not the targets.
+So the correct way to assign <code>clustermq</code> resources is through
+<code><a href="../../targets/help/tar_option_set.html">tar_option_set()</a></code>, not <code><a href="../../targets/help/tar_target.html">tar_target()</a></code>. <code>clustermq</code> resources
+in individual <code><a href="../../targets/help/tar_target.html">tar_target()</a></code> calls will be ignored.</p>
+</td></tr>
+<tr valign="top"><td><code>crew</code></td>
+<td>
+<p>Output of function <code>tar_resources_crew()</code>
+with target-specific settings for integration with the
+<code>crew</code> R package. These settings are arguments to the <code>push()</code>
+method of the controller or controller group
+object which control things like
+auto-scaling behavior and the controller to use in the case
+of a controller group.</p>
+</td></tr>
+<tr valign="top"><td><code>feather</code></td>
+<td>
+<p>Output of function <code>tar_resources_feather()</code>.
+Non-default arguments to <code>arrow::read_feather()</code> and
+<code>arrow::write_feather()</code> for <code>arrow</code>/feather-based storage formats.
+Applies to all formats ending with the <code>"_feather"</code> suffix.
+For details on formats, see the <code>format</code> argument of <code><a href="../../targets/help/tar_target.html">tar_target()</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>fst</code></td>
+<td>
+<p>Output of function <code>tar_resources_fst()</code>.
+Non-default arguments to <code>fst::read_fst()</code> and
+<code>fst::write_fst()</code> for <code>fst</code>-based storage formats.
+Applies to all formats ending with <code>"fst"</code> in the name.
+For details on formats, see the <code>format</code> argument of <code><a href="../../targets/help/tar_target.html">tar_target()</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>future</code></td>
+<td>
+<p>Output of function <code>tar_resources_future()</code>.
+Optional <code>future</code> settings for <code>tar_make_future()</code>,
+including the <code>resources</code> argument of
+<code>future::future()</code>, which can include values to insert in
+template placeholders in <code>future.batchtools</code> template files.
+This is how to supply the <code>resources</code>
+argument of <code>future::future()</code> for <code>targets</code>.
+Resources supplied through
+<code>future::plan()</code> and <code>future::tweak()</code> are completely ignored.</p>
+</td></tr>
+<tr valign="top"><td><code>gcp</code></td>
+<td>
+<p>Output of function <code>tar_resources_gcp()</code>.
+Google Cloud Storage bucket settings for
+<code>tar_target(..., repository = "gcp")</code>.
+See the cloud storage section of
+<a href="https://books.ropensci.org/targets/data.html">https://books.ropensci.org/targets/data.html</a>
+for details for instructions.</p>
+</td></tr>
+<tr valign="top"><td><code>parquet</code></td>
+<td>
+<p>Output of function <code>tar_resources_parquet()</code>.
+Non-default arguments to <code>arrow::read_parquet()</code> and
+<code>arrow::write_parquet()</code> for <code>arrow</code>/parquet-based storage formats.
+Applies to all formats ending with the <code>"_parquet"</code> suffix.
+For details on formats, see the <code>format</code> argument of <code><a href="../../targets/help/tar_target.html">tar_target()</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>qs</code></td>
+<td>
+<p>Output of function <code>tar_resources_qs()</code>.
+Non-default arguments to <code>qs::qread()</code> and
+<code>qs::qsave()</code> for <code>qs</code>-based storage formats.
+Applies to all formats ending with the <code>"_qs"</code> suffix.
+For details on formats, see the <code>format</code> argument of <code><a href="../../targets/help/tar_target.html">tar_target()</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>url</code></td>
+<td>
+<p>Output of function <code>tar_resources_url()</code>.
+Non-default settings for storage formats ending with the <code>"_url"</code> suffix.
+These settings include the <code>curl</code> handle for extra control over HTTP
+requests. For details on formats, see the <code>format</code> argument of
+<code><a href="../../targets/help/tar_target.html">tar_target()</a></code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A list of objects of class <code>"tar_resources"</code> with
+non-default settings of various optional backends for data storage
+and high-performance computing.
+</p>
+
+
+<h3>Resources</h3>
+
+<p>Functions <code><a href="../../targets/help/tar_target.html">tar_target()</a></code> and <code><a href="../../targets/help/tar_option_set.html">tar_option_set()</a></code>
+each takes an optional <code>resources</code> argument to supply
+non-default settings of various optional backends for data storage
+and high-performance computing. The <code>tar_resources()</code> function
+is a helper to supply those settings in the correct manner.
+</p>
+<p>In <code>targets</code> version 0.12.2 and above, resources are inherited one-by-one
+in nested fashion from <code>tar_option_get("resources")</code>.
+For example, suppose you set
+<code>tar_option_set(resources = tar_resources(aws = my_aws))</code>,
+where <code>my_aws</code> equals <code>tar_resources_aws(bucket = "x", prefix = "y")</code>.
+Then, <code style="white-space: pre;">tar_target(data, get_data()</code> will have bucket <code>"x"</code> and
+prefix <code>"y"</code>. In addition, if <code>new_resources</code> equals
+<code style="white-space: pre;">tar_resources(aws = tar_resources_aws(bucket = "z")))</code>, then
+<code>tar_target(data, get_data(), resources = new_resources)</code>
+will use the new bucket <code>"z"</code>, but it will still use the prefix <code>"y"</code>
+supplied through <code>tar_option_set()</code>. (In <code>targets</code> 0.12.1 and below,
+options like <code>prefix</code> do not carry over from <code>tar_option_set()</code> if you
+supply non-default resources to <code>tar_target()</code>.)
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other resources: 
+<code><a href="../../targets/help/tar_resources_aws.html">tar_resources_aws</a>()</code>,
+<code><a href="../../targets/help/tar_resources_clustermq.html">tar_resources_clustermq</a>()</code>,
+<code><a href="../../targets/help/tar_resources_crew.html">tar_resources_crew</a>()</code>,
+<code><a href="../../targets/help/tar_resources_feather.html">tar_resources_feather</a>()</code>,
+<code><a href="../../targets/help/tar_resources_fst.html">tar_resources_fst</a>()</code>,
+<code><a href="../../targets/help/tar_resources_future.html">tar_resources_future</a>()</code>,
+<code><a href="../../targets/help/tar_resources_gcp.html">tar_resources_gcp</a>()</code>,
+<code><a href="../../targets/help/tar_resources_parquet.html">tar_resources_parquet</a>()</code>,
+<code><a href="../../targets/help/tar_resources_qs.html">tar_resources_qs</a>()</code>,
+<code><a href="../../targets/help/tar_resources_url.html">tar_resources_url</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Somewhere in you target script file (usually _targets.R):
+tar_target(
+  name,
+  command(),
+  format = "qs",
+  resources = tar_resources(
+    qs = tar_resources_qs(preset = "fast"),
+    future = tar_resources_future(resources = list(n_cores = 1))
+  )
+)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

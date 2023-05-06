@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Destroy the data store.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_destroy {targets}"><tr><td>tar_destroy {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Destroy the data store.</h2>
+
+<h3>Description</h3>
+
+<p>Destroy the data store written by the pipeline.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_destroy(
+  destroy = c("all", "cloud", "local", "meta", "process", "progress", "objects",
+    "scratch", "workspaces", "user"),
+  ask = NULL,
+  store = targets::tar_config_get("store")
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>destroy</code></td>
+<td>
+<p>Character of length 1, what to destroy. Choices:
+</p>
+
+<ul>
+<li> <p><code>"all"</code>: destroy the entire data store (default: <code style="white-space: pre;">_targets/</code>)
+including cloud data.
+</p>
+</li>
+<li> <p><code>"cloud"</code>: just try to delete cloud data, e.g. target data
+from targets with <code>tar_target(..., repository = "aws")</code>.
+</p>
+</li>
+<li> <p><code>"local"</code>: all the local files in the data store but nothing
+on the cloud.
+</p>
+</li>
+<li> <p><code>"meta"</code>: just delete the metadata file at <code>meta/meta</code> in the
+data store, which invalidates all the targets but keeps the data.
+</p>
+</li>
+<li> <p><code>"process"</code>: just delete the progress data file at
+<code>meta/process</code> in the data store, which resets the metadata
+of the main process.
+</p>
+</li>
+<li> <p><code>"progress"</code>: just delete the progress data file at
+<code>meta/progress</code> in the data store,
+which resets the progress tracking info.
+</p>
+</li>
+<li> <p><code>"objects"</code>: delete all the target
+return values in <code style="white-space: pre;">objects/</code> in the data
+store but keep progress and metadata.
+Dynamic files are not deleted this way.
+</p>
+</li>
+<li> <p><code>"scratch"</code>: temporary files saved during <code><a href="../../targets/help/tar_make.html">tar_make()</a></code> that should
+automatically get deleted except if R crashed.
+</p>
+</li>
+<li> <p><code>"workspaces"</code>: compressed lightweight files in <code style="white-space: pre;">workspaces/</code>
+in the data store with the saved workspaces of targets.
+See <code><a href="../../targets/help/tar_workspace.html">tar_workspace()</a></code> for details.
+</p>
+</li>
+<li> <p><code>"user"</code>: custom user-supplied files in the <code style="white-space: pre;">user/</code> folder in the
+data store.
+</p>
+</li></ul>
+</td></tr>
+<tr valign="top"><td><code>ask</code></td>
+<td>
+<p>Logical of length 1, whether to pause with a menu prompt
+before deleting files. To disable this menu, set the <code>TAR_ASK</code>
+environment variable to <code>"false"</code>. <code>usethis::edit_r_environ()</code>
+can help set environment variables.</p>
+</td></tr>
+<tr valign="top"><td><code>store</code></td>
+<td>
+<p>Character of length 1, path to the
+<code>targets</code> data store. Defaults to <code>tar_config_get("store")</code>,
+which in turn defaults to <code style="white-space: pre;">_targets/</code>.
+When you set this argument, the value of <code>tar_config_get("store")</code>
+is temporarily changed for the current function call.
+See <code><a href="../../targets/help/tar_config_get.html">tar_config_get()</a></code> and <code><a href="../../targets/help/tar_config_set.html">tar_config_set()</a></code> for details
+about how to set the data store path persistently
+for a project.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The data store is a folder created by <code><a href="../../targets/help/tar_make.html">tar_make()</a></code>
+(or <code><a href="../../targets/help/tar_make_future.html">tar_make_future()</a></code> or <code><a href="../../targets/help/tar_make_clustermq.html">tar_make_clustermq()</a></code>).
+The details of the data store are explained at
+<a href="https://books.ropensci.org/targets/data.html#local-data-store">https://books.ropensci.org/targets/data.html#local-data-store</a>.
+The data store folder contains the output data
+and metadata of the targets in the pipeline. Usually,
+the data store is a folder called <code style="white-space: pre;">_targets/</code>
+(see <code><a href="../../targets/help/tar_config_set.html">tar_config_set()</a></code> to customize), and it may
+link to data on the cloud if you used AWS or GCP
+buckets. By default, <code>tar_destroy()</code> deletes the entire
+<code style="white-space: pre;">_targets/</code> folder (or wherever the data store is located),
+including custom user-supplied files in <code style="white-space: pre;">_targets/user/</code>,
+as well as any cloud data that the pipeline uploaded.
+See the <code>destroy</code> argument to customize this behavior
+and only delete part of the data store, and see functions like
+<code><a href="../../targets/help/tar_invalidate.html">tar_invalidate()</a></code>, <code><a href="../../targets/help/tar_delete.html">tar_delete()</a></code>, and <code><a href="../../targets/help/tar_prune.html">tar_prune()</a></code> to remove
+information pertaining to some but not all targets in the pipeline.
+After calling <code>tar_destroy()</code> with default arguments,
+the entire data store is gone, which means all the output data from
+previous runs of the pipeline is gone (except for
+input/output files tracked with <code>tar_target(..., format = "file")</code>).
+The next run of the pipeline will start from scratch,
+and it will not skip any targets.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>NULL</code> (invisibly).
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other clean: 
+<code><a href="../../targets/help/tar_delete.html">tar_delete</a>()</code>,
+<code><a href="../../targets/help/tar_invalidate.html">tar_invalidate</a>()</code>,
+<code><a href="../../targets/help/tar_prune.html">tar_prune</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+if (identical(Sys.getenv("TAR_EXAMPLES"), "true")) { # for CRAN
+tar_dir({ # tar_dir() runs code from a temp dir for CRAN.
+tar_script(list(tar_target(x, 1 + 1)), ask = FALSE)
+tar_make() # Creates the _targets/ data store.
+tar_destroy()
+print(file.exists("_targets")) # Should be FALSE.
+})
+}
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

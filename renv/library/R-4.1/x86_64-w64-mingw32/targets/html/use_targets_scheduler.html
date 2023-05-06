@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Detect the scheduler on the system.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for use_targets_scheduler {targets}"><tr><td>use_targets_scheduler {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Detect the scheduler on the system.</h2>
+
+<h3>Description</h3>
+
+<p>Automatically detect the resource manager
+on the system.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+use_targets_scheduler()
+</pre>
+
+
+<h3>Details</h3>
+
+<p>Not a user-side function. Do not invoke directly.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Character of length 1 with the name of the resource
+manager. One of the following:
+</p>
+
+<ul>
+<li> <p><code>"multicore"</code>: local forked processes on Linux-like systems.
+</p>
+</li>
+<li> <p><code>"multiprocess"</code>: local platform-independent and multi-process.
+</p>
+</li>
+<li> <p><code>"slurm"</code>: SLURM clusters.
+</p>
+</li>
+<li> <p><code>"sge"</code>: Sun Grid Engine clusters.
+</p>
+</li>
+<li> <p><code>"lsf"</code>: LSF clusters.
+</p>
+</li></ul>
+
+
+
+<h3>Examples</h3>
+
+<pre>
+use_targets_scheduler()
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

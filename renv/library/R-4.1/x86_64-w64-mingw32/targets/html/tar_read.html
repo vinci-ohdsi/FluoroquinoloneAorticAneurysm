@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Read a target's value from storage.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_read {targets}"><tr><td>tar_read {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Read a target's value from storage.</h2>
+
+<h3>Description</h3>
+
+<p>Read a target's return value from its file in
+<code style="white-space: pre;">_targets/objects/</code>. For dynamic files (i.e. <code>format = "file"</code>)
+the paths are returned.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_read(
+  name,
+  branches = NULL,
+  meta = tar_meta(store = store),
+  store = targets::tar_config_get("store")
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>name</code></td>
+<td>
+<p>Symbol, name of the target to read.</p>
+</td></tr>
+<tr valign="top"><td><code>branches</code></td>
+<td>
+<p>Integer of indices of the branches to load
+if the target is a pattern.</p>
+</td></tr>
+<tr valign="top"><td><code>meta</code></td>
+<td>
+<p>Data frame of metadata from <code><a href="../../targets/help/tar_meta.html">tar_meta()</a></code>.
+<code>tar_read()</code> with the default arguments can be inefficient for large
+pipelines because all the metadata is stored in a single file.
+However, if you call <code><a href="../../targets/help/tar_meta.html">tar_meta()</a></code> beforehand and supply it to the <code>meta</code>
+argument, then successive calls to <code>tar_read()</code> may run much faster.</p>
+</td></tr>
+<tr valign="top"><td><code>store</code></td>
+<td>
+<p>Character of length 1, path to the
+<code>targets</code> data store. Defaults to <code>tar_config_get("store")</code>,
+which in turn defaults to <code style="white-space: pre;">_targets/</code>.
+When you set this argument, the value of <code>tar_config_get("store")</code>
+is temporarily changed for the current function call.
+See <code><a href="../../targets/help/tar_config_get.html">tar_config_get()</a></code> and <code><a href="../../targets/help/tar_config_set.html">tar_config_set()</a></code> for details
+about how to set the data store path persistently
+for a project.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>The target's return value from its file in
+<code style="white-space: pre;">_targets/objects/</code>, or the paths to the custom files and directories
+if <code>format = "file"</code> was set.
+</p>
+
+
+<h3>Limited scope</h3>
+
+<p><code>tar_read()</code> and <code>tar_load()</code>
+are only for exploratory analysis and literate programming,
+and <code>tar_read_raw()</code> and <code>tar_load_raw()</code> are only
+for exploratory analysis. <code>targets</code> automatically
+loads the correct dependencies into memory when the pipeline
+is running, so invoking these functions
+from inside a target is rarely advisable.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other data: 
+<code><a href="../../targets/help/tar_load_everything.html">tar_load_everything</a>()</code>,
+<code><a href="../../targets/help/tar_load_raw.html">tar_load_raw</a>()</code>,
+<code><a href="../../targets/help/tar_load.html">tar_load</a>()</code>,
+<code><a href="../../targets/help/tar_meta.html">tar_meta</a>()</code>,
+<code><a href="../../targets/help/tar_objects.html">tar_objects</a>()</code>,
+<code><a href="../../targets/help/tar_pid.html">tar_pid</a>()</code>,
+<code><a href="../../targets/help/tar_process.html">tar_process</a>()</code>,
+<code><a href="../../targets/help/tar_read_raw.html">tar_read_raw</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+if (identical(Sys.getenv("TAR_EXAMPLES"), "true")) { # for CRAN
+tar_dir({ # tar_dir() runs code from a temp dir for CRAN.
+tar_script(list(tar_target(x, 1 + 1)), ask = FALSE)
+tar_make()
+tar_read(x)
+})
+}
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

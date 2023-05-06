@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Invoke a 'targets' task from inside a 'callr' function.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_callr_inner_try {targets}"><tr><td>tar_callr_inner_try {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Invoke a <code>targets</code> task from inside a <code>callr</code> function.</h2>
+
+<h3>Description</h3>
+
+<p>Not a user-side function. Do not invoke directly.
+Exported for internal purposes only.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_callr_inner_try(
+  targets_function,
+  targets_arguments,
+  options,
+  envir = NULL,
+  parent,
+  script,
+  store,
+  fun
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>targets_function</code></td>
+<td>
+<p>A function from <code>targets</code> to call.</p>
+</td></tr>
+<tr valign="top"><td><code>targets_arguments</code></td>
+<td>
+<p>Named list of arguments of targets_function.</p>
+</td></tr>
+<tr valign="top"><td><code>options</code></td>
+<td>
+<p>Names of global options to temporarily set
+in the <code>callr</code> process.</p>
+</td></tr>
+<tr valign="top"><td><code>envir</code></td>
+<td>
+<p>Name of the environment to run in. If <code>NULL</code>,
+the environment defaults to <code>tar_option_get("envir")</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>parent</code></td>
+<td>
+<p>Parent environment of the call to
+<code>tar_call_inner()</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>script</code></td>
+<td>
+<p>Character of length 1, path to the
+target script file. Defaults to <code>tar_config_get("script")</code>,
+which in turn defaults to <code style="white-space: pre;">_targets.R</code>. When you set
+this argument, the value of <code>tar_config_get("script")</code>
+is temporarily changed for the current function call.
+See <code><a href="../../targets/help/tar_script.html">tar_script()</a></code>,
+<code><a href="../../targets/help/tar_config_get.html">tar_config_get()</a></code>, and <code><a href="../../targets/help/tar_config_set.html">tar_config_set()</a></code> for details
+about the target script file and how to set it
+persistently for a project.</p>
+</td></tr>
+<tr valign="top"><td><code>store</code></td>
+<td>
+<p>Character of length 1, path to the
+<code>targets</code> data store. Defaults to <code>tar_config_get("store")</code>,
+which in turn defaults to <code style="white-space: pre;">_targets/</code>.
+When you set this argument, the value of <code>tar_config_get("store")</code>
+is temporarily changed for the current function call.
+See <code><a href="../../targets/help/tar_config_get.html">tar_config_get()</a></code> and <code><a href="../../targets/help/tar_config_set.html">tar_config_set()</a></code> for details
+about how to set the data store path persistently
+for a project.</p>
+</td></tr>
+<tr valign="top"><td><code>fun</code></td>
+<td>
+<p>Character of length 1, name of the <code>targets</code>
+function being called.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>The output of a call to a <code>targets</code> function that uses
+<code>callr</code> for reproducibility.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# See the examples of tar_make().
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

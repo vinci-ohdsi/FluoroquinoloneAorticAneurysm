@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Reconstruct the branch names and the names of their...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_branches {targets}"><tr><td>tar_branches {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Reconstruct the branch names and the names of their dependencies.</h2>
+
+<h3>Description</h3>
+
+<p>Given a branching pattern, use available metadata
+to reconstruct branch names and the names of each
+branch's dependencies. The metadata of each target
+must already exist and be consistent with the metadata
+of the other targets involved.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_branches(name, pattern, store = targets::tar_config_get("store"))
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>name</code></td>
+<td>
+<p>Symbol, name of the target.</p>
+</td></tr>
+<tr valign="top"><td><code>pattern</code></td>
+<td>
+<p>Language to define branching for a target.
+For example, in a pipeline with numeric vector targets <code>x</code> and <code>y</code>,
+<code>tar_target(z, x + y, pattern = map(x, y))</code> implicitly defines
+branches of <code>z</code> that each compute <code>x[1] + y[1]</code>, <code>x[2] + y[2]</code>,
+and so on. See the user manual for details.</p>
+</td></tr>
+<tr valign="top"><td><code>store</code></td>
+<td>
+<p>Character of length 1, path to the
+<code>targets</code> data store. Defaults to <code>tar_config_get("store")</code>,
+which in turn defaults to <code style="white-space: pre;">_targets/</code>.
+When you set this argument, the value of <code>tar_config_get("store")</code>
+is temporarily changed for the current function call.
+See <code><a href="../../targets/help/tar_config_get.html">tar_config_get()</a></code> and <code><a href="../../targets/help/tar_config_set.html">tar_config_set()</a></code> for details
+about how to set the data store path persistently
+for a project.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The results from this function can help you retroactively
+figure out correspondences between upstream branches and downstream
+branches. However, it does not always correctly predict what the
+names of the branches will be after the next run of the pipeline.
+Dynamic branching happens while the pipeline is running,
+so we cannot always know what the names of the branches will be
+in advance (or even how many there will be).
+</p>
+
+
+<h3>Value</h3>
+
+<p>A <code>tibble</code> with one row per branch and one column for each target
+(including the branched-over targets and the target with the pattern.)
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other branching: 
+<code><a href="../../targets/help/tar_branch_index.html">tar_branch_index</a>()</code>,
+<code><a href="../../targets/help/tar_branch_names_raw.html">tar_branch_names_raw</a>()</code>,
+<code><a href="../../targets/help/tar_branch_names.html">tar_branch_names</a>()</code>,
+<code><a href="../../targets/help/tar_pattern.html">tar_pattern</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+if (identical(Sys.getenv("TAR_EXAMPLES"), "true")) { # for CRAN
+tar_dir({ # tar_dir() runs code from a temp dir for CRAN.
+tar_script({
+  list(
+    tar_target(x, seq_len(2)),
+    tar_target(y, head(letters, 2)),
+    tar_target(z, head(LETTERS, 2)),
+    tar_target(dynamic, c(x, y, z), pattern = cross(z, map(x, y)))
+  )
+}, ask = FALSE)
+tar_make()
+tar_branches(dynamic, pattern = cross(z, map(x, y)))
+})
+}
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

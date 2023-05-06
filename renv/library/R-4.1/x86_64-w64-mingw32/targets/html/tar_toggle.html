@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Choose code to run based on Target Markdown mode.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_toggle {targets}"><tr><td>tar_toggle {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Choose code to run based on Target Markdown mode.</h2>
+
+<h3>Description</h3>
+
+<p>Run one piece of code if Target Markdown mode
+interactive mode is turned on and another piece of code otherwise.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_toggle(interactive, noninteractive)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>interactive</code></td>
+<td>
+<p>R code to run if Target Markdown interactive mode is
+activated.</p>
+</td></tr>
+<tr valign="top"><td><code>noninteractive</code></td>
+<td>
+<p>R code to run if Target Markdown interactive mode is
+not activated.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Visit &lt;books.ropensci.org/targets/literate-programming.html&gt;
+to learn about Target Markdown and interactive mode.
+</p>
+
+
+<h3>Value</h3>
+
+<p>If Target Markdown interactive mode is not turned on,
+the function returns the result of running the code.
+Otherwise, the function invisibly returns <code>NULL</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other Target Markdown: 
+<code><a href="../../targets/help/tar_engine_knitr.html">tar_engine_knitr</a>()</code>,
+<code><a href="../../targets/help/tar_interactive.html">tar_interactive</a>()</code>,
+<code><a href="../../targets/help/tar_noninteractive.html">tar_noninteractive</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+tar_toggle(
+  message("In interactive mode."),
+  message("Not in interactive mode.")
+)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

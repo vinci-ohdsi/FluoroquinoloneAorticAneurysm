@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: For developers only: get the definition of the current...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_definition {targets}"><tr><td>tar_definition {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>For developers only: get the definition of the current target.</h2>
+
+<h3>Description</h3>
+
+<p>For developers only: get the full definition of the
+target currently running. This target definition is the same kind
+of object produced by <code><a href="../../targets/help/tar_target.html">tar_target()</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_definition(
+  default = targets::tar_target_raw("target_name", quote(identity()))
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>default</code></td>
+<td>
+<p>Environment, value to return if <code>tar_definition()</code>
+is called on its own outside a <code>targets</code> pipeline.
+Having a default lets users run things without <code><a href="../../targets/help/tar_make.html">tar_make()</a></code>,
+which helps peel back layers of code and troubleshoot bugs.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Most users should not use <code>tar_definition()</code>  because accidental
+modifications could break the pipeline.
+<code>tar_definition()</code> only exists in order to support third-party interface
+packages, and even then the returned target definition is not modified..
+</p>
+
+
+<h3>Value</h3>
+
+<p>If called from a running target, <code>tar_definition()</code> returns
+the target object of the currently running target.
+See the &quot;Target objects&quot; section for details.
+</p>
+
+
+<h3>Target objects</h3>
+
+<p>Functions like <code>tar_target()</code> produce target objects,
+special objects with specialized sets of S3 classes.
+Target objects represent skippable steps of the analysis pipeline
+as described at <a href="https://books.ropensci.org/targets/">https://books.ropensci.org/targets/</a>.
+Please read the walkthrough at
+<a href="https://books.ropensci.org/targets/walkthrough.html">https://books.ropensci.org/targets/walkthrough.html</a>
+to understand the role of target objects in analysis pipelines.
+</p>
+<p>For developers,
+<a href="https://wlandau.github.io/targetopia/contributing.html#target-factories">https://wlandau.github.io/targetopia/contributing.html#target-factories</a>
+explains target factories (functions like this one which generate targets)
+and the design specification at
+<a href="https://books.ropensci.org/targets-design/">https://books.ropensci.org/targets-design/</a>
+details the structure and composition of target objects.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other utilities: 
+<code><a href="../../targets/help/tar_active.html">tar_active</a>()</code>,
+<code><a href="../../targets/help/tar_call.html">tar_call</a>()</code>,
+<code><a href="../../targets/help/tar_cancel.html">tar_cancel</a>()</code>,
+<code><a href="../../targets/help/tar_envir.html">tar_envir</a>()</code>,
+<code><a href="../../targets/help/tar_group.html">tar_group</a>()</code>,
+<code><a href="../../targets/help/tar_name.html">tar_name</a>()</code>,
+<code><a href="../../targets/help/tar_path_script_support.html">tar_path_script_support</a>()</code>,
+<code><a href="../../targets/help/tar_path_script.html">tar_path_script</a>()</code>,
+<code><a href="../../targets/help/tar_path_store.html">tar_path_store</a>()</code>,
+<code><a href="../../targets/help/tar_path_target.html">tar_path_target</a>()</code>,
+<code><a href="../../targets/help/tar_path.html">tar_path</a>()</code>,
+<code><a href="../../targets/help/tar_seed.html">tar_seed</a>()</code>,
+<code><a href="../../targets/help/tar_source.html">tar_source</a>()</code>,
+<code><a href="../../targets/help/tar_store.html">tar_store</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+class(tar_definition())
+tar_definition()$settings$name
+if (identical(Sys.getenv("TAR_EXAMPLES"), "true")) { # for CRAN
+tar_dir({ # tar_dir() runs code from a temp dir for CRAN.
+tar_script(
+  tar_target(x, tar_definition()$settings$memory, memory = "transient")
+)
+tar_make(x)
+tar_read(x)
+})
+}
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

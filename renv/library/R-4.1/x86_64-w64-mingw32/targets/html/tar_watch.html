@@ -1,0 +1,288 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Shiny app to watch the dependency graph.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_watch {targets}"><tr><td>tar_watch {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Shiny app to watch the dependency graph.</h2>
+
+<h3>Description</h3>
+
+<p>Launches a background process with a Shiny app
+that calls <code><a href="../../targets/help/tar_visnetwork.html">tar_visnetwork()</a></code> every few seconds.
+To embed this app in other apps, use the Shiny module
+in <code><a href="../../targets/help/tar_watch_ui.html">tar_watch_ui()</a></code> and <code><a href="../../targets/help/tar_watch_server.html">tar_watch_server()</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_watch(
+  seconds = 10,
+  seconds_min = 1,
+  seconds_max = 60,
+  seconds_step = 1,
+  targets_only = FALSE,
+  exclude = ".Random.seed",
+  outdated = FALSE,
+  label = NULL,
+  level_separation = 150,
+  degree_from = 1L,
+  degree_to = 1L,
+  config = Sys.getenv("TAR_CONFIG", "_targets.yaml"),
+  project = Sys.getenv("TAR_PROJECT", "main"),
+  height = "650px",
+  display = "summary",
+  displays = c("summary", "branches", "progress", "graph", "about"),
+  background = TRUE,
+  browse = TRUE,
+  host = getOption("shiny.host", "127.0.0.1"),
+  port = getOption("shiny.port", targets::tar_random_port()),
+  verbose = TRUE,
+  supervise = TRUE,
+  poll_connection = TRUE,
+  stdout = "|",
+  stderr = "|"
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>seconds</code></td>
+<td>
+<p>Numeric of length 1,
+default number of seconds between refreshes of the graph.
+Can be changed in the app controls.</p>
+</td></tr>
+<tr valign="top"><td><code>seconds_min</code></td>
+<td>
+<p>Numeric of length 1, lower bound of <code>seconds</code>
+in the app controls.</p>
+</td></tr>
+<tr valign="top"><td><code>seconds_max</code></td>
+<td>
+<p>Numeric of length 1, upper bound of <code>seconds</code>
+in the app controls.</p>
+</td></tr>
+<tr valign="top"><td><code>seconds_step</code></td>
+<td>
+<p>Numeric of length 1, step size of <code>seconds</code>
+in the app controls.</p>
+</td></tr>
+<tr valign="top"><td><code>targets_only</code></td>
+<td>
+<p>Logical, whether to restrict the output to just targets
+(<code>FALSE</code>) or to also include global functions and objects.</p>
+</td></tr>
+<tr valign="top"><td><code>exclude</code></td>
+<td>
+<p>Character vector of nodes to omit from the graph.</p>
+</td></tr>
+<tr valign="top"><td><code>outdated</code></td>
+<td>
+<p>Logical, whether to show colors to distinguish outdated
+targets from up-to-date targets. (Global functions and objects
+still show these colors.) Looking for outdated targets
+takes a lot of time for large pipelines with lots of branches,
+and setting <code>outdated</code> to <code>FALSE</code> is a nice way to speed up the graph
+if you only want to see dependency relationships and build progress.</p>
+</td></tr>
+<tr valign="top"><td><code>label</code></td>
+<td>
+<p>Label argument to <code><a href="../../targets/help/tar_visnetwork.html">tar_visnetwork()</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>level_separation</code></td>
+<td>
+<p>Numeric of length 1,
+<code>levelSeparation</code> argument of <code>visNetwork::visHierarchicalLayout()</code>.
+Controls the distance between hierarchical levels.
+Consider changing the value if the aspect ratio of the graph
+is far from 1. If <code>level_separation</code> is <code>NULL</code>,
+the <code>levelSeparation</code> argument of <code>visHierarchicalLayout()</code>
+defaults to <code>150</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>degree_from</code></td>
+<td>
+<p>Integer of length 1. When you click on a node,
+the graph highlights a neighborhood of that node. <code>degree_from</code>
+controls the number of edges the neighborhood extends upstream.</p>
+</td></tr>
+<tr valign="top"><td><code>degree_to</code></td>
+<td>
+<p>Integer of length 1. When you click on a node,
+the graph highlights a neighborhood of that node. <code>degree_to</code>
+controls the number of edges the neighborhood extends downstream.</p>
+</td></tr>
+<tr valign="top"><td><code>config</code></td>
+<td>
+<p>Character of length 1, file path of the YAML
+configuration file with <code>targets</code> project settings.
+The <code>config</code> argument specifies which YAML configuration
+file that <code>tar_config_get()</code> reads from or <code>tar_config_set()</code>
+writes to in a single function call.
+It does not globally change which configuration file is used
+in subsequent function calls. The default file path of the YAML
+file is always <code style="white-space: pre;">_targets.yaml</code> unless you set another
+default path using the <code>TAR_CONFIG</code> environment variable,
+e.g. <code>Sys.setenv(TAR_CONFIG = "custom.yaml")</code>. This also has the
+effect of temporarily modifying the default arguments to other functions
+such as <code><a href="../../targets/help/tar_make.html">tar_make()</a></code> because the default arguments
+to those functions are controlled by <code>tar_config_get()</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>project</code></td>
+<td>
+<p>Character of length 1, name of the current
+<code>targets</code> project. Thanks to the <code>config</code> R package,
+<code>targets</code> YAML configuration files can store multiple
+sets of configuration settings, with each set corresponding
+to its own project. The <code>project</code> argument allows you to
+set or get a configuration setting for a specific project
+for a given call to <code>tar_config_set()</code> or <code>tar_config_get()</code>.
+The default project is always called <code>"main"</code>
+unless you set another
+default project using the <code>TAR_PROJECT</code> environment variable,
+e.g. <code>Sys.setenv(tar_project = "custom")</code>. This also has the
+effect of temporarily modifying the default arguments to other functions
+such as <code><a href="../../targets/help/tar_make.html">tar_make()</a></code> because the default arguments
+to those functions are controlled by <code>tar_config_get()</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>height</code></td>
+<td>
+<p>Character of length 1,
+height of the <code>visNetwork</code> widget and branches table.</p>
+</td></tr>
+<tr valign="top"><td><code>display</code></td>
+<td>
+<p>Character of length 1, which display to show first.</p>
+</td></tr>
+<tr valign="top"><td><code>displays</code></td>
+<td>
+<p>Character vector of choices for the display.
+Elements can be any of
+<code>"graph"</code>, <code>"summary"</code>, <code>"branches"</code>, or <code>"about"</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>background</code></td>
+<td>
+<p>Logical, whether to run the app in a background process
+so you can still use the R console while the app is running.</p>
+</td></tr>
+<tr valign="top"><td><code>browse</code></td>
+<td>
+<p>Whether to open the app in a browser when the app is ready.
+Only relevant if <code>background</code> is <code>TRUE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>host</code></td>
+<td>
+<p>Character of length 1, IPv4 address to listen on.
+Only relevant if <code>background</code> is <code>TRUE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>port</code></td>
+<td>
+<p>Positive integer of length 1, TCP port to listen on.
+Only relevant if <code>background</code> is <code>TRUE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>verbose</code></td>
+<td>
+<p>whether to print a spinner and informative messages.
+Only relevant if <code>background</code> is <code>TRUE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>supervise</code></td>
+<td>
+<p>Whether to register the process with a supervisor. If <code>TRUE</code>,
+the supervisor will ensure that the process is killed when the R process
+exits.</p>
+</td></tr>
+<tr valign="top"><td><code>poll_connection</code></td>
+<td>
+<p>Whether to have a control connection to
+the process. This is used to transmit messages from the subprocess
+to the main process.</p>
+</td></tr>
+<tr valign="top"><td><code>stdout</code></td>
+<td>
+<p>The name of the file the standard output of
+the child R process will be written to.
+If the child process runs with the <code>--slave</code> option (the default),
+then the commands are not echoed and will not be shown
+in the standard output. Also note that you need to call <code>print()</code>
+explicitly to show the output of the command(s).
+IF <code>NULL</code> (the default), then standard output is not returned, but
+it is recorded and included in the error object if an error happens.</p>
+</td></tr>
+<tr valign="top"><td><code>stderr</code></td>
+<td>
+<p>The name of the file the standard error of
+the child R process will be written to.
+In particular <code>message()</code> sends output to the standard
+error. If nothing was sent to the standard error, then this file
+will be empty. This argument can be the same file as <code>stdout</code>,
+in which case they will be correctly interleaved. If this is the
+string <code>"2&gt;&amp;1"</code>, then standard error is redirected to standard output.
+IF <code>NULL</code> (the default), then standard output is not returned, but
+it is recorded and included in the error object if an error happens.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The controls of the app are in the left panel.
+The <code>seconds</code> control is the number of seconds between
+refreshes of the graph, and the other settings match
+the arguments of <code><a href="../../targets/help/tar_visnetwork.html">tar_visnetwork()</a></code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A handle to <code>callr::r_bg()</code> background process running the app.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other progress: 
+<code><a href="../../targets/help/tar_built.html">tar_built</a>()</code>,
+<code><a href="../../targets/help/tar_canceled.html">tar_canceled</a>()</code>,
+<code><a href="../../targets/help/tar_errored.html">tar_errored</a>()</code>,
+<code><a href="../../targets/help/tar_poll.html">tar_poll</a>()</code>,
+<code><a href="../../targets/help/tar_progress_branches.html">tar_progress_branches</a>()</code>,
+<code><a href="../../targets/help/tar_progress_summary.html">tar_progress_summary</a>()</code>,
+<code><a href="../../targets/help/tar_progress.html">tar_progress</a>()</code>,
+<code><a href="../../targets/help/tar_skipped.html">tar_skipped</a>()</code>,
+<code><a href="../../targets/help/tar_started.html">tar_started</a>()</code>,
+<code><a href="../../targets/help/tar_watch_server.html">tar_watch_server</a>()</code>,
+<code><a href="../../targets/help/tar_watch_ui.html">tar_watch_ui</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+if (identical(Sys.getenv("TAR_INTERACTIVE_EXAMPLES"), "true")) {
+tar_dir({ # tar_dir() runs code from a temp dir for CRAN.
+tar_script({
+  sleep_run &lt;- function(...) {
+    Sys.sleep(10)
+  }
+  list(
+    tar_target(settings, sleep_run()),
+    tar_target(data1, sleep_run(settings)),
+    tar_target(data2, sleep_run(settings))
+  )
+}, ask = FALSE)
+# Launch the app in a background process.
+tar_watch(seconds = 10, outdated = FALSE, targets_only = TRUE)
+# Run the pipeline.
+tar_make()
+})
+}
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

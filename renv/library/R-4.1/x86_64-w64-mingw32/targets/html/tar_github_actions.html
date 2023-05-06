@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Set up GitHub Actions to run a targets pipeline</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_github_actions {targets}"><tr><td>tar_github_actions {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Set up GitHub Actions to run a targets pipeline</h2>
+
+<h3>Description</h3>
+
+<p>Writes a GitHub Actions workflow file so the pipeline
+runs on every push to GitHub. Historical runs accumulate in the
+<code>targets-runs</code> branch, and the latest output is restored before
+<code><a href="../../targets/help/tar_make.html">tar_make()</a></code> so up-to-date targets do not rerun.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_github_actions(
+  path = file.path(".github", "workflows", "targets.yaml"),
+  ask = NULL
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>path</code></td>
+<td>
+<p>Character of length 1, file path to write the GitHub Actions
+workflow file.</p>
+</td></tr>
+<tr valign="top"><td><code>ask</code></td>
+<td>
+<p>Logical, whether to ask before writing if the workflow file
+already exists. If <code>NULL</code>, defaults to <code>Sys.getenv("TAR_ASK")</code>.
+(Set to <code>"true"</code> or <code>"false"</code> with <code>Sys.setenv()</code>).
+If <code>ask</code> and the <code>TAR_ASK</code> environment variable are both
+indeterminate, defaults to <code>interactive()</code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Steps to set up continuous deployment:
+</p>
+
+<ol>
+<li><p> Ensure your pipeline stays within the resource limitations of
+GitHub Actions and repositories, both for storage and compute.
+For storage, you may wish to reduce the burden with
+an alternative repository (e.g. <code>tar_target(..., repository = "aws")</code>).
+</p>
+</li>
+<li><p> Ensure Actions are enabled in your GitHub repository.
+You may have to visit the Settings tab.
+</p>
+</li>
+<li><p> Call <code>targets::tar_renv(extras = character(0))</code>
+to expose hidden package dependencies.
+</p>
+</li>
+<li><p> Set up <code>renv</code> for your project (with <code>renv::init()</code>
+or <code>renv::snapshot()</code>). Details at
+<a href="https://rstudio.github.io/renv/articles/ci.html">https://rstudio.github.io/renv/articles/ci.html</a>.
+</p>
+</li>
+<li><p> Commit the <code>renv.lock</code> file to the <code>main</code> (recommended)
+or <code>master</code> Git branch.
+</p>
+</li>
+<li><p> Run <code>tar_github_actions()</code> to create the workflow file.
+Commit this file to <code>main</code> (recommended) or <code>master</code> in Git.
+</p>
+</li>
+<li><p> Push your project to GitHub. Verify that a GitHub Actions
+workflow runs and pushes results to <code>targets-runs</code>.
+Subsequent runs will only recompute the outdated targets.
+</p>
+</li></ol>
+
+
+
+<h3>Value</h3>
+
+<p>Nothing (invisibly). This function writes a GitHub Actions
+workflow file as a side effect.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other scripts: 
+<code><a href="../../targets/help/tar_edit.html">tar_edit</a>()</code>,
+<code><a href="../../targets/help/tar_helper_raw.html">tar_helper_raw</a>()</code>,
+<code><a href="../../targets/help/tar_helper.html">tar_helper</a>()</code>,
+<code><a href="../../targets/help/tar_renv.html">tar_renv</a>()</code>,
+<code><a href="../../targets/help/tar_script.html">tar_script</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+tar_github_actions(tempfile())
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

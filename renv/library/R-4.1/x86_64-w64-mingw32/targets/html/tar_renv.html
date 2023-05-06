@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Set up package dependencies for compatibility with 'renv'</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_renv {targets}"><tr><td>tar_renv {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Set up package dependencies for compatibility with <code>renv</code></h2>
+
+<h3>Description</h3>
+
+<p>Write package dependencies to a script file
+(by default, named <code style="white-space: pre;">_targets_packages.R</code> in the root project directory).
+Each package is written to a separate line
+as a standard <code><a href="../../base/html/library.html">library()</a></code> call (e.g. <code>library(package)</code>) so
+<code>renv</code> can identify them automatically.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_renv(
+  extras = c("bs4Dash", "clustermq", "future", "gt", "markdown", "pingr", "rstudioapi",
+    "shiny", "shinybusy", "shinyWidgets", "visNetwork"),
+  path = "_targets_packages.R",
+  callr_function = callr::r,
+  callr_arguments = targets::tar_callr_args_default(callr_function),
+  envir = parent.frame(),
+  script = targets::tar_config_get("script")
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>extras</code></td>
+<td>
+<p>Character vector of additional packages to declare as
+project dependencies.</p>
+</td></tr>
+<tr valign="top"><td><code>path</code></td>
+<td>
+<p>Character of length 1, path to the script file to
+populate with <code>library()</code> calls.</p>
+</td></tr>
+<tr valign="top"><td><code>callr_function</code></td>
+<td>
+<p>A function from <code>callr</code> to start a fresh clean R
+process to do the work. Set to <code>NULL</code> to run in the current session
+instead of an external process (but restart your R session just before
+you do in order to clear debris out of the global environment).
+<code>callr_function</code> needs to be <code>NULL</code> for interactive debugging,
+e.g. <code>tar_option_set(debug = "your_target")</code>.
+However, <code>callr_function</code> should not be <code>NULL</code> for serious
+reproducible work.</p>
+</td></tr>
+<tr valign="top"><td><code>callr_arguments</code></td>
+<td>
+<p>A list of arguments to <code>callr_function</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>envir</code></td>
+<td>
+<p>An environment, where to run the target R script
+(default: <code style="white-space: pre;">_targets.R</code>) if <code>callr_function</code> is <code>NULL</code>.
+Ignored if <code>callr_function</code> is anything other than <code>NULL</code>.
+<code>callr_function</code> should only be <code>NULL</code> for debugging and
+testing purposes, not for serious runs of a pipeline, etc.
+</p>
+<p>The <code>envir</code> argument of <code><a href="../../targets/help/tar_make.html">tar_make()</a></code> and related
+functions always overrides
+the current value of <code>tar_option_get("envir")</code> in the current R session
+just before running the target script file,
+so whenever you need to set an alternative <code>envir</code>, you should always set
+it with <code>tar_option_set()</code> from within the target script file.
+In other words, if you call <code>tar_option_set(envir = envir1)</code> in an
+interactive session and then
+<code>tar_make(envir = envir2, callr_function = NULL)</code>,
+then <code>envir2</code> will be used.</p>
+</td></tr>
+<tr valign="top"><td><code>script</code></td>
+<td>
+<p>Character of length 1, path to the
+target script file. Defaults to <code>tar_config_get("script")</code>,
+which in turn defaults to <code style="white-space: pre;">_targets.R</code>. When you set
+this argument, the value of <code>tar_config_get("script")</code>
+is temporarily changed for the current function call.
+See <code><a href="../../targets/help/tar_script.html">tar_script()</a></code>,
+<code><a href="../../targets/help/tar_config_get.html">tar_config_get()</a></code>, and <code><a href="../../targets/help/tar_config_set.html">tar_config_set()</a></code> for details
+about the target script file and how to set it
+persistently for a project.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This function gets called for its side-effect, which writes
+package dependencies to a script for compatibility with <code>renv</code>.
+The generated file should <strong>not</strong> be edited by hand and will be
+overwritten each time <code>tar_renv()</code> is called.
+</p>
+<p>The behavior of <code>renv</code> is to create and manage a project-local <code>R</code> library
+and keep a record of project dependencies in a file called <code>renv.lock</code>.
+To identify dependencies, <code>renv</code> crawls through code to find packages
+explicitly mentioned using <code>library()</code>, <code>require()</code>, or <code>::</code>.
+However, <code>targets</code> manages packages in a way that hides dependencies
+from <code>renv.</code> <code>tar_renv()</code> finds package dependencies that would be
+otherwise hidden to <code>renv</code> because they are declared using the <code>targets</code>
+API. Thus, calling <code>tar_renv</code> this is only necessary if using
+<code><a href="../../targets/help/tar_option_set.html">tar_option_set()</a></code> or <code><a href="../../targets/help/tar_target.html">tar_target()</a></code> to use specialized storage
+formats or manage packages.
+</p>
+<p>With the script written by <code>tar_renv()</code>, <code>renv</code> is able to crawl the
+file to identify package dependencies (with <code>renv::dependencies()</code>).
+<code>tar_renv()</code> only serves to make your <code>targets</code> project compatible with
+<code>renv</code>, it is still the users responsibility to call <code>renv::init()</code> and
+<code>renv::snapshot()</code> directly to initialize and manage a
+project-local <code>R</code> library. This allows your <code>targets</code> pipeline to have
+its own self-contained <code>R</code> library separate from your standard <code>R</code>
+library. See <a href="https://rstudio.github.io/renv/index.html">https://rstudio.github.io/renv/index.html</a> for
+more information.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Nothing, invisibly.
+</p>
+
+
+<h3>Performance</h3>
+
+<p>If you use <code>renv</code>, then overhead from project initialization
+could slow down <code><a href="../../targets/help/tar_make.html">tar_make()</a></code> and friends.
+If you experience slowness, please make sure your <code>renv</code> library
+is on a fast file system.
+(For example, slow network drives can severely reduce performance.)
+In addition, you can disable the slowest <code>renv</code> initialization checks.
+After confirming at
+<a href="https://rstudio.github.io/renv/reference/config.html">https://rstudio.github.io/renv/reference/config.html</a>
+that you can safely disable these checks,
+you can write lines <code>RENV_CONFIG_RSPM_ENABLED=false</code>,
+<code>RENV_CONFIG_SANDBOX_ENABLED=false</code>,
+and <code>RENV_CONFIG_SYNCHRONIZED_CHECK=false</code>
+in your user-level <code>.Renviron</code> file. If you disable the synchronization
+check, remember to call <code>renv::status()</code> periodically
+to check the health of your <code>renv</code> project library.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><a href="https://rstudio.github.io/renv/articles/renv.html">https://rstudio.github.io/renv/articles/renv.html</a>
+</p>
+<p>Other scripts: 
+<code><a href="../../targets/help/tar_edit.html">tar_edit</a>()</code>,
+<code><a href="../../targets/help/tar_github_actions.html">tar_github_actions</a>()</code>,
+<code><a href="../../targets/help/tar_helper_raw.html">tar_helper_raw</a>()</code>,
+<code><a href="../../targets/help/tar_helper.html">tar_helper</a>()</code>,
+<code><a href="../../targets/help/tar_script.html">tar_script</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+tar_dir({ # tar_dir() runs code from a temp dir for CRAN.
+  tar_script({
+    tar_option_set(packages = c("tibble", "qs"))
+    list()
+  }, ask = FALSE)
+  tar_renv()
+  writeLines(readLines("_targets_packages.R"))
+})
+tar_option_reset()
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

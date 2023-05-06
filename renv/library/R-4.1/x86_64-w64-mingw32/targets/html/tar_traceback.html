@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Get a target's traceback</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_traceback {targets}"><tr><td>tar_traceback {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Get a target's traceback</h2>
+
+<h3>Description</h3>
+
+<p>Return the saved traceback of a target.
+Assumes the target errored out in a previous run of the pipeline
+with workspaces enabled for that target.
+See <code><a href="../../targets/help/tar_workspace.html">tar_workspace()</a></code> for details.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_traceback(
+  name,
+  envir = NULL,
+  packages = NULL,
+  source = NULL,
+  characters = getOption("width"),
+  store = targets::tar_config_get("store")
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>name</code></td>
+<td>
+<p>Symbol, name of the target whose workspace to read.</p>
+</td></tr>
+<tr valign="top"><td><code>envir</code></td>
+<td>
+<p>Deprecated in <code>targets</code> &gt; 0.3.1 (2021-03-28).</p>
+</td></tr>
+<tr valign="top"><td><code>packages</code></td>
+<td>
+<p>Logical, whether to load the required packages
+of the target.</p>
+</td></tr>
+<tr valign="top"><td><code>source</code></td>
+<td>
+<p>Logical, whether to run the target script file
+(default: <code style="white-space: pre;">_targets.R</code>) to load user-defined
+global object dependencies into <code>envir</code>. If <code>TRUE</code>, then <code>envir</code>
+should either be the global environment or inherit from the
+global environment.</p>
+</td></tr>
+<tr valign="top"><td><code>characters</code></td>
+<td>
+<p>Positive integer. Each line of the traceback
+is shortened to this number of characters.</p>
+</td></tr>
+<tr valign="top"><td><code>store</code></td>
+<td>
+<p>Character of length 1, path to the
+<code>targets</code> data store. Defaults to <code>tar_config_get("store")</code>,
+which in turn defaults to <code style="white-space: pre;">_targets/</code>.
+When you set this argument, the value of <code>tar_config_get("store")</code>
+is temporarily changed for the current function call.
+See <code><a href="../../targets/help/tar_config_get.html">tar_config_get()</a></code> and <code><a href="../../targets/help/tar_config_set.html">tar_config_set()</a></code> for details
+about how to set the data store path persistently
+for a project.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>Character vector, the traceback of a failed target
+if it exists.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other debug: 
+<code><a href="../../targets/help/tar_load_globals.html">tar_load_globals</a>()</code>,
+<code><a href="../../targets/help/tar_workspaces.html">tar_workspaces</a>()</code>,
+<code><a href="../../targets/help/tar_workspace.html">tar_workspace</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+if (identical(Sys.getenv("TAR_EXAMPLES"), "true")) { # for CRAN
+tar_dir({ # tar_dir() runs code from a temp dir for CRAN.
+tmp &lt;- sample(1)
+tar_script({
+  tar_option_set(workspace_on_error = TRUE)
+  list(
+    tar_target(x, "loaded"),
+    tar_target(y, stop(x))
+  )
+}, ask = FALSE)
+try(tar_make())
+tar_traceback(y, characters = 60)
+})
+}
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

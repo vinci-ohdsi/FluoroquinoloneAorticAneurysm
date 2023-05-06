@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Conditions</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_condition {targets}"><tr><td>tar_condition {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Conditions</h2>
+
+<h3>Description</h3>
+
+<p>These functions throw custom
+<code>targets</code>-specific error conditions.
+Useful for error handling in packages built on top of <code>targets</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_message_run(...)
+
+tar_throw_file(...)
+
+tar_throw_run(..., class = character(0))
+
+tar_throw_validate(...)
+
+tar_warn_deprecate(...)
+
+tar_warn_run(...)
+
+tar_warn_validate(...)
+
+tar_error(message, class)
+
+tar_warning(message, class)
+
+tar_message(message, class)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>zero or more objects which can be coerced to character
+(and which are pasted together with no separator) or a single
+condition object.</p>
+</td></tr>
+<tr valign="top"><td><code>class</code></td>
+<td>
+<p>Character vector of S3 classes of the message.</p>
+</td></tr>
+<tr valign="top"><td><code>message</code></td>
+<td>
+<p>Character of length 1, text of the message.</p>
+</td></tr>
+</table>
+
+
+<h3>See Also</h3>
+
+<p>Other utilities to extend targets: 
+<code><a href="../../targets/help/tar_assert.html">tar_assert</a></code>,
+<code><a href="../../targets/help/tar_dir.html">tar_dir</a>()</code>,
+<code><a href="../../targets/help/tar_language.html">tar_language</a></code>,
+<code><a href="../../targets/help/tar_test.html">tar_test</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+try(tar_throw_validate("something is not valid"))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Provides a list of HADES modules to run through Strategus</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for getModuleList {Strategus}"><tr><td>getModuleList {Strategus}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Provides a list of HADES modules to run through Strategus</h2>
+
+<h3>Description</h3>
+
+<p>This function provides a list of modules and their locations
+that may be used with Strategus.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+getModuleList()
+</pre>
+
+
+<h3>Value</h3>
+
+<p>A data.frame() of modules that work with Strategus. This will contain:
+module = The name of the module
+version = The version of the module
+remote_repo = The remote location of the module (i.e. github.com)
+remote_username = The organization of the module (i.e. OHDSI)
+module_type = 'cdm' or 'results'. 'cdm' refers to modules that are designed to work against
+patient level data in the OMOP CDM format. 'results' refers to modules that are designed
+to work against a results database containing output from a 'cdm' module.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>Strategus</em> version 0.0.6 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

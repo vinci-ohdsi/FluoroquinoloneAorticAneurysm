@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Language</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_language {targets}"><tr><td>tar_language {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Language</h2>
+
+<h3>Description</h3>
+
+<p>These functions help with metaprogramming in
+packages built on top of <code>targets</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_deparse_language(expr)
+
+tar_deparse_safe(expr, collapse = "\n", backtick = TRUE)
+
+tar_tidy_eval(expr, envir, tidy_eval)
+
+tar_tidyselect_eval(names_quosure, choices)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>expr</code></td>
+<td>
+<p>A language object to modify or deparse.</p>
+</td></tr>
+<tr valign="top"><td><code>collapse</code></td>
+<td>
+<p>Character of length 1, delimiter in deparsing.</p>
+</td></tr>
+<tr valign="top"><td><code>backtick</code></td>
+<td>
+<p>logical indicating whether symbolic names should be
+enclosed in backticks if they do not follow the standard syntax.</p>
+</td></tr>
+<tr valign="top"><td><code>envir</code></td>
+<td>
+<p>An environment to find objects for tidy evaluation.</p>
+</td></tr>
+<tr valign="top"><td><code>tidy_eval</code></td>
+<td>
+<p>Logical of length 1, whether to apply tidy evaluation.</p>
+</td></tr>
+<tr valign="top"><td><code>names_quosure</code></td>
+<td>
+<p>An <code>rlang</code> quosure with <code>tidyselect</code> expressions.</p>
+</td></tr>
+<tr valign="top"><td><code>choices</code></td>
+<td>
+<p>A character vector of choices for character elements
+returned by tidy evaluation.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+
+<ul>
+<li> <p><code>tar_deparse_language()</code> is a wrapper around <code>tar_deparse_safe()</code>
+which leaves character vectors and <code>NULL</code> objects alone,
+which helps with subsequent user input validation.
+</p>
+</li>
+<li> <p><code>tar_deparse_safe()</code> is a wrapper around <code>base::deparse()</code>
+with a custom set of fast default settings and guardrails
+to ensure the output always has length 1.
+</p>
+</li>
+<li> <p><code>tar_tidy_eval()</code> applies tidy evaluation to a language object
+and returns another language object.
+</p>
+</li>
+<li> <p><code>tar_tidyselect_eval()</code> applies <code>tidyselect</code> selection with
+some special guardrails around <code>NULL</code> inputs.
+</p>
+</li></ul>
+
+
+
+<h3>See Also</h3>
+
+<p>Other utilities to extend targets: 
+<code><a href="../../targets/help/tar_assert.html">tar_assert</a></code>,
+<code><a href="../../targets/help/tar_condition.html">tar_condition</a></code>,
+<code><a href="../../targets/help/tar_dir.html">tar_dir</a>()</code>,
+<code><a href="../../targets/help/tar_test.html">tar_test</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+tar_deparse_language(quote(run_model()))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

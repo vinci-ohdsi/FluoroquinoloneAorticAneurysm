@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Execute analysis specifications.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for execute {Strategus}"><tr><td>execute {Strategus}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Execute analysis specifications.</h2>
+
+<h3>Description</h3>
+
+<p>Execute analysis specifications.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+execute(
+  analysisSpecifications,
+  executionSettings,
+  executionScriptFolder = NULL,
+  keyringName = NULL,
+  restart = FALSE
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>analysisSpecifications</code></td>
+<td>
+<p>An object of type <code>AnalysisSpecifications</code> as created
+by <code><a href="../../Strategus/help/createEmptyAnalysisSpecificiations.html">createEmptyAnalysisSpecificiations()</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>executionSettings</code></td>
+<td>
+<p>An object of type <code>ExecutionSettings</code> as created
+by <code><a href="../../Strategus/help/createCdmExecutionSettings.html">createCdmExecutionSettings()</a></code> or <code><a href="../../Strategus/help/createResultsExecutionSettings.html">createResultsExecutionSettings()</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>executionScriptFolder</code></td>
+<td>
+<p>Optional: the path to use for storing the execution script.
+when NULL, this function will use a temporary
+file location to create the script to execute.</p>
+</td></tr>
+<tr valign="top"><td><code>keyringName</code></td>
+<td>
+<p>The name of the keyring to operate on. This function assumes you have
+created the keyring before calling this function. It defaults to
+NULL to select the default keyring. If the keyring is password
+protected, the password must be stored in the environment variable
+STRATEGUS_KEYRING_PASSWORD so it is retrieved using the command
+Sys.getenv(&quot;STRATEGUS_KEYRING_PASSWORD&quot;)</p>
+</td></tr>
+<tr valign="top"><td><code>restart</code></td>
+<td>
+<p>Restart run? Requires <code>executionScriptFolder</code> to be specified, and be
+the same as the <code>executionScriptFolder</code> used in the run to restart.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>Does not return anything. Is called for the side-effect of executing the specified
+analyses.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>Strategus</em> version 0.0.6 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

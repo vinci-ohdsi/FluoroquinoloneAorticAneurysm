@@ -1,0 +1,181 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Assertions</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_assert {targets}"><tr><td>tar_assert {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Assertions</h2>
+
+<h3>Description</h3>
+
+<p>These functions assert the correctness of user inputs
+and generate custom error conditions as needed. Useful
+for writing packages built on top of <code>targets</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_assert_chr(x, msg = NULL)
+
+tar_assert_dbl(x, msg = NULL)
+
+tar_assert_df(x, msg = NULL)
+
+tar_assert_equal_lengths(x, msg = NULL)
+
+tar_assert_envir(x, msg = NULL)
+
+tar_assert_expr(x, msg = NULL)
+
+tar_assert_flag(x, choices, msg = NULL)
+
+tar_assert_file(x)
+
+tar_assert_finite(x, msg = NULL)
+
+tar_assert_function(x, msg = NULL)
+
+tar_assert_function_arguments(x, args, msg = NULL)
+
+tar_assert_ge(x, threshold, msg = NULL)
+
+tar_assert_identical(x, y, msg = NULL)
+
+tar_assert_in(x, choices, msg = NULL)
+
+tar_assert_not_dirs(x, msg = NULL)
+
+tar_assert_not_dir(x, msg = NULL)
+
+tar_assert_not_in(x, choices, msg = NULL)
+
+tar_assert_inherits(x, class, msg = NULL)
+
+tar_assert_int(x, msg = NULL)
+
+tar_assert_internet(msg = NULL)
+
+tar_assert_lang(x, msg = NULL)
+
+tar_assert_le(x, threshold, msg = NULL)
+
+tar_assert_list(x, msg = NULL)
+
+tar_assert_lgl(x, msg = NULL)
+
+tar_assert_name(x)
+
+tar_assert_named(x, msg = NULL)
+
+tar_assert_names(x, msg = NULL)
+
+tar_assert_nonempty(x, msg = NULL)
+
+tar_assert_not_expr(x, msg = NULL)
+
+tar_assert_nzchar(x, msg = NULL)
+
+tar_assert_package(package)
+
+tar_assert_path(path, msg = NULL)
+
+tar_assert_match(x, pattern, msg = NULL)
+
+tar_assert_nonmissing(x, msg = NULL)
+
+tar_assert_positive(x, msg = NULL)
+
+tar_assert_scalar(x, msg = NULL)
+
+tar_assert_store(store)
+
+tar_assert_target(x, msg = NULL)
+
+tar_assert_target_list(x)
+
+tar_assert_true(x, msg = NULL)
+
+tar_assert_unique(x, msg = NULL)
+
+tar_assert_unique_targets(x)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p>R object, input to be validated. The kind of object depends on the
+specific assertion function called.</p>
+</td></tr>
+<tr valign="top"><td><code>msg</code></td>
+<td>
+<p>Character of length 1, a message to be printed to the console
+if <code>x</code> is invalid.</p>
+</td></tr>
+<tr valign="top"><td><code>choices</code></td>
+<td>
+<p>Character vector of choices of <code>x</code> for certain assertions.</p>
+</td></tr>
+<tr valign="top"><td><code>args</code></td>
+<td>
+<p>Character vector of expected function argument names.
+Order matters.</p>
+</td></tr>
+<tr valign="top"><td><code>threshold</code></td>
+<td>
+<p>Numeric of length 1, lower/upper bound for
+assertions like <code>tar_assert_le()</code>/<code>tar_assert_ge()</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>y</code></td>
+<td>
+<p>R object, value to compare against <code>x</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>class</code></td>
+<td>
+<p>Character vector of expected class names.</p>
+</td></tr>
+<tr valign="top"><td><code>package</code></td>
+<td>
+<p>Character of length 1, name of an R package.</p>
+</td></tr>
+<tr valign="top"><td><code>path</code></td>
+<td>
+<p>Character, file path.</p>
+</td></tr>
+<tr valign="top"><td><code>pattern</code></td>
+<td>
+<p>Character of length 1, a <code>grep</code> pattern for certain
+assertions.</p>
+</td></tr>
+<tr valign="top"><td><code>store</code></td>
+<td>
+<p>Character of length 1, path to the data store of the pipeline.</p>
+</td></tr>
+</table>
+
+
+<h3>See Also</h3>
+
+<p>Other utilities to extend targets: 
+<code><a href="../../targets/help/tar_condition.html">tar_condition</a></code>,
+<code><a href="../../targets/help/tar_dir.html">tar_dir</a>()</code>,
+<code><a href="../../targets/help/tar_language.html">tar_language</a></code>,
+<code><a href="../../targets/help/tar_test.html">tar_test</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+tar_assert_chr("123")
+try(tar_assert_chr(123))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

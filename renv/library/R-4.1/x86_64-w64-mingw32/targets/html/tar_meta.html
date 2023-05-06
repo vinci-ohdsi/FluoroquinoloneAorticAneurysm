@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Read a project's metadata.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_meta {targets}"><tr><td>tar_meta {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Read a project's metadata.</h2>
+
+<h3>Description</h3>
+
+<p>Read the metadata of all recorded targets and global objects.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_meta(
+  names = NULL,
+  fields = NULL,
+  targets_only = FALSE,
+  complete_only = FALSE,
+  store = targets::tar_config_get("store")
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>names</code></td>
+<td>
+<p>Optional, names of the targets. If supplied, <code>tar_meta()</code>
+only returns metadata on these targets.
+You can supply symbols
+or <code>tidyselect</code> helpers like <code><a href="../../targets/help/any_of.html">any_of()</a></code> and <code><a href="../../targets/help/starts_with.html">starts_with()</a></code>.
+If <code>NULL</code>, all names are selected.</p>
+</td></tr>
+<tr valign="top"><td><code>fields</code></td>
+<td>
+<p>Optional, names of columns/fields to select. If supplied,
+<code>tar_meta()</code> only returns the selected metadata columns.
+If <code>NULL</code>, all fields are selected.
+You can supply symbols or <code>tidyselect</code> helpers
+like <code><a href="../../targets/help/any_of.html">any_of()</a></code> and <code><a href="../../targets/help/starts_with.html">starts_with()</a></code>.
+The <code>name</code> column is always included first
+no matter what you select. Choices:
+</p>
+
+<ul>
+<li> <p><code>name</code>: name of the target or global object.
+</p>
+</li>
+<li> <p><code>type</code>: type of the object: either <code>"function"</code> or <code>"object"</code>
+for global objects, and <code>"stem"</code>, <code>"branch"</code>,
+<code>"map"</code>, or <code>"cross"</code> for targets.
+</p>
+</li>
+<li> <p><code>data</code>: hash of the output data.
+</p>
+</li>
+<li> <p><code>command</code>: hash of the target's deparsed command.
+</p>
+</li>
+<li> <p><code>depend</code>: hash of the immediate upstream dependencies of the target.
+</p>
+</li>
+<li> <p><code>seed</code>: random number generator seed with which the target was built.
+A target's random number generator seed
+is a deterministic function of its name. In this way,
+each target runs with a reproducible seed so someone else
+running the same pipeline should get the same results,
+and no two targets in the same pipeline share the same seed.
+(Even dynamic branches have different names and thus different seeds.)
+You can recover the seed of a completed target
+with <code>tar_meta(your_target, seed)</code> and run <code>set.seed()</code>
+on the result to locally recreate the target's initial RNG state.
+</p>
+</li>
+<li> <p><code>path</code>: A list column of paths to target data. Usually, each element
+is a single path, but there could be multiple paths per target
+for dynamic files (i.e. <code>tar_target(format = "file")</code>).
+</p>
+</li>
+<li> <p><code>time</code>: <code>POSIXct</code> object with the time the target's data in storage
+was last modified. If the target stores no local file,
+then the time stamp corresponds to the time the target last
+ran successfully. Only targets that run commands have time stamps:
+just non-branching targets and individual dynamic branches.
+Displayed in the current time zone of the system.
+If there are multiple outputs for that target, as with file targets,
+then the maximum time is shown.
+</p>
+</li>
+<li> <p><code>size</code>: hash of the sum of all the bytes of the files at <code>path</code>.
+</p>
+</li>
+<li> <p><code>bytes</code>: total file size in bytes of all files in <code>path</code>.
+</p>
+</li>
+<li> <p><code>format</code>: character, one of the admissible data storage formats.
+See the <code>format</code> argument in the <code><a href="../../targets/help/tar_target.html">tar_target()</a></code> help file for details.
+</p>
+</li>
+<li> <p><code>iteration</code>: character, either <code>"list"</code> or <code>"vector"</code>
+to describe the iteration and aggregation mode of the target. See the
+<code>iteration</code> argument in the <code><a href="../../targets/help/tar_target.html">tar_target()</a></code> help file for details.
+</p>
+</li>
+<li> <p><code>parent</code>: for branches, name of the parent pattern.
+</p>
+</li>
+<li> <p><code>children</code>: list column, names of the children of targets that
+have them. These include buds of stems and branches of patterns.
+</p>
+</li>
+<li> <p><code>seconds</code>: number of seconds it took to run the target.
+</p>
+</li>
+<li> <p><code>warnings</code>: character string of warning messages
+from the last run of the target.
+Only the first 50 warnings are available,
+and only the first 2048 characters of the concatenated warning messages.
+</p>
+</li>
+<li> <p><code>error</code>: character string of the error message if the target errored.
+</p>
+</li></ul>
+</td></tr>
+<tr valign="top"><td><code>targets_only</code></td>
+<td>
+<p>Logical, whether to just show information about targets
+or also return metadata on functions and other global objects.</p>
+</td></tr>
+<tr valign="top"><td><code>complete_only</code></td>
+<td>
+<p>Logical, whether to return only complete rows
+(no <code>NA</code> values).</p>
+</td></tr>
+<tr valign="top"><td><code>store</code></td>
+<td>
+<p>Character of length 1, path to the
+<code>targets</code> data store. Defaults to <code>tar_config_get("store")</code>,
+which in turn defaults to <code style="white-space: pre;">_targets/</code>.
+When you set this argument, the value of <code>tar_config_get("store")</code>
+is temporarily changed for the current function call.
+See <code><a href="../../targets/help/tar_config_get.html">tar_config_get()</a></code> and <code><a href="../../targets/help/tar_config_set.html">tar_config_set()</a></code> for details
+about how to set the data store path persistently
+for a project.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>A metadata row only updates when the target is built.
+<code><a href="../../targets/help/tar_progress.html">tar_progress()</a></code> shows information on targets that are running.
+That is why the number of branches may disagree between <code><a href="../../targets/help/tar_meta.html">tar_meta()</a></code>
+and <code><a href="../../targets/help/tar_progress.html">tar_progress()</a></code> for actively running pipelines.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A data frame with one row per target/object and the selected fields.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other data: 
+<code><a href="../../targets/help/tar_load_everything.html">tar_load_everything</a>()</code>,
+<code><a href="../../targets/help/tar_load_raw.html">tar_load_raw</a>()</code>,
+<code><a href="../../targets/help/tar_load.html">tar_load</a>()</code>,
+<code><a href="../../targets/help/tar_objects.html">tar_objects</a>()</code>,
+<code><a href="../../targets/help/tar_pid.html">tar_pid</a>()</code>,
+<code><a href="../../targets/help/tar_process.html">tar_process</a>()</code>,
+<code><a href="../../targets/help/tar_read_raw.html">tar_read_raw</a>()</code>,
+<code><a href="../../targets/help/tar_read.html">tar_read</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+if (identical(Sys.getenv("TAR_EXAMPLES"), "true")) { # for CRAN
+tar_dir({ # tar_dir() runs code from a temp dir for CRAN.
+tar_script({
+  list(
+    tar_target(x, seq_len(2)),
+    tar_target(y, 2 * x, pattern = map(x))
+  )
+}, ask = FALSE)
+tar_make()
+tar_meta()
+tar_meta(starts_with("y_")) # see also any_of()
+})
+}
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

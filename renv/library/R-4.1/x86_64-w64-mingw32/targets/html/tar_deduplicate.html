@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Deduplicate meta and progress databases (deprecated).</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_deduplicate {targets}"><tr><td>tar_deduplicate {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Deduplicate meta and progress databases (deprecated).</h2>
+
+<h3>Description</h3>
+
+<p>Deprecated in version 0.3.0 (2020-03-06).
+Deduplication happens automatically before and after the pipeline runs.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_deduplicate(
+  meta = TRUE,
+  progress = TRUE,
+  store = targets::tar_config_get("store")
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>meta</code></td>
+<td>
+<p>Logical, whether to deduplicate the meta database file
+at <code style="white-space: pre;">_targets/meta/meta</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>progress</code></td>
+<td>
+<p>Logical, whether to deduplicate the progress database file
+at <code style="white-space: pre;">_targets/meta/progress</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>store</code></td>
+<td>
+<p>Character of length 1, path to the
+<code>targets</code> data store. Defaults to <code>tar_config_get("store")</code>,
+which in turn defaults to <code style="white-space: pre;">_targets/</code>.
+When you set this argument, the value of <code>tar_config_get("store")</code>
+is temporarily changed for the current function call.
+See <code><a href="../../targets/help/tar_config_get.html">tar_config_get()</a></code> and <code><a href="../../targets/help/tar_config_set.html">tar_config_set()</a></code> for details
+about how to set the data store path persistently
+for a project.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Removes duplicated entries in the meta and progress
+databases in order to lighten storage. These databases are located
+in the <code style="white-space: pre;">_targets/meta/meta</code> and <code style="white-space: pre;">_targets/meta/progress</code> files,
+where <code style="white-space: pre;">_targets</code> is the a folder at the project root.
+No essential data is removed, so
+this is simply a form of garbage collection.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Nothing.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

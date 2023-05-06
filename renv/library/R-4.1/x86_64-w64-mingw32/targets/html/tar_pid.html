@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Get main process ID.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_pid {targets}"><tr><td>tar_pid {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Get main process ID.</h2>
+
+<h3>Description</h3>
+
+<p>Get the process ID (PID) of the most recent main R process
+to orchestrate the targets of the current project.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_pid(store = targets::tar_config_get("store"))
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>store</code></td>
+<td>
+<p>Character of length 1, path to the
+<code>targets</code> data store. Defaults to <code>tar_config_get("store")</code>,
+which in turn defaults to <code style="white-space: pre;">_targets/</code>.
+When you set this argument, the value of <code>tar_config_get("store")</code>
+is temporarily changed for the current function call.
+See <code><a href="../../targets/help/tar_config_get.html">tar_config_get()</a></code> and <code><a href="../../targets/help/tar_config_set.html">tar_config_set()</a></code> for details
+about how to set the data store path persistently
+for a project.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The main process is the R process invoked
+by <code><a href="../../targets/help/tar_make.html">tar_make()</a></code> or similar. If <code>callr_function</code> is not <code>NULL</code>,
+this is an external process, and the <code>pid</code> in the return value
+will not agree with <code>Sys.getpid()</code> in your current interactive session.
+The process may or may not be alive. You may want to
+check it with <code>ps::ps_is_running(ps::ps_handle(targets::tar_pid()))</code>
+before running another call to <code><a href="../../targets/help/tar_make.html">tar_make()</a></code>
+for the same project.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Integer with the process ID (PID) of the most recent
+main R process to orchestrate the targets of the current project.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other data: 
+<code><a href="../../targets/help/tar_load_everything.html">tar_load_everything</a>()</code>,
+<code><a href="../../targets/help/tar_load_raw.html">tar_load_raw</a>()</code>,
+<code><a href="../../targets/help/tar_load.html">tar_load</a>()</code>,
+<code><a href="../../targets/help/tar_meta.html">tar_meta</a>()</code>,
+<code><a href="../../targets/help/tar_objects.html">tar_objects</a>()</code>,
+<code><a href="../../targets/help/tar_process.html">tar_process</a>()</code>,
+<code><a href="../../targets/help/tar_read_raw.html">tar_read_raw</a>()</code>,
+<code><a href="../../targets/help/tar_read.html">tar_read</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+if (identical(Sys.getenv("TAR_EXAMPLES"), "true")) { # for CRAN
+tar_dir({ # tar_dir() runs code from a temp dir for CRAN.
+tar_script({
+  list(
+    tar_target(x, seq_len(2)),
+    tar_target(y, 2 * x, pattern = map(x))
+  )
+}, ask = FALSE)
+tar_make()
+Sys.getpid()
+tar_pid() # Different from the current PID.
+})
+}
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

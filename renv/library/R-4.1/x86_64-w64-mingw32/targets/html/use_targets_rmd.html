@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Use targets with Target Markdown.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for use_targets_rmd {targets}"><tr><td>use_targets_rmd {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Use targets with Target Markdown.</h2>
+
+<h3>Description</h3>
+
+<p>Create an example Target Markdown report
+to get started with targets.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+use_targets_rmd(path = "_targets.Rmd", open = interactive())
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>path</code></td>
+<td>
+<p>Character of length 1, output path of the
+Target Markdown report relative to the current active
+project.</p>
+</td></tr>
+<tr valign="top"><td><code>open</code></td>
+<td>
+<p>Logical, whether to open the file for editing
+in the RStudio IDE.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p><code>NULL</code> (invisibly).
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other help: 
+<code><a href="../../targets/help/tar_reprex.html">tar_reprex</a>()</code>,
+<code><a href="../../targets/help/targets-package.html">targets-package</a></code>,
+<code><a href="../../targets/help/use_targets.html">use_targets</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+if (identical(Sys.getenv("TAR_INTERACTIVE_EXAMPLES"), "true")) {
+tar_dir({ # tar_dir() runs code from a temp dir for CRAN.
+use_targets(open = FALSE)
+})
+}
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

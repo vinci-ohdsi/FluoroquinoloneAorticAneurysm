@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Open the target script file for editing.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_edit {targets}"><tr><td>tar_edit {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Open the target script file for editing.</h2>
+
+<h3>Description</h3>
+
+<p>Open the target script file for editing.
+Requires the <code>usethis</code> package.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_edit(script = targets::tar_config_get("script"))
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>script</code></td>
+<td>
+<p>Character of length 1, path to the
+target script file. Defaults to <code>tar_config_get("script")</code>,
+which in turn defaults to <code style="white-space: pre;">_targets.R</code>. When you set
+this argument, the value of <code>tar_config_get("script")</code>
+is temporarily changed for the current function call.
+See <code><a href="../../targets/help/tar_script.html">tar_script()</a></code>,
+<code><a href="../../targets/help/tar_config_get.html">tar_config_get()</a></code>, and <code><a href="../../targets/help/tar_config_set.html">tar_config_set()</a></code> for details
+about the target script file and how to set it
+persistently for a project.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The target script file is an R code file
+that defines the pipeline. The default path is <code style="white-space: pre;">_targets.R</code>,
+but the default for the current project
+can be configured with <code><a href="../../targets/help/tar_config_set.html">tar_config_set()</a></code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other scripts: 
+<code><a href="../../targets/help/tar_github_actions.html">tar_github_actions</a>()</code>,
+<code><a href="../../targets/help/tar_helper_raw.html">tar_helper_raw</a>()</code>,
+<code><a href="../../targets/help/tar_helper.html">tar_helper</a>()</code>,
+<code><a href="../../targets/help/tar_renv.html">tar_renv</a>()</code>,
+<code><a href="../../targets/help/tar_script.html">tar_script</a>()</code>
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

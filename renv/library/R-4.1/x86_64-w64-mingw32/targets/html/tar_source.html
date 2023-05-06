@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Run R scripts.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_source {targets}"><tr><td>tar_source {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Run R scripts.</h2>
+
+<h3>Description</h3>
+
+<p>Run all the R scripts in a directory
+in the environment specified.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_source(
+  files = "R",
+  envir = targets::tar_option_get("envir"),
+  change_directory = FALSE
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>files</code></td>
+<td>
+<p>Character vector of file and directory paths
+to look for R scripts to run. Paths must either be absolute
+paths or must be relative to the current working directory
+just before the function call.</p>
+</td></tr>
+<tr valign="top"><td><code>envir</code></td>
+<td>
+<p>Environment to run the scripts. Defaults to
+<code>tar_option_get("envir")</code>, the environment of the pipeline.</p>
+</td></tr>
+<tr valign="top"><td><code>change_directory</code></td>
+<td>
+<p>Logical, whether to temporarily change
+the working directory to the directory of each R script
+before running it.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p><code>tar_source()</code> is a convenient way to load R scripts
+in <code style="white-space: pre;">_targets.R</code> to make custom functions available to the pipeline.
+<code>tar_source()</code> recursively looks for files ending
+in <code>.R</code> or <code>.r</code>, and it runs each with
+<code>eval(parse(text = readLines(script_file, warn = FALSE)), envir)</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>NULL</code> (invisibly)
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other utilities: 
+<code><a href="../../targets/help/tar_active.html">tar_active</a>()</code>,
+<code><a href="../../targets/help/tar_call.html">tar_call</a>()</code>,
+<code><a href="../../targets/help/tar_cancel.html">tar_cancel</a>()</code>,
+<code><a href="../../targets/help/tar_definition.html">tar_definition</a>()</code>,
+<code><a href="../../targets/help/tar_envir.html">tar_envir</a>()</code>,
+<code><a href="../../targets/help/tar_group.html">tar_group</a>()</code>,
+<code><a href="../../targets/help/tar_name.html">tar_name</a>()</code>,
+<code><a href="../../targets/help/tar_path_script_support.html">tar_path_script_support</a>()</code>,
+<code><a href="../../targets/help/tar_path_script.html">tar_path_script</a>()</code>,
+<code><a href="../../targets/help/tar_path_store.html">tar_path_store</a>()</code>,
+<code><a href="../../targets/help/tar_path_target.html">tar_path_target</a>()</code>,
+<code><a href="../../targets/help/tar_path.html">tar_path</a>()</code>,
+<code><a href="../../targets/help/tar_seed.html">tar_seed</a>()</code>,
+<code><a href="../../targets/help/tar_store.html">tar_store</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+if (identical(Sys.getenv("TAR_EXAMPLES"), "true")) { # for CRAN
+tar_dir({ # tar_dir() runs code from a temp dir for CRAN.
+# Running in tar_dir(), these files are written in tempdir().
+dir.create("R")
+writeLines("f &lt;- function(x) x + 1", file.path("R", "functions.R"))
+tar_script({
+  tar_source()
+  list(tar_target(x, f(1)))
+})
+tar_make()
+tar_read(x) # 2
+})
+}
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

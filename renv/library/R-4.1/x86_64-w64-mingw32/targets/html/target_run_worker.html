@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Internal function to run a target on a worker.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for target_run_worker {targets}"><tr><td>target_run_worker {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Internal function to run a target on a worker.</h2>
+
+<h3>Description</h3>
+
+<p>For internal purposes only. Not a user-side function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+target_run_worker(target, envir, path_store, fun, options, envvars)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>target</code></td>
+<td>
+<p>A target object.</p>
+</td></tr>
+<tr valign="top"><td><code>envir</code></td>
+<td>
+<p>An environment or the string <code>"globalenv"</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>path_store</code></td>
+<td>
+<p>Character of length 1, path to the data store.</p>
+</td></tr>
+<tr valign="top"><td><code>fun</code></td>
+<td>
+<p>Character of length 1, name of the user-side function called
+to run the pipeline.</p>
+</td></tr>
+<tr valign="top"><td><code>options</code></td>
+<td>
+<p>List, exported from an object of class <code>"tar_options"</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>envvars</code></td>
+<td>
+<p>Data frame of <code>targets</code>-specific environment variables
+from <code><a href="../../targets/help/tar_envvars.html">tar_envvars()</a></code>.</p>
+</td></tr>
+</table>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

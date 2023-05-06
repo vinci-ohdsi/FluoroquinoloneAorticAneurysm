@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create the full 'tar_watch()' app UI.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_watch_app_ui {targets}"><tr><td>tar_watch_app_ui {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Create the full <code><a href="../../targets/help/tar_watch.html">tar_watch()</a></code> app UI.</h2>
+
+<h3>Description</h3>
+
+<p>Only exported for infrastructure purposes.
+Not a user-side function. Users should instead
+call <code><a href="../../targets/help/tar_watch.html">tar_watch()</a></code> directly.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_watch_app_ui(
+  seconds,
+  seconds_min,
+  seconds_max,
+  seconds_step,
+  targets_only,
+  outdated,
+  label,
+  level_separation,
+  degree_from,
+  degree_to,
+  height,
+  display,
+  displays
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>seconds</code></td>
+<td>
+<p>Numeric of length 1,
+default number of seconds between refreshes of the graph.
+Can be changed in the app controls.</p>
+</td></tr>
+<tr valign="top"><td><code>seconds_min</code></td>
+<td>
+<p>Numeric of length 1, lower bound of <code>seconds</code>
+in the app controls.</p>
+</td></tr>
+<tr valign="top"><td><code>seconds_max</code></td>
+<td>
+<p>Numeric of length 1, upper bound of <code>seconds</code>
+in the app controls.</p>
+</td></tr>
+<tr valign="top"><td><code>seconds_step</code></td>
+<td>
+<p>Numeric of length 1, step size of <code>seconds</code>
+in the app controls.</p>
+</td></tr>
+<tr valign="top"><td><code>targets_only</code></td>
+<td>
+<p>Logical, whether to restrict the output to just targets
+(<code>FALSE</code>) or to also include global functions and objects.</p>
+</td></tr>
+<tr valign="top"><td><code>outdated</code></td>
+<td>
+<p>Logical, whether to show colors to distinguish outdated
+targets from up-to-date targets. (Global functions and objects
+still show these colors.) Looking for outdated targets
+takes a lot of time for large pipelines with lots of branches,
+and setting <code>outdated</code> to <code>FALSE</code> is a nice way to speed up the graph
+if you only want to see dependency relationships and build progress.</p>
+</td></tr>
+<tr valign="top"><td><code>label</code></td>
+<td>
+<p>Label argument to <code><a href="../../targets/help/tar_visnetwork.html">tar_visnetwork()</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>level_separation</code></td>
+<td>
+<p>Numeric of length 1,
+<code>levelSeparation</code> argument of <code>visNetwork::visHierarchicalLayout()</code>.
+Controls the distance between hierarchical levels.
+Consider changing the value if the aspect ratio of the graph
+is far from 1. If <code>level_separation</code> is <code>NULL</code>,
+the <code>levelSeparation</code> argument of <code>visHierarchicalLayout()</code>
+defaults to <code>150</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>degree_from</code></td>
+<td>
+<p>Integer of length 1. When you click on a node,
+the graph highlights a neighborhood of that node. <code>degree_from</code>
+controls the number of edges the neighborhood extends upstream.</p>
+</td></tr>
+<tr valign="top"><td><code>degree_to</code></td>
+<td>
+<p>Integer of length 1. When you click on a node,
+the graph highlights a neighborhood of that node. <code>degree_to</code>
+controls the number of edges the neighborhood extends downstream.</p>
+</td></tr>
+<tr valign="top"><td><code>height</code></td>
+<td>
+<p>Character of length 1,
+height of the <code>visNetwork</code> widget and branches table.</p>
+</td></tr>
+<tr valign="top"><td><code>display</code></td>
+<td>
+<p>Character of length 1, which display to show first.</p>
+</td></tr>
+<tr valign="top"><td><code>displays</code></td>
+<td>
+<p>Character vector of choices for the display.
+Elements can be any of
+<code>"graph"</code>, <code>"summary"</code>, <code>"branches"</code>, or <code>"about"</code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A Shiny UI.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

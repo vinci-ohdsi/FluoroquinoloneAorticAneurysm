@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Cancel a target mid-build under a custom condition.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_cancel {targets}"><tr><td>tar_cancel {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Cancel a target mid-build under a custom condition.</h2>
+
+<h3>Description</h3>
+
+<p>Cancel a target while its command is running
+if a condition is met.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_cancel(condition = TRUE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>condition</code></td>
+<td>
+<p>Logical of length 1, whether to cancel the target.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Must be invoked by the target itself. <code>tar_cancel()</code>
+cannot interrupt a target from another process.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other utilities: 
+<code><a href="../../targets/help/tar_active.html">tar_active</a>()</code>,
+<code><a href="../../targets/help/tar_call.html">tar_call</a>()</code>,
+<code><a href="../../targets/help/tar_definition.html">tar_definition</a>()</code>,
+<code><a href="../../targets/help/tar_envir.html">tar_envir</a>()</code>,
+<code><a href="../../targets/help/tar_group.html">tar_group</a>()</code>,
+<code><a href="../../targets/help/tar_name.html">tar_name</a>()</code>,
+<code><a href="../../targets/help/tar_path_script_support.html">tar_path_script_support</a>()</code>,
+<code><a href="../../targets/help/tar_path_script.html">tar_path_script</a>()</code>,
+<code><a href="../../targets/help/tar_path_store.html">tar_path_store</a>()</code>,
+<code><a href="../../targets/help/tar_path_target.html">tar_path_target</a>()</code>,
+<code><a href="../../targets/help/tar_path.html">tar_path</a>()</code>,
+<code><a href="../../targets/help/tar_seed.html">tar_seed</a>()</code>,
+<code><a href="../../targets/help/tar_source.html">tar_source</a>()</code>,
+<code><a href="../../targets/help/tar_store.html">tar_store</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+if (identical(Sys.getenv("TAR_EXAMPLES"), "true")) { # for CRAN
+tar_dir({ # tar_dir() runs code from a temp dir for CRAN.
+tar_script(tar_target(x, tar_cancel(1 &gt; 0)))
+tar_make() # Should cancel target x.
+})
+}
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

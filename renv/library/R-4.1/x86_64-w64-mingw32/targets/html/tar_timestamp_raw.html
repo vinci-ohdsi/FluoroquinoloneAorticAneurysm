@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Get the timestamp(s) of a target (raw version).</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_timestamp_raw {targets}"><tr><td>tar_timestamp_raw {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Get the timestamp(s) of a target (raw version).</h2>
+
+<h3>Description</h3>
+
+<p>Get the time that a target last ran successfully.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_timestamp_raw(
+  name = NULL,
+  format = NULL,
+  tz = NULL,
+  parse = NULL,
+  store = targets::tar_config_get("store")
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>name</code></td>
+<td>
+<p>Character of length 1, name of the target.</p>
+</td></tr>
+<tr valign="top"><td><code>format</code></td>
+<td>
+<p>Deprecated in <code>targets</code> version 0.6.0 (2021-07-21).</p>
+</td></tr>
+<tr valign="top"><td><code>tz</code></td>
+<td>
+<p>Deprecated in <code>targets</code> version 0.6.0 (2021-07-21).</p>
+</td></tr>
+<tr valign="top"><td><code>parse</code></td>
+<td>
+<p>Deprecated in <code>targets</code> version 0.6.0 (2021-07-21).</p>
+</td></tr>
+<tr valign="top"><td><code>store</code></td>
+<td>
+<p>Character of length 1, path to the
+<code>targets</code> data store. Defaults to <code>tar_config_get("store")</code>,
+which in turn defaults to <code style="white-space: pre;">_targets/</code>.
+When you set this argument, the value of <code>tar_config_get("store")</code>
+is temporarily changed for the current function call.
+See <code><a href="../../targets/help/tar_config_get.html">tar_config_get()</a></code> and <code><a href="../../targets/help/tar_config_set.html">tar_config_set()</a></code> for details
+about how to set the data store path persistently
+for a project.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p><code>tar_timestamp_raw()</code> is like <code>tar_timestamp()</code> except
+it accepts a character string for <code>name</code> instead of a symbol.
+<code>tar_timestamp_raw()</code> checks the metadata in <code style="white-space: pre;">_targets/meta/meta</code>,
+not the actual data. Time stamps are recorded only for targets that
+run commands: just non-branching targets and individual dynamic
+branches.
+</p>
+
+
+<h3>Value</h3>
+
+<p>If the target is not recorded in the metadata
+or cannot be parsed correctly, then
+<code>tar_timestamp_raw()</code> returns a <code>POSIXct</code> object at <code style="white-space: pre;">1970-01-01 UTC</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other time: 
+<code><a href="../../targets/help/tar_newer.html">tar_newer</a>()</code>,
+<code><a href="../../targets/help/tar_older.html">tar_older</a>()</code>,
+<code><a href="../../targets/help/tar_timestamp.html">tar_timestamp</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+if (identical(Sys.getenv("TAR_EXAMPLES"), "true")) { # for CRAN
+tar_dir({ # tar_dir() runs code from a temp dir for CRAN.
+tar_script({
+  list(tar_target(x, 1))
+}, ask = FALSE)
+tar_make()
+# Get the timestamp.
+tar_timestamp_raw("x")
+# We can use the timestamp to cancel the target
+# if it already ran within the last hour.
+# Be sure to set `cue = tar_cue(mode = "always")`
+# if you want the target to always check the timestamp.
+tar_script({
+  list(
+  tar_target(
+    x,
+    tar_cancel((Sys.time() - tar_timestamp_raw()) &lt; 3600),
+    cue = tar_cue(mode = "always")
+  )
+)}, ask = FALSE)
+tar_make()
+})
+}
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

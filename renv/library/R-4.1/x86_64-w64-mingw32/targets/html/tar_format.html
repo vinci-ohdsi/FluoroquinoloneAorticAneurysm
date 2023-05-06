@@ -1,0 +1,241 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Define a custom target storage format.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_format {targets}"><tr><td>tar_format {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Define a custom target storage format.</h2>
+
+<h3>Description</h3>
+
+<p>Define a custom target storage format for the
+<code>format</code> argument of <code><a href="../../targets/help/tar_target.html">tar_target()</a></code> or <code><a href="../../targets/help/tar_option_set.html">tar_option_set()</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_format(
+  read = NULL,
+  write = NULL,
+  marshal = NULL,
+  unmarshal = NULL,
+  convert = NULL,
+  copy = NULL,
+  repository = NULL
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>read</code></td>
+<td>
+<p>A function with a single argument named <code>path</code>.
+This function should read and return the target stored
+at the file in the argument. It should have no side effects.
+See the &quot;Format functions&quot; section for specific requirements.
+If <code>NULL</code>, the <code>read</code> argument defaults to <code>readRDS()</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>write</code></td>
+<td>
+<p>A function with two arguments: <code>object</code> and <code>path</code>,
+in that order. This function should save the R object <code>object</code>
+to the file path at <code>path</code> and have no other side effects.
+The return value does not matter.
+See the &quot;Format functions&quot; section for specific requirements.
+If <code>NULL</code>, the <code>write</code> argument defaults to <code>saveRDS()</code>
+with <code>version = 3</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>marshal</code></td>
+<td>
+<p>A function with a single argument named <code>object</code>.
+This function should marshal the R object and return
+an in-memory object that can be exported to remote parallel workers.
+It should not read or write any persistent files.
+See the Marshalling section for details.
+See the &quot;Format functions&quot; section for specific requirements.
+If <code>NULL</code>, the <code>marshal</code> argument defaults to just
+returning the original object without any modifications.</p>
+</td></tr>
+<tr valign="top"><td><code>unmarshal</code></td>
+<td>
+<p>A function with a single argument named <code>object</code>.
+This function should unmarshal the (marshalled) R object and return
+an in-memory object that is appropriate and valid for use
+on a parallel worker. It should not read or write any persistent files.
+See the Marshalling section for details.
+See the &quot;Format functions&quot; section for specific requirements.
+If <code>NULL</code>, the <code>unmarshal</code> argument defaults to just
+returning the original object without any modifications.</p>
+</td></tr>
+<tr valign="top"><td><code>convert</code></td>
+<td>
+<p>The <code>convert</code> argument is a function
+that accepts the object returned by the command of the target
+and changes it into an acceptable format (e.g. can be
+saved with the <code>read</code> function). The <code>convert</code>
+ensures the in-memory copy
+of an object during the running pipeline session
+is the same as the copy of the object that is saved
+to disk. The function should be idempotent, and it should
+handle edge cases like <code>NULL</code> values (especially for
+<code>error = "null"</code> in <code><a href="../../targets/help/tar_target.html">tar_target()</a></code> or <code><a href="../../targets/help/tar_option_set.html">tar_option_set()</a></code>).
+If <code>NULL</code>, the <code>convert</code> argument defaults to just
+returning the original object without any modifications.</p>
+</td></tr>
+<tr valign="top"><td><code>copy</code></td>
+<td>
+<p>The <code>copy</code> argument is a function
+that accepts the object returned by the command of the target
+and makes a deep copy in memory. This method does is relevant
+to objects like <code>data.table</code>s that support in-place modification
+which could cause unpredictable side effects from target
+to target. In cases like these, the target should be deep-copied
+before a downstream target attempts to use it (in the case of
+<code>data.table</code> objects, using <code>data.table::copy()</code>).
+If <code>NULL</code>, the <code>copy</code> argument defaults to just
+returning the original object without any modifications.</p>
+</td></tr>
+<tr valign="top"><td><code>repository</code></td>
+<td>
+<p>Deprecated. Use the <code>repository</code> argument of
+<code><a href="../../targets/help/tar_target.html">tar_target()</a></code> or <code><a href="../../targets/help/tar_option_set.html">tar_option_set()</a></code> instead.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>It is good practice to write formats that correctly handle
+<code>NULL</code> objects if you are planning to set <code>error = "null"</code>
+in <code><a href="../../targets/help/tar_option_set.html">tar_option_set()</a></code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A character string of length 1 encoding the custom format.
+You can supply this string directly to the <code>format</code>
+argument of <code><a href="../../targets/help/tar_target.html">tar_target()</a></code> or <code><a href="../../targets/help/tar_option_set.html">tar_option_set()</a></code>.
+</p>
+
+
+<h3>Marshalling</h3>
+
+<p>If an object can only be used in the R session
+where it was created, it is called &quot;non-exportable&quot;.
+Examples of non-exportable R objects are Keras models,
+Torch objects, <code>xgboost</code> matrices, <code>xml2</code> documents,
+<code>rstan</code> model objects, <code>sparklyr</code> data objects, and
+database connection objects. These objects cannot be
+exported to parallel workers (e.g. for <code><a href="../../targets/help/tar_make_future.html">tar_make_future()</a></code>)
+without special treatment. To send an non-exportable
+object to a parallel worker, the object must be marshalled:
+converted into a form that can be exported safely
+(similar to serialization but not always the same).
+Then, the worker must unmarshal the object: convert it
+into a form that is usable and valid in the current R session.
+Arguments <code>marshal</code> and <code>unmarshal</code> of <code>tar_format()</code>
+let you control how marshalling and unmarshalling happens.
+</p>
+
+
+<h3>Format functions</h3>
+
+<p>In <code>tar_format()</code>, functions like <code>read</code>, <code>write</code>,
+<code>marshal</code>, and <code>unmarshal</code> must be perfectly pure
+and perfectly self-sufficient.
+They must load or namespace all their own packages,
+and they must not depend on any custom user-defined
+functions or objects in the global environment of your pipeline.
+<code>targets</code> converts each function to and from text,
+so it must not rely on any data in the closure.
+This disqualifies functions produced by <code>Vectorize()</code>,
+for example.
+</p>
+<p>The functions to read and write the object
+should not do any conversions on the object. That is the job
+of the <code>convert</code> argument. The <code>convert</code> argument is a function
+that accepts the object returned by the command of the target
+and changes it into an acceptable format (e.g. can be
+saved with the <code>read</code> function). Working with the <code>convert</code>
+function is best because it ensures the in-memory copy
+of an object during the running pipeline session
+is the same as the copy of the object that is saved
+to disk.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other targets: 
+<code><a href="../../targets/help/tar_cue.html">tar_cue</a>()</code>,
+<code><a href="../../targets/help/tar_target_raw.html">tar_target_raw</a>()</code>,
+<code><a href="../../targets/help/tar_target.html">tar_target</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# The following target is equivalent to the current superseded
+# tar_target(name, command(), format = "keras").
+# An improved version of this would supply a `convert` argument
+# to handle NULL objects, which are returned by the target if it
+# errors and the error argument of tar_target() is "null".
+tar_target(
+  name = keras_target,
+  command = your_function(),
+  format = tar_format(
+    read = function(path) {
+      keras::load_model_hdf5(path)
+    },
+    write = function(object, path) {
+      keras::save_model_hdf5(object = object, filepath = path)
+    },
+    marshal = function(object) {
+      keras::serialize_model(object)
+    },
+    unmarshal = function(object) {
+      keras::unserialize_model(object)
+    }
+  )
+)
+# And the following is equivalent to the current superseded
+# tar_target(name, torch::torch_tensor(seq_len(4)), format = "torch"),
+# except this version has a `convert` argument to handle
+# cases when `NULL` is returned (e.g. if the target errors out
+# and the `error` argument is "null" in tar_target()
+# or tar_option_set())
+tar_target(
+  name = torch_target,
+  command = torch::torch_tensor(),
+  format = tar_format(
+    read = function(path) {
+      torch::torch_load(path)
+    },
+    write = function(object, path) {
+      torch::torch_save(obj = object, path = path)
+    },
+    marshal = function(object) {
+      con &lt;- rawConnection(raw(), open = "wr")
+      on.exit(close(con))
+      torch::torch_save(object, con)
+      rawConnectionValue(con)
+    },
+    unmarshal = function(object) {
+      con &lt;- rawConnection(object, open = "r")
+      on.exit(close(con))
+      torch::torch_load(con)
+    }
+  )
+)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

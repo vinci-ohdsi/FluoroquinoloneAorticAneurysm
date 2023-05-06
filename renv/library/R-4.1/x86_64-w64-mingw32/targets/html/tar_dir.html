@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Execute code in a temporary directory.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_dir {targets}"><tr><td>tar_dir {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Execute code in a temporary directory.</h2>
+
+<h3>Description</h3>
+
+<p>Runs code inside a new <code>tempfile()</code> directory
+in order to avoid writing to the user's file space.
+Used in examples and tests in order to comply with CRAN policies.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_dir(code)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>code</code></td>
+<td>
+<p>User-defined code.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>Return value of the user-defined code.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other utilities to extend targets: 
+<code><a href="../../targets/help/tar_assert.html">tar_assert</a></code>,
+<code><a href="../../targets/help/tar_condition.html">tar_condition</a></code>,
+<code><a href="../../targets/help/tar_language.html">tar_language</a></code>,
+<code><a href="../../targets/help/tar_test.html">tar_test</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+tar_dir(file.create("only_exists_in_tar_dir"))
+file.exists("only_exists_in_tar_dir")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

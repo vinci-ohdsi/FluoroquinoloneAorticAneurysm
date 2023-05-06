@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Run a pipeline of targets in parallel with transient 'future'...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_make_future {targets}"><tr><td>tar_make_future {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Run a pipeline of targets in parallel with transient
+<code>future</code> workers.</h2>
+
+<h3>Description</h3>
+
+<p>This function is like <code><a href="../../targets/help/tar_make.html">tar_make()</a></code> except that targets
+run in parallel with transient <code>future</code> workers. It requires
+that you declare your <code>future::plan()</code> inside the
+target script file (default: <code style="white-space: pre;">_targets.R</code>).
+<code>future</code> is not a strict dependency of <code>targets</code>,
+so you must install <code>future</code> yourself.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_make_future(
+  names = NULL,
+  shortcut = targets::tar_config_get("shortcut"),
+  reporter = targets::tar_config_get("reporter_make"),
+  workers = targets::tar_config_get("workers"),
+  callr_function = callr::r,
+  callr_arguments = targets::tar_callr_args_default(callr_function, reporter),
+  envir = parent.frame(),
+  script = targets::tar_config_get("script"),
+  store = targets::tar_config_get("store")
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>names</code></td>
+<td>
+<p>Names of the targets to build or check. Set to <code>NULL</code> to
+check/build all the targets (default). Otherwise, you can supply
+<code>tidyselect</code> helpers like <code><a href="../../targets/help/any_of.html">any_of()</a></code> and <code><a href="../../targets/help/starts_with.html">starts_with()</a></code>.
+Because <code><a href="../../targets/help/tar_make.html">tar_make()</a></code> and friends run the pipeline in a new R session,
+if you pass a character vector to a tidyselect helper, you will need
+to evaluate that character vector early with <code style="white-space: pre;">!!</code>, e.g.
+<code>tar_make(names = any_of(!!your_vector))</code>.
+Applies to ordinary targets (stem) and whole dynamic branching targets
+(patterns) but not to individual dynamic branches.</p>
+</td></tr>
+<tr valign="top"><td><code>shortcut</code></td>
+<td>
+<p>Logical of length 1, how to interpret the <code>names</code> argument.
+If <code>shortcut</code> is <code>FALSE</code> (default) then the function checks
+all targets upstream of <code>names</code> as far back as the dependency graph goes.
+<code>shortcut = TRUE</code> increases speed if there are a lot of
+up-to-date targets, but it assumes all the dependencies
+are up to date, so please use with caution.
+It relies on stored metadata for information about upstream dependencies.
+<code>shortcut = TRUE</code> only works if you set <code>names</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>reporter</code></td>
+<td>
+<p>Character of length 1, name of the reporter to user.
+Controls how messages are printed as targets run in the pipeline.
+Defaults to <code>tar_config_get("reporter_make")</code>. Choices:
+</p>
+
+<ul>
+<li> <p><code>"silent"</code>: print nothing.
+</p>
+</li>
+<li> <p><code>"summary"</code>: print a running total of the number of each targets in
+each status category (queued, started, skipped, build, canceled,
+or errored). Also show a timestamp (<code>"%H:%M %OS2"</code> <code>strptime()</code> format)
+of the last time the progress changed and printed to the screen.
+</p>
+</li>
+<li> <p><code>"timestamp"</code>: same as the <code>"verbose"</code> reporter except that each
+.message begins with a time stamp.
+</p>
+</li>
+<li> <p><code>"timestamp_positives"</code>: same as the <code>"timestamp"</code> reporter
+except without messages for skipped targets.
+</p>
+</li>
+<li> <p><code>"verbose"</code>: print messages for individual targets
+as they start, finish, or are skipped. Each individual
+target-specific time (e.g. &quot;3.487 seconds&quot;) is strictly the
+elapsed runtime of the target and does not include
+steps like data retrieval and output storage.
+</p>
+</li>
+<li> <p><code>"verbose_positives"</code>: same as the <code>"verbose"</code> reporter
+except without messages for skipped targets.
+</p>
+</li></ul>
+</td></tr>
+<tr valign="top"><td><code>workers</code></td>
+<td>
+<p>Positive integer, maximum number of transient
+<code>future</code> workers allowed to run at any given time.</p>
+</td></tr>
+<tr valign="top"><td><code>callr_function</code></td>
+<td>
+<p>A function from <code>callr</code> to start a fresh clean R
+process to do the work. Set to <code>NULL</code> to run in the current session
+instead of an external process (but restart your R session just before
+you do in order to clear debris out of the global environment).
+<code>callr_function</code> needs to be <code>NULL</code> for interactive debugging,
+e.g. <code>tar_option_set(debug = "your_target")</code>.
+However, <code>callr_function</code> should not be <code>NULL</code> for serious
+reproducible work.</p>
+</td></tr>
+<tr valign="top"><td><code>callr_arguments</code></td>
+<td>
+<p>A list of arguments to <code>callr_function</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>envir</code></td>
+<td>
+<p>An environment, where to run the target R script
+(default: <code style="white-space: pre;">_targets.R</code>) if <code>callr_function</code> is <code>NULL</code>.
+Ignored if <code>callr_function</code> is anything other than <code>NULL</code>.
+<code>callr_function</code> should only be <code>NULL</code> for debugging and
+testing purposes, not for serious runs of a pipeline, etc.
+</p>
+<p>The <code>envir</code> argument of <code><a href="../../targets/help/tar_make.html">tar_make()</a></code> and related
+functions always overrides
+the current value of <code>tar_option_get("envir")</code> in the current R session
+just before running the target script file,
+so whenever you need to set an alternative <code>envir</code>, you should always set
+it with <code>tar_option_set()</code> from within the target script file.
+In other words, if you call <code>tar_option_set(envir = envir1)</code> in an
+interactive session and then
+<code>tar_make(envir = envir2, callr_function = NULL)</code>,
+then <code>envir2</code> will be used.</p>
+</td></tr>
+<tr valign="top"><td><code>script</code></td>
+<td>
+<p>Character of length 1, path to the
+target script file. Defaults to <code>tar_config_get("script")</code>,
+which in turn defaults to <code style="white-space: pre;">_targets.R</code>. When you set
+this argument, the value of <code>tar_config_get("script")</code>
+is temporarily changed for the current function call.
+See <code><a href="../../targets/help/tar_script.html">tar_script()</a></code>,
+<code><a href="../../targets/help/tar_config_get.html">tar_config_get()</a></code>, and <code><a href="../../targets/help/tar_config_set.html">tar_config_set()</a></code> for details
+about the target script file and how to set it
+persistently for a project.</p>
+</td></tr>
+<tr valign="top"><td><code>store</code></td>
+<td>
+<p>Character of length 1, path to the
+<code>targets</code> data store. Defaults to <code>tar_config_get("store")</code>,
+which in turn defaults to <code style="white-space: pre;">_targets/</code>.
+When you set this argument, the value of <code>tar_config_get("store")</code>
+is temporarily changed for the current function call.
+See <code><a href="../../targets/help/tar_config_get.html">tar_config_get()</a></code> and <code><a href="../../targets/help/tar_config_set.html">tar_config_set()</a></code> for details
+about how to set the data store path persistently
+for a project.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>To configure <code>tar_make_future()</code> with a computing cluster,
+see the <code>future.batchtools</code> package documentation.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>NULL</code> except if <code>callr_function = callr::r_bg()</code>, in which case
+a handle to the <code>callr</code> background process is returned. Either way,
+the value is invisibly returned.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other pipeline: 
+<code><a href="../../targets/help/tar_make_clustermq.html">tar_make_clustermq</a>()</code>,
+<code><a href="../../targets/help/tar_make.html">tar_make</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+if (identical(Sys.getenv("TAR_EXAMPLES"), "true")) { # for CRAN
+tar_dir({ # tar_dir() runs code from a temp dir for CRAN.
+tar_script({
+  future::plan(future::multisession, workers = 2)
+  list(
+    tar_target(x, 1 + 1),
+    tar_target(y, 1 + 1)
+  )
+}, ask = FALSE)
+tar_make_future()
+})
+}
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

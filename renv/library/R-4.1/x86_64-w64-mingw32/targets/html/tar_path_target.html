@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Identify the file path where a target will be stored.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_path_target {targets}"><tr><td>tar_path_target {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Identify the file path where a target will be stored.</h2>
+
+<h3>Description</h3>
+
+<p>Identify the file path where a target will be stored
+after the target finishes running in the pipeline.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_path_target(
+  name = NULL,
+  default = NA_character_,
+  create_dir = FALSE,
+  store = targets::tar_config_get("store")
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>name</code></td>
+<td>
+<p>Symbol, name of a target.
+If <code>NULL</code>, <code>tar_path_target()</code> returns the path of the target currently
+running in a pipeline.</p>
+</td></tr>
+<tr valign="top"><td><code>default</code></td>
+<td>
+<p>Character, value to return if <code>tar_path_target()</code>
+is called on its own outside a <code>targets</code> pipeline.
+Having a default lets users run things without <code><a href="../../targets/help/tar_make.html">tar_make()</a></code>,
+which helps peel back layers of code and troubleshoot bugs.</p>
+</td></tr>
+<tr valign="top"><td><code>create_dir</code></td>
+<td>
+<p>Logical of length 1,
+whether to create <code>dirname(tar_path_target())</code> in
+<code>tar_path_target()</code> itself.
+This is useful if you are writing to <code>tar_path_target()</code> from inside a
+<code>storage = "none"</code> target and need the parent directory of the file
+to exist.</p>
+</td></tr>
+<tr valign="top"><td><code>store</code></td>
+<td>
+<p>Character of length 1,
+path to the data store if <code>tar_path_target()</code>
+is called outside a running pipeline. If <code>tar_path_target()</code> is called
+inside a running pipeline, this argument is ignored
+and actual the path to the running pipeline's data store
+is used instead.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>Character, file path of the return value of the target.
+If not called from inside a running target,
+<code>tar_path_target(name = your_target)</code> just returns
+<code style="white-space: pre;">_targets/objects/your_target</code>, the file path where <code>your_target</code>
+will be saved unless <code>format</code> is equal to <code>"file"</code> or any of the
+supported cloud-based storage formats.
+</p>
+<p>For non-cloud storage formats, if you call <code>tar_path_target()</code>
+with no arguments while target <code>x</code> is running, the <code>name</code>
+argument defaults to the name of the running target,
+so <code>tar_path_target()</code> returns <code style="white-space: pre;">_targets/objects/x</code>.
+</p>
+<p>For cloud-backed formats, <code>tar_path_target()</code> returns the
+path to the staging file in <code style="white-space: pre;">_targets/scratch/</code>.
+That way, even if you select a cloud repository
+(e.g. <code>tar_target(..., repository = "aws", storage = "none")</code>)
+then you can still manually write to
+<code>tar_path_target(create_dir = TRUE)</code>
+and the <code>targets</code> package will automatically hash it and
+upload it to the AWS S3 bucket. This does not apply to
+<code>format = "file"</code>, where you would never need <code>storage = "none"</code>
+anyway.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other utilities: 
+<code><a href="../../targets/help/tar_active.html">tar_active</a>()</code>,
+<code><a href="../../targets/help/tar_call.html">tar_call</a>()</code>,
+<code><a href="../../targets/help/tar_cancel.html">tar_cancel</a>()</code>,
+<code><a href="../../targets/help/tar_definition.html">tar_definition</a>()</code>,
+<code><a href="../../targets/help/tar_envir.html">tar_envir</a>()</code>,
+<code><a href="../../targets/help/tar_group.html">tar_group</a>()</code>,
+<code><a href="../../targets/help/tar_name.html">tar_name</a>()</code>,
+<code><a href="../../targets/help/tar_path_script_support.html">tar_path_script_support</a>()</code>,
+<code><a href="../../targets/help/tar_path_script.html">tar_path_script</a>()</code>,
+<code><a href="../../targets/help/tar_path_store.html">tar_path_store</a>()</code>,
+<code><a href="../../targets/help/tar_path.html">tar_path</a>()</code>,
+<code><a href="../../targets/help/tar_seed.html">tar_seed</a>()</code>,
+<code><a href="../../targets/help/tar_source.html">tar_source</a>()</code>,
+<code><a href="../../targets/help/tar_store.html">tar_store</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+tar_path_target()
+tar_path_target(your_target)
+if (identical(Sys.getenv("TAR_EXAMPLES"), "true")) { # for CRAN
+tar_dir({ # tar_dir() runs code from a temp dir for CRAN.
+tar_script(tar_target(returns_path, tar_path_target()), ask = FALSE)
+tar_make()
+tar_read(returns_path)
+})
+}
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

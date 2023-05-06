@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Declare a pipeline (deprecated).</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_pipeline {targets}"><tr><td>tar_pipeline {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Declare a pipeline (deprecated).</h2>
+
+<h3>Description</h3>
+
+<p>Functions <code>tar_pipeline()</code> and <code><a href="../../targets/help/tar_bind.html">tar_bind()</a></code> are deprecated.
+Instead, simply end your target script file (default: <code style="white-space: pre;">_targets.R</code>)
+with a list of target objects.
+You can nest these objects however you like.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_pipeline(...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Targets or lists of targets defined with <code><a href="../../targets/help/tar_target.html">tar_target()</a></code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Deprecated on 2021-01-03.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A pipeline object.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# In _targets.R:
+library(targets)
+list( # You no longer need tar_pipeline() here.
+  tar_target(data_file, "data.csv", format = "file"),
+  list( # Target lists can be arbitrarily nested.
+    tar_target(data_object, read.csv(data_file)),
+    tar_target(analysis, analyze(data_object))
+  )
+)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

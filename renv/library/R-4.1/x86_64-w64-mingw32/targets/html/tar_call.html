@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Identify the called 'targets' function.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_call {targets}"><tr><td>tar_call {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Identify the called <code>targets</code> function.</h2>
+
+<h3>Description</h3>
+
+<p>Get the name of the currently running <code>targets</code>
+interface function. Returns <code>NULL</code> if not invoked inside
+a target or <code style="white-space: pre;">_targets.R</code> (i.e. if not directly invoked
+by <code><a href="../../targets/help/tar_make.html">tar_make()</a></code>, <code><a href="../../targets/help/tar_visnetwork.html">tar_visnetwork()</a></code>, etc.).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_call()
+</pre>
+
+
+<h3>Value</h3>
+
+<p>Character of length 1, name of the currently running <code>targets</code>
+interface function. For example, suppose you have a call to
+<code>tar_call()</code> inside a target or <code style="white-space: pre;">_targets.R</code>. Then if you run
+<code>tar_make()</code>, <code>tar_call()</code> will return <code>"tar_make"</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other utilities: 
+<code><a href="../../targets/help/tar_active.html">tar_active</a>()</code>,
+<code><a href="../../targets/help/tar_cancel.html">tar_cancel</a>()</code>,
+<code><a href="../../targets/help/tar_definition.html">tar_definition</a>()</code>,
+<code><a href="../../targets/help/tar_envir.html">tar_envir</a>()</code>,
+<code><a href="../../targets/help/tar_group.html">tar_group</a>()</code>,
+<code><a href="../../targets/help/tar_name.html">tar_name</a>()</code>,
+<code><a href="../../targets/help/tar_path_script_support.html">tar_path_script_support</a>()</code>,
+<code><a href="../../targets/help/tar_path_script.html">tar_path_script</a>()</code>,
+<code><a href="../../targets/help/tar_path_store.html">tar_path_store</a>()</code>,
+<code><a href="../../targets/help/tar_path_target.html">tar_path_target</a>()</code>,
+<code><a href="../../targets/help/tar_path.html">tar_path</a>()</code>,
+<code><a href="../../targets/help/tar_seed.html">tar_seed</a>()</code>,
+<code><a href="../../targets/help/tar_source.html">tar_source</a>()</code>,
+<code><a href="../../targets/help/tar_store.html">tar_store</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+if (identical(Sys.getenv("TAR_EXAMPLES"), "true")) { # for CRAN
+tar_dir({ # tar_dir() runs code from a temp dir for CRAN.
+tar_call() # NULL
+tar_script({
+  message("called function: ", tar_call())
+  tar_target(x, tar_call())
+})
+tar_manifest() # prints "called function: tar_manifest"
+tar_make() # prints "called function: tar_make"
+tar_read(x) # "tar_make"
+})
+}
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

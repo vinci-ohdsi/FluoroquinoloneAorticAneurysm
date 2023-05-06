@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Remove targets that are no longer part of the pipeline.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_prune {targets}"><tr><td>tar_prune {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Remove targets that are no longer part of the pipeline.</h2>
+
+<h3>Description</h3>
+
+<p>Remove target values from <code style="white-space: pre;">_targets/objects/</code> and the cloud
+and remove target metadata from <code style="white-space: pre;">_targets/meta/meta</code>
+for targets that are no longer part of the pipeline.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_prune(
+  cloud = TRUE,
+  callr_function = callr::r,
+  callr_arguments = targets::tar_callr_args_default(callr_function),
+  envir = parent.frame(),
+  script = targets::tar_config_get("script"),
+  store = targets::tar_config_get("store")
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>cloud</code></td>
+<td>
+<p>Logical of length 1, whether to delete objects
+from the cloud if applicable (e.g. AWS, GCP). If <code>FALSE</code>,
+files are not deleted from the cloud.</p>
+</td></tr>
+<tr valign="top"><td><code>callr_function</code></td>
+<td>
+<p>A function from <code>callr</code> to start a fresh clean R
+process to do the work. Set to <code>NULL</code> to run in the current session
+instead of an external process (but restart your R session just before
+you do in order to clear debris out of the global environment).
+<code>callr_function</code> needs to be <code>NULL</code> for interactive debugging,
+e.g. <code>tar_option_set(debug = "your_target")</code>.
+However, <code>callr_function</code> should not be <code>NULL</code> for serious
+reproducible work.</p>
+</td></tr>
+<tr valign="top"><td><code>callr_arguments</code></td>
+<td>
+<p>A list of arguments to <code>callr_function</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>envir</code></td>
+<td>
+<p>An environment, where to run the target R script
+(default: <code style="white-space: pre;">_targets.R</code>) if <code>callr_function</code> is <code>NULL</code>.
+Ignored if <code>callr_function</code> is anything other than <code>NULL</code>.
+<code>callr_function</code> should only be <code>NULL</code> for debugging and
+testing purposes, not for serious runs of a pipeline, etc.
+</p>
+<p>The <code>envir</code> argument of <code><a href="../../targets/help/tar_make.html">tar_make()</a></code> and related
+functions always overrides
+the current value of <code>tar_option_get("envir")</code> in the current R session
+just before running the target script file,
+so whenever you need to set an alternative <code>envir</code>, you should always set
+it with <code>tar_option_set()</code> from within the target script file.
+In other words, if you call <code>tar_option_set(envir = envir1)</code> in an
+interactive session and then
+<code>tar_make(envir = envir2, callr_function = NULL)</code>,
+then <code>envir2</code> will be used.</p>
+</td></tr>
+<tr valign="top"><td><code>script</code></td>
+<td>
+<p>Character of length 1, path to the
+target script file. Defaults to <code>tar_config_get("script")</code>,
+which in turn defaults to <code style="white-space: pre;">_targets.R</code>. When you set
+this argument, the value of <code>tar_config_get("script")</code>
+is temporarily changed for the current function call.
+See <code><a href="../../targets/help/tar_script.html">tar_script()</a></code>,
+<code><a href="../../targets/help/tar_config_get.html">tar_config_get()</a></code>, and <code><a href="../../targets/help/tar_config_set.html">tar_config_set()</a></code> for details
+about the target script file and how to set it
+persistently for a project.</p>
+</td></tr>
+<tr valign="top"><td><code>store</code></td>
+<td>
+<p>Character of length 1, path to the
+<code>targets</code> data store. Defaults to <code>tar_config_get("store")</code>,
+which in turn defaults to <code style="white-space: pre;">_targets/</code>.
+When you set this argument, the value of <code>tar_config_get("store")</code>
+is temporarily changed for the current function call.
+See <code><a href="../../targets/help/tar_config_get.html">tar_config_get()</a></code> and <code><a href="../../targets/help/tar_config_set.html">tar_config_set()</a></code> for details
+about how to set the data store path persistently
+for a project.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This is useful if you recently worked through
+multiple changes to your project and are now trying to
+discard irrelevant data while keeping the results that still matter.
+Global objects and local files with <code>format = "file"</code> outside the
+data store are unaffected. Also removes <code style="white-space: pre;">_targets/scratch/</code>,
+which is only needed while <code><a href="../../targets/help/tar_make.html">tar_make()</a></code>, <code><a href="../../targets/help/tar_make_clustermq.html">tar_make_clustermq()</a></code>,
+or <code><a href="../../targets/help/tar_make_future.html">tar_make_future()</a></code> is running.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>NULL</code> except if <code>callr_function = callr::r_bg()</code>, in which case
+a handle to the <code>callr</code> background process is returned. Either way,
+the value is invisibly returned.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other clean: 
+<code><a href="../../targets/help/tar_delete.html">tar_delete</a>()</code>,
+<code><a href="../../targets/help/tar_destroy.html">tar_destroy</a>()</code>,
+<code><a href="../../targets/help/tar_invalidate.html">tar_invalidate</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+if (identical(Sys.getenv("TAR_EXAMPLES"), "true")) { # for CRAN
+tar_dir({ # tar_dir() runs code from a temp dir for CRAN.
+tar_script({
+  list(
+    tar_target(y1, 1 + 1),
+    tar_target(y2, 1 + 1),
+    tar_target(z, y1 + y2)
+  )
+}, ask = FALSE)
+tar_make()
+# Remove some targets from the pipeline.
+tar_script(list(tar_target(y1, 1 + 1)), ask = FALSE)
+# Keep only the remaining targets in the data store.
+tar_prune()
+})
+}
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

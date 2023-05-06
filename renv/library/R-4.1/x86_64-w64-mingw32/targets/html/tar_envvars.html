@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Show 'targets' environment variables.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tar_envvars {targets}"><tr><td>tar_envvars {targets}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Show <code>targets</code> environment variables.</h2>
+
+<h3>Description</h3>
+
+<p>Show all the special environment variables
+available for customizing <code>targets</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tar_envvars(unset = "")
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>unset</code></td>
+<td>
+<p>Character of length 1, value to return
+for any environment variable that is not set.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>You can customize the behavior of <code>targets</code>
+with special environment variables. The sections in this help file
+describe each environment variable, and the <code>tar_envvars()</code> function
+lists their current values.
+</p>
+<p>If you modify environment variables, please set them
+in project-level <code>.Renviron</code> file so you do not lose your
+configuration when you restart your R session.
+Modify the project-level <code>.Renviron</code> file with
+<code>usethis::edit_r_environ(scope = "project")</code>. Restart
+your R session after you are done editing.
+</p>
+<p>For targets that run on parallel workers
+created by <code><a href="../../targets/help/tar_make_clustermq.html">tar_make_clustermq()</a></code> or <code><a href="../../targets/help/tar_make_future.html">tar_make_future()</a></code>,
+only the environment variables listed by <code><a href="../../targets/help/tar_envvars.html">tar_envvars()</a></code>
+are specifically exported to the targets.
+For all other environment variables, you will have to set
+the values manually, e.g. a project-level <code>.Renviron</code> file
+(for workers that have access to the local file system).
+</p>
+
+
+<h3>Value</h3>
+
+<p>A data frame with one row per environment variable
+and columns with the name and current value of each.
+An unset environment variable will have a value of <code>""</code>
+by default. (Customize with the <code>unset</code> argument).
+</p>
+
+
+<h3>TAR_ASK</h3>
+
+<p>The <code>TAR_ASK</code> environment variable accepts values <code>"true"</code> and <code>"false"</code>.
+If <code>TAR_ASK</code> is not set, or if it is set to <code>"true"</code>,
+then <code>targets</code> asks permission in a menu
+before overwriting certain files, such as the target script file
+(default: <code style="white-space: pre;">_targets.R</code>) in <code><a href="../../targets/help/tar_script.html">tar_script()</a></code>.
+If <code>TAR_ASK</code> is <code>"false"</code>, then <code>targets</code> overwrites the old files
+with the new ones without asking. Once you are comfortable with
+<code><a href="../../targets/help/tar_script.html">tar_script()</a></code>, <code><a href="../../targets/help/tar_github_actions.html">tar_github_actions()</a></code>, and similar functions,
+you can safely set <code>TAR_ASK</code> to <code>"false"</code> in either a project-level
+or user-level <code>.Renviron</code> file.
+</p>
+
+
+<h3>TAR_CONFIG</h3>
+
+<p>The <code>TAR_CONFIG</code> environment variable controls the file path to the
+optional YAML configuration file with project settings.
+See the help file of <code><a href="../../targets/help/tar_config_set.html">tar_config_set()</a></code> for details.
+</p>
+
+
+<h3>TAR_PROJECT</h3>
+
+<p>The <code>TAR_PROJECT</code> environment variable sets the name of project
+to set and get settings when working with the YAML configuration file.
+See the help file of <code><a href="../../targets/help/tar_config_set.html">tar_config_set()</a></code> for details.
+</p>
+
+
+<h3>TAR_WARN</h3>
+
+<p>The <code>TAR_WARN</code> environment variable accepts values <code>"true"</code> and <code>"false"</code>.
+If <code>TAR_WARN</code> is not set, or if it is set to <code>"true"</code>,
+then <code>targets</code> throws warnings in certain edge cases,
+such as target/global name conflicts and dangerous use of
+<code>devtools::load_all()</code>. If <code>TAR_WARN</code> is <code>"false"</code>, then <code>targets</code>
+does not throw warnings in these cases.
+These warnings can detect potentially serious
+issues with your pipeline, so please do not set <code>TAR_WARN</code>
+unless your use case absolutely requires it.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other configuration: 
+<code><a href="../../targets/help/tar_config_get.html">tar_config_get</a>()</code>,
+<code><a href="../../targets/help/tar_config_set.html">tar_config_set</a>()</code>,
+<code><a href="../../targets/help/tar_config_unset.html">tar_config_unset</a>()</code>,
+<code><a href="../../targets/help/tar_option_get.html">tar_option_get</a>()</code>,
+<code><a href="../../targets/help/tar_option_reset.html">tar_option_reset</a>()</code>,
+<code><a href="../../targets/help/tar_option_set.html">tar_option_set</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+tar_envvars()
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>targets</em> version 1.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>
