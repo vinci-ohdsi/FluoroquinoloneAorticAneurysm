@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Creates R6 object for StrataSettings</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for createStrataSettings {CohortIncidence}"><tr><td>createStrataSettings {CohortIncidence}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Creates R6 object for StrataSettings</h2>
+
+<h3>Description</h3>
+
+<p>Creates R6 object for StrataSettings
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+createStrataSettings(byAge = F, byGender = F, byYear = F, ageBreaks)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>byAge</code></td>
+<td>
+<p>a boolean indicating to stratify by age, defaults to F</p>
+</td></tr>
+<tr valign="top"><td><code>byGender</code></td>
+<td>
+<p>a boolean indicating to stratify by gender, defaults to F</p>
+</td></tr>
+<tr valign="top"><td><code>byYear</code></td>
+<td>
+<p>a boolean indicating to stratify by year, defaults to F</p>
+</td></tr>
+<tr valign="top"><td><code>ageBreaks</code></td>
+<td>
+<p>a vector of integers indicating the age group bounds.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>an R list containing name-value pairs that will serialize into a org.ohdsi.analysis.cohortincidence.design.StratifySettings JSON format.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>CohortIncidence</em> version 3.1.2 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

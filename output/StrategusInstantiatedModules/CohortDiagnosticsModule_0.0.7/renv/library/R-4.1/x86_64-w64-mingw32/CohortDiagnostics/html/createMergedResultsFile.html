@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Merge Shiny diagnostics files into sqlite database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for createMergedResultsFile {CohortDiagnostics}"><tr><td>createMergedResultsFile {CohortDiagnostics}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Merge Shiny diagnostics files into sqlite database</h2>
+
+<h3>Description</h3>
+
+<p>This function combines diagnostics results from one or more databases into a single file. The result is an
+sqlite database that can be used as input for the Diagnostics Explorer Shiny app.
+</p>
+<p>It also checks whether the results conform to the results data model specifications.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+createMergedResultsFile(
+  dataFolder,
+  sqliteDbPath = "MergedCohortDiagnosticsData.sqlite",
+  overwrite = FALSE,
+  tablePrefix = ""
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>dataFolder</code></td>
+<td>
+<p>folder where the exported zip files for the diagnostics are stored. Use
+the <code><a href="../../CohortDiagnostics/help/executeDiagnostics.html">executeDiagnostics</a></code> function to generate these zip files.
+Zip files containing results from multiple databases may be placed in the same
+folder.</p>
+</td></tr>
+<tr valign="top"><td><code>sqliteDbPath</code></td>
+<td>
+<p>Output path where sqlite database is placed</p>
+</td></tr>
+<tr valign="top"><td><code>overwrite</code></td>
+<td>
+<p>(Optional) overwrite existing sqlite lite db if it exists.</p>
+</td></tr>
+<tr valign="top"><td><code>tablePrefix</code></td>
+<td>
+<p>(Optional) string to insert before table names (e.g. &quot;cd_&quot;) for database table names</p>
+</td></tr>
+</table>
+
+<hr /><div style="text-align: center;">[Package <em>CohortDiagnostics</em> version 3.1.2 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

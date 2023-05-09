@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: R6 Class Representing a CohortReference</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for CohortReference {CohortIncidence}"><tr><td>CohortReference {CohortIncidence}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>R6 Class Representing a CohortReference</h2>
+
+<h3>Description</h3>
+
+<p>The CohortReference class, encapsulating the id, name and descritpion fields that refernces a cohort definition.
+</p>
+
+
+<h3>Details</h3>
+
+<p>This class is used to reference a cohort definition by ID, while providing a way to 
+substitute a name for this specific reference.
+</p>
+<p>Note, when serializing with a library such as jsonlite, first call toList() on the R6 class
+before calling jsonlite::toJSON().
+</p>
+
+
+<h3>Active bindings</h3>
+
+<div class="r6-active-bindings">
+
+<dl>
+<dt><code>id</code></dt><dd><p>the cohort id being referenced</p>
+</dd>
+<dt><code>name</code></dt><dd><p>the name for the cohort to be used in this reference.</p>
+</dd>
+<dt><code>description</code></dt><dd><p>A description for this Cohort Reference.</p>
+</dd>
+</dl>
+
+</div>
+
+
+<h3>Methods</h3>
+
+
+
+<h4>Public methods</h4>
+
+
+<ul>
+<li> <p><a href="#method-CohortReference-new"><code>CohortReference$new()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-CohortReference-toList"><code>CohortReference$toList()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-CohortReference-asJSON"><code>CohortReference$asJSON()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-CohortReference-clone"><code>CohortReference$clone()</code></a>
+</p>
+</li></ul>
+
+
+<hr>
+<a id="method-CohortReference-new"></a>
+
+
+
+<h4>Method <code>new()</code></h4>
+
+<p>creates a new instance, using the provided data param if provided.
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>CohortReference$new(data = list())</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>data</code></dt><dd><p>the data (as a json string or list) to initialize with</p>
+</dd>
+</dl>
+
+</div>
+
+
+<hr>
+<a id="method-CohortReference-toList"></a>
+
+
+
+<h4>Method <code>toList()</code></h4>
+
+<p>returns the R6 class elements as a list for use in jsonlite::toJSON()
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>CohortReference$toList()</pre></div>
+
+
+<hr>
+<a id="method-CohortReference-asJSON"></a>
+
+
+
+<h4>Method <code>asJSON()</code></h4>
+
+<p>returns the JSON string for this R6 class
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>CohortReference$asJSON()</pre></div>
+
+
+<hr>
+<a id="method-CohortReference-clone"></a>
+
+
+
+<h4>Method <code>clone()</code></h4>
+
+<p>The objects of this class are cloneable with this method.
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>CohortReference$clone(deep = FALSE)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p>
+</dd>
+</dl>
+
+</div>
+
+
+
+<hr /><div style="text-align: center;">[Package <em>CohortIncidence</em> version 3.1.2 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

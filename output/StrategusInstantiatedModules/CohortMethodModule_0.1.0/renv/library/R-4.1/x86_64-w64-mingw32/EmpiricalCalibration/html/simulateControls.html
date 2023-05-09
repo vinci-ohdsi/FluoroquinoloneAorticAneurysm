@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Simulate (negative) controls</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for simulateControls {EmpiricalCalibration}"><tr><td>simulateControls {EmpiricalCalibration}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Simulate (negative) controls</h2>
+
+<h3>Description</h3>
+
+<p>Simulate (negative) controls
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+simulateControls(
+  n = 50,
+  mean = 0,
+  sd = 0.1,
+  seLogRr = runif(n, min = 0.01, max = 0.2),
+  trueLogRr = 0
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>n</code></td>
+<td>
+<p>Number of controls to simulate.</p>
+</td></tr>
+<tr valign="top"><td><code>mean</code></td>
+<td>
+<p>The mean of the error distribution (on the log RR scale).</p>
+</td></tr>
+<tr valign="top"><td><code>sd</code></td>
+<td>
+<p>The standard deviation of the error distribution (on the log RR scale).</p>
+</td></tr>
+<tr valign="top"><td><code>seLogRr</code></td>
+<td>
+<p>The standard error of the log of the relative risk. This is recycled for the
+controls. The default is to sample these from a uniform distribution.</p>
+</td></tr>
+<tr valign="top"><td><code>trueLogRr</code></td>
+<td>
+<p>The true relative risk (on the log scale) used to generate these controls.  This
+is recycled for the controls.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Generate point estimates given known true effect sizes and standard errors
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data &lt;- simulateControls(n = 50 * 3, mean = 0.25, sd = 0.25, trueLogRr = log(c(1, 2, 4)))
+plotTrueAndObserved(data$logRr, data$seLogRr, data$trueLogRr)
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>EmpiricalCalibration</em> version 3.1.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

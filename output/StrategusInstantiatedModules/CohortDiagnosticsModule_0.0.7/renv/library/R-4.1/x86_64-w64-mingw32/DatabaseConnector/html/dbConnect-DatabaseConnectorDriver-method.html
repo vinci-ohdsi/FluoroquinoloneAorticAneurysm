@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create a connection to a DBMS</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for dbConnect,DatabaseConnectorDriver-method {DatabaseConnector}"><tr><td>dbConnect,DatabaseConnectorDriver-method {DatabaseConnector}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Create a connection to a DBMS</h2>
+
+<h3>Description</h3>
+
+<p>Connect to a database. This function is synonymous with the <code><a href="../../DatabaseConnector/help/connect.html">connect</a></code> function. except
+a dummy driver needs to be specified
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'DatabaseConnectorDriver'
+dbConnect(drv, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>drv</code></td>
+<td>
+<p>The result of the <code>link{DatabaseConnectorDriver}</code> function</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Other parameters. These are the same as expected by the <code><a href="../../DatabaseConnector/help/connect.html">connect</a></code> function.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>Returns a DatabaseConnectorConnection object that can be used with most of the other functions in
+this package.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## Not run: 
+conn &lt;- dbConnect(DatabaseConnectorDriver(),
+  dbms = "postgresql",
+  server = "localhost/ohdsi",
+  user = "joe",
+  password = "secret"
+)
+querySql(conn, "SELECT * FROM cdm_synpuf.person;")
+dbDisconnect(conn)
+
+## End(Not run)
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>DatabaseConnector</em> version 5.1.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

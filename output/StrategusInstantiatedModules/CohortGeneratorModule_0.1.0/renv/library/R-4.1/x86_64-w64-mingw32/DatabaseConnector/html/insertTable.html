@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Insert a table on the server</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for insertTable {DatabaseConnector}"><tr><td>insertTable {DatabaseConnector}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Insert a table on the server</h2>
+
+<h3>Description</h3>
+
+<p>This function sends the data in a data frame to a table on the server. Either a new table
+is created, or the data is appended to an existing table.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+insertTable(
+  connection,
+  databaseSchema = NULL,
+  tableName,
+  data,
+  dropTableIfExists = TRUE,
+  createTable = TRUE,
+  tempTable = FALSE,
+  oracleTempSchema = NULL,
+  tempEmulationSchema = getOption("sqlRenderTempEmulationSchema"),
+  bulkLoad = Sys.getenv("DATABASE_CONNECTOR_BULK_UPLOAD"),
+  useMppBulkLoad = Sys.getenv("USE_MPP_BULK_LOAD"),
+  progressBar = FALSE,
+  camelCaseToSnakeCase = FALSE
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>connection</code></td>
+<td>
+<p>The connection to the database server created using either
+<code><a href="../../DatabaseConnector/help/connect.html">connect()</a></code> or <code><a href="../../DBI/html/dbConnect.html">dbConnect()</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>databaseSchema</code></td>
+<td>
+<p>The name of the database schema. See details for platform-specific details.</p>
+</td></tr>
+<tr valign="top"><td><code>tableName</code></td>
+<td>
+<p>The name of the table where the data should be inserted.</p>
+</td></tr>
+<tr valign="top"><td><code>data</code></td>
+<td>
+<p>The data frame containing the data to be inserted.</p>
+</td></tr>
+<tr valign="top"><td><code>dropTableIfExists</code></td>
+<td>
+<p>Drop the table if the table already exists before writing?</p>
+</td></tr>
+<tr valign="top"><td><code>createTable</code></td>
+<td>
+<p>Create a new table? If false, will append to existing table.</p>
+</td></tr>
+<tr valign="top"><td><code>tempTable</code></td>
+<td>
+<p>Should the table created as a temp table?</p>
+</td></tr>
+<tr valign="top"><td><code>oracleTempSchema</code></td>
+<td>
+<p>DEPRECATED: use <code>tempEmulationSchema</code> instead.</p>
+</td></tr>
+<tr valign="top"><td><code>tempEmulationSchema</code></td>
+<td>
+<p>Some database platforms like Oracle and Impala do not truly support temp tables. To
+emulate temp tables, provide a schema with write privileges where temp tables
+can be created.</p>
+</td></tr>
+<tr valign="top"><td><code>bulkLoad</code></td>
+<td>
+<p>If using Redshift, PDW, Hive or Postgres, use more performant bulk loading
+techniques. Does not work for temp tables (except for HIVE). See Details for
+requirements for the various platforms.</p>
+</td></tr>
+<tr valign="top"><td><code>useMppBulkLoad</code></td>
+<td>
+<p>DEPRECATED. Use <code>bulkLoad</code> instead.</p>
+</td></tr>
+<tr valign="top"><td><code>progressBar</code></td>
+<td>
+<p>Show a progress bar when uploading?</p>
+</td></tr>
+<tr valign="top"><td><code>camelCaseToSnakeCase</code></td>
+<td>
+<p>If TRUE, the data frame column names are assumed to use camelCase and
+are converted to snake_case before uploading.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The <code>databaseSchema</code> argument is interpreted differently according to the different platforms:
+SQL Server and PDW: The databaseSchema schema should specify both the database and the schema, e.g.
+'my_database.dbo'. Impala: the databaseSchema should specify the database. Oracle:
+The databaseSchema should specify the Oracle 'user'. All other : The databaseSchema should
+specify the schema.
+</p>
+<p>This function sends the data in a data frame to a table on the server. Either a new table is
+created, or the data is appended to an existing table. NA values are inserted as null values in the
+database.
+</p>
+<p>Bulk uploading:
+</p>
+<p>Redshift: The MPP bulk loading relies upon the CloudyR S3 library
+to test a connection to an S3 bucket using AWS S3 credentials. Credentials are configured
+directly into the System Environment using the following keys: Sys.setenv(&quot;AWS_ACCESS_KEY_ID&quot; =
+&quot;some_access_key_id&quot;, &quot;AWS_SECRET_ACCESS_KEY&quot; = &quot;some_secret_access_key&quot;, &quot;AWS_DEFAULT_REGION&quot; =
+&quot;some_aws_region&quot;, &quot;AWS_BUCKET_NAME&quot; = &quot;some_bucket_name&quot;, &quot;AWS_OBJECT_KEY&quot; = &quot;some_object_key&quot;,
+&quot;AWS_SSE_TYPE&quot; = &quot;server_side_encryption_type&quot;).
+</p>
+<p>PDW: The MPP bulk loading relies upon the client
+having a Windows OS and the DWLoader exe installed, and the following permissions granted: &ndash;Grant
+BULK Load permissions - needed at a server level USE master; GRANT ADMINISTER BULK OPERATIONS TO
+user; &ndash;Grant Staging database permissions - we will use the user db. USE scratch; EXEC
+sp_addrolemember 'db_ddladmin', user; Set the R environment variable DWLOADER_PATH to the location
+of the binary.
+</p>
+<p>PostgreSQL:
+Uses the 'psql' executable to upload. Set the POSTGRES_PATH environment variable  to the Postgres
+binary path, e.g. 'C:/Program Files/PostgreSQL/11/bin'.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## Not run: 
+connectionDetails &lt;- createConnectionDetails(
+  dbms = "mysql",
+  server = "localhost",
+  user = "root",
+  password = "blah"
+)
+conn &lt;- connect(connectionDetails)
+data &lt;- data.frame(x = c(1, 2, 3), y = c("a", "b", "c"))
+insertTable(conn, "my_schema", "my_table", data)
+disconnect(conn)
+
+## bulk data insert with Redshift or PDW
+connectionDetails &lt;- createConnectionDetails(
+  dbms = "redshift",
+  server = "localhost",
+  user = "root",
+  password = "blah",
+  schema = "cdm_v5"
+)
+conn &lt;- connect(connectionDetails)
+data &lt;- data.frame(x = c(1, 2, 3), y = c("a", "b", "c"))
+insertTable(
+  connection = connection,
+  databaseSchema = "scratch",
+  tableName = "somedata",
+  data = data,
+  dropTableIfExists = TRUE,
+  createTable = TRUE,
+  tempTable = FALSE,
+  bulkLoad = TRUE
+) # or, Sys.setenv("DATABASE_CONNECTOR_BULK_UPLOAD" = TRUE)
+
+## End(Not run)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>DatabaseConnector</em> version 6.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

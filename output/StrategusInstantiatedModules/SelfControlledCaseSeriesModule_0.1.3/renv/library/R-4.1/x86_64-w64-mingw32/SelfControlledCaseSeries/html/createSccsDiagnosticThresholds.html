@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create SCCS diagnostics thresholds</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for createSccsDiagnosticThresholds {SelfControlledCaseSeries}"><tr><td>createSccsDiagnosticThresholds {SelfControlledCaseSeries}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Create SCCS diagnostics thresholds</h2>
+
+<h3>Description</h3>
+
+<p>Threshold used when calling <code><a href="../../SelfControlledCaseSeries/help/exportToCsv.html">exportToCsv()</a></code> to determine if we pass or fail diagnostics.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+createSccsDiagnosticThresholds(
+  mdrrThreshold = 10,
+  easeThreshold = 0.25,
+  timeTrendPThreshold = 0.05,
+  preExposurePThreshold = 0.05
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>mdrrThreshold</code></td>
+<td>
+<p>What is the maximum allowed minimum detectable relative risk
+(MDRR)?</p>
+</td></tr>
+<tr valign="top"><td><code>easeThreshold</code></td>
+<td>
+<p>What is the maximum allowed expected absolute systematic error
+(EASE).</p>
+</td></tr>
+<tr valign="top"><td><code>timeTrendPThreshold</code></td>
+<td>
+<p>What family-wise p-value threshold (alpha) will be used to determine
+temporal instability?</p>
+</td></tr>
+<tr valign="top"><td><code>preExposurePThreshold</code></td>
+<td>
+<p>What p-value threshold (alpha) will be used to determine whether the
+rate of the outcome was higher just before exposure initiation?</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>An object of type <code>SccsDiagnosticThresholds</code>.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>SelfControlledCaseSeries</em> version 4.2.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Simulation Cyclops dataset</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for simulateCyclopsData {Cyclops}"><tr><td>simulateCyclopsData {Cyclops}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Simulation Cyclops dataset</h2>
+
+<h3>Description</h3>
+
+<p><code>simulateCyclopsData</code> generates a simulated large, sparse data set for use by <code>fitCyclopsSimulation</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+simulateCyclopsData(
+  nstrata = 200,
+  nrows = 10000,
+  ncovars = 20,
+  effectSizeSd = 1,
+  zeroEffectSizeProp = 0.9,
+  eCovarsPerRow = ncovars/100,
+  model = "survival"
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>nstrata</code></td>
+<td>
+<p>Numeric: Number of strata</p>
+</td></tr>
+<tr valign="top"><td><code>nrows</code></td>
+<td>
+<p>Numeric: Number of observation rows</p>
+</td></tr>
+<tr valign="top"><td><code>ncovars</code></td>
+<td>
+<p>Numeric: Number of covariates</p>
+</td></tr>
+<tr valign="top"><td><code>effectSizeSd</code></td>
+<td>
+<p>Numeric: Standard derivation of the non-zero simulated regression coefficients</p>
+</td></tr>
+<tr valign="top"><td><code>zeroEffectSizeProp</code></td>
+<td>
+<p>Numeric: Expected proportion of zero effect size</p>
+</td></tr>
+<tr valign="top"><td><code>eCovarsPerRow</code></td>
+<td>
+<p>Number: Effective number of non-zero covariates per data row</p>
+</td></tr>
+<tr valign="top"><td><code>model</code></td>
+<td>
+<p>String: Simulation model. Choices are: <code>logistic</code>, <code>poisson</code> or <code>survival</code></p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A simulated data set
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+#Generate some simulated data:
+sim &lt;- simulateCyclopsData(nstrata = 1, nrows = 1000, ncovars = 2, eCovarsPerRow = 0.5, 
+                           model = "poisson")
+cyclopsData &lt;- convertToCyclopsData(sim$outcomes, sim$covariates, modelType = "pr", 
+                                    addIntercept = TRUE)
+
+#Define the prior and control objects to use cross-validation for finding the 
+#optimal hyperparameter:
+prior &lt;- createPrior("laplace", exclude = 0, useCrossValidation = TRUE)
+control &lt;- createControl(cvType = "auto", noiseLevel = "quiet")
+
+#Fit the model
+fit &lt;- fitCyclopsModel(cyclopsData,prior = prior, control = control)  
+
+#Find out what the optimal hyperparameter was:
+getHyperParameter(fit)
+
+#Extract the current log-likelihood, and coefficients
+logLik(fit)
+coef(fit)
+
+#We can only retrieve the confidence interval for unregularized coefficients:
+confint(fit, c(0))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>Cyclops</em> version 3.2.1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

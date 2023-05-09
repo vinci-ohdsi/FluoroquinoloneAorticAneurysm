@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Calculate variance-covariance matrix for a fitted Cyclops...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for vcov.cyclopsFit {Cyclops}"><tr><td>vcov.cyclopsFit {Cyclops}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Calculate variance-covariance matrix for a fitted Cyclops model object</h2>
+
+<h3>Description</h3>
+
+<p><code>vcov.cyclopsFit</code> returns the variance-covariance matrix for all covariates of a Cyclops model object
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'cyclopsFit'
+vcov(object, control, overrideNoRegularization = FALSE, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>A fitted Cyclops model object</p>
+</td></tr>
+<tr valign="top"><td><code>control</code></td>
+<td>
+<p>A <code>"cyclopsControl"</code> object constructed by <code><a href="../../Cyclops/help/createControl.html">createControl</a></code></p>
+</td></tr>
+<tr valign="top"><td><code>overrideNoRegularization</code></td>
+<td>
+<p>Logical: Enable variance-covariance estimation for regularized parameters</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Additional argument(s) for methods</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A matrix of the estimates covariances between all covariate estimates.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>Cyclops</em> version 3.2.1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

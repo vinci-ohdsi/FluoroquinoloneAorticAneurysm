@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Simulate survival data for MaxSPRT computation</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for simulateMaxSprtData {EmpiricalCalibration}"><tr><td>simulateMaxSprtData {EmpiricalCalibration}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Simulate survival data for MaxSPRT computation</h2>
+
+<h3>Description</h3>
+
+<p>Simulate survival data for MaxSPRT computation
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+simulateMaxSprtData(
+  n = 10000,
+  pExposure = 0.5,
+  backgroundHazard = 0.001,
+  tar = 10,
+  nullMu = 0.2,
+  nullSigma = 0.2,
+  maxT = 100,
+  looks = 10,
+  numberOfNegativeControls = 50,
+  numberOfPositiveControls = 1,
+  positiveControlEffectSize = 4
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>n</code></td>
+<td>
+<p>Number of subjects.</p>
+</td></tr>
+<tr valign="top"><td><code>pExposure</code></td>
+<td>
+<p>Probability of being in target cohort.</p>
+</td></tr>
+<tr valign="top"><td><code>backgroundHazard</code></td>
+<td>
+<p>Background hazard (risk of the outcome per day).</p>
+</td></tr>
+<tr valign="top"><td><code>tar</code></td>
+<td>
+<p>Time at risk for each exposure</p>
+</td></tr>
+<tr valign="top"><td><code>nullMu</code></td>
+<td>
+<p>Null distribution mean (at log HR scale)</p>
+</td></tr>
+<tr valign="top"><td><code>nullSigma</code></td>
+<td>
+<p>Null distribution SD (at log HR scale)</p>
+</td></tr>
+<tr valign="top"><td><code>maxT</code></td>
+<td>
+<p>Maximum time to simulate.</p>
+</td></tr>
+<tr valign="top"><td><code>looks</code></td>
+<td>
+<p>Number of (evenly spaced) looks at the data.</p>
+</td></tr>
+<tr valign="top"><td><code>numberOfNegativeControls</code></td>
+<td>
+<p>Number of negative controls to simulate.</p>
+</td></tr>
+<tr valign="top"><td><code>numberOfPositiveControls</code></td>
+<td>
+<p>Number of positive controls to simulate.</p>
+</td></tr>
+<tr valign="top"><td><code>positiveControlEffectSize</code></td>
+<td>
+<p>The true effect size of the positive controls.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Simulate survival data for negative and positive controls. The data provides multiple looks at data accruing over time, with
+each look having more data than the one before. Systematic error for each outcome is drawn from the prespecified null distribution.
+</p>
+<p>The outcome IDs are assigned sequentially starting at 1, with the first IDs used for the negative controls, and the latter IDs used
+for the positive controls.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A data frame with 5 variables: </p>
+ <dl>
+<dt>time</dt><dd><p>Time from index date to either the event or
+end of observation, whichever came first</p>
+</dd> <dt>outcome</dt><dd><p>Whether the outcome occurred (1) or not (0)</p>
+</dd> <dt>exposure</dt><dd><p>Whether
+the subject was exposed (TRUE) or not (FALSE)</p>
+</dd> <dt>lookTime</dt><dd><p>The time point when the look occurred. </p>
+</dd> <dt>outcomeId</dt><dd><p>A unique
+identifier for data corresponding to a single outcome. Lower IDs indicate negative controls, higher IDs indicate the positive control</p>
+</dd> </dl>
+
+
+
+<h3>Examples</h3>
+
+<pre>
+data &lt;- simulateMaxSprtData(n = 1000)
+head(data)
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>EmpiricalCalibration</em> version 3.1.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

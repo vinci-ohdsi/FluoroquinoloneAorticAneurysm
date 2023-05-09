@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Compute critical values for Poisson regression data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for computeCvPoissonRegression {EmpiricalCalibration}"><tr><td>computeCvPoissonRegression {EmpiricalCalibration}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Compute critical values for Poisson regression data</h2>
+
+<h3>Description</h3>
+
+<p>Obtains critical values for the group and continuous sequential MaxSPRT test with Poisson regression data,
+using a Wald type upper boundary, which is flat with respect to the likelihood ratio function,
+and with a pre-specified upper limit on the sample size.
+</p>
+<p>It is often not possible to select a critical value that corresponds to the exact alpha specified.
+Instead, this function will select the least conservative critical value having an alpha below
+the one specified, so the sequential analysis is conservative.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+computeCvPoissonRegression(
+  groupSizes,
+  z,
+  minimumEvents = 1,
+  alpha = 0.05,
+  sampleSize = 1e+06
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>groupSizes</code></td>
+<td>
+<p>Vector containing the expected number of events under H0 for each test.</p>
+</td></tr>
+<tr valign="top"><td><code>z</code></td>
+<td>
+<p>The control time divided by the time at risk.</p>
+</td></tr>
+<tr valign="top"><td><code>minimumEvents</code></td>
+<td>
+<p>The minimum number of events needed before the null hypothesis can be rejected.</p>
+</td></tr>
+<tr valign="top"><td><code>alpha</code></td>
+<td>
+<p>The significance level, or the type 1 error probability, which is the probability
+of rejecting the null hypothesis when it is true.</p>
+</td></tr>
+<tr valign="top"><td><code>sampleSize</code></td>
+<td>
+<p>Sample size for the Monte-Carlo simulations.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>The computed critical value. The 'alpha' attribute of the result indicates the selected alpha.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+groupSizes &lt;- rep(1, 10)
+computeCvPoissonRegression(groupSizes, z = 4)
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>EmpiricalCalibration</em> version 3.1.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

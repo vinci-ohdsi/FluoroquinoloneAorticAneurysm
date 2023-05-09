@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: R6 Class Representing an Outcome definition</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for Outcome {CohortIncidence}"><tr><td>Outcome {CohortIncidence}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>R6 Class Representing an Outcome definition</h2>
+
+<h3>Description</h3>
+
+<p>The Outcome class, encapsulating the id, name, outcome cohortId, 
+exclusion cohortId, and clean window.
+</p>
+
+
+<h3>Details</h3>
+
+<p>This class is used to specify an outcome definition.  The outcome id is distinct from 
+the outcome cohort ID in that you can define multiple outcomes that use the same outcome cohort 
+with different clean windows or exclusion cohort.
+</p>
+<p>Note, when serializing with a library such as jsonlite, first call toList() on the R6 class
+before calling jsonlite::toJSON().
+</p>
+
+
+<h3>Active bindings</h3>
+
+<div class="r6-active-bindings">
+
+<dl>
+<dt><code>id</code></dt><dd><p>an integer uniquely identifying this outcome definition</p>
+</dd>
+<dt><code>name</code></dt><dd><p>the name given to this outcome definition</p>
+</dd>
+<dt><code>cohortId</code></dt><dd><p>The outcome cohort ID for this outcome.</p>
+</dd>
+<dt><code>cleanWindow</code></dt><dd><p>The clean window for this outcome.</p>
+</dd>
+<dt><code>excludeCohortId</code></dt><dd><p>The cohort that will be used to exclude time at risk.</p>
+</dd>
+</dl>
+
+</div>
+
+
+<h3>Methods</h3>
+
+
+
+<h4>Public methods</h4>
+
+
+<ul>
+<li> <p><a href="#method-Outcome-new"><code>Outcome$new()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-Outcome-toList"><code>Outcome$toList()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-Outcome-asJSON"><code>Outcome$asJSON()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-Outcome-clone"><code>Outcome$clone()</code></a>
+</p>
+</li></ul>
+
+
+<hr>
+<a id="method-Outcome-new"></a>
+
+
+
+<h4>Method <code>new()</code></h4>
+
+<p>creates a new instance, using the provided data param if provided.
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>Outcome$new(data = list())</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>data</code></dt><dd><p>the data (as a json string or list) to initialize with</p>
+</dd>
+</dl>
+
+</div>
+
+
+<hr>
+<a id="method-Outcome-toList"></a>
+
+
+
+<h4>Method <code>toList()</code></h4>
+
+<p>returns the R6 class elements as a list for use in jsonlite::toJSON()
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>Outcome$toList()</pre></div>
+
+
+<hr>
+<a id="method-Outcome-asJSON"></a>
+
+
+
+<h4>Method <code>asJSON()</code></h4>
+
+<p>returns the JSON string for this R6 class
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>Outcome$asJSON()</pre></div>
+
+
+<hr>
+<a id="method-Outcome-clone"></a>
+
+
+
+<h4>Method <code>clone()</code></h4>
+
+<p>The objects of this class are cloneable with this method.
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>Outcome$clone(deep = FALSE)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p>
+</dd>
+</dl>
+
+</div>
+
+
+
+<hr /><div style="text-align: center;">[Package <em>CohortIncidence</em> version 3.1.2 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

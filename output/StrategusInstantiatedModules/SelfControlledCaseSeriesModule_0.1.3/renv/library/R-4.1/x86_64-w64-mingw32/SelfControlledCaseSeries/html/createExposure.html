@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create exposure definition</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for createExposure {SelfControlledCaseSeries}"><tr><td>createExposure {SelfControlledCaseSeries}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Create exposure definition</h2>
+
+<h3>Description</h3>
+
+<p>Create exposure definition
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+createExposure(exposureId, exposureIdRef = "exposureId", trueEffectSize = NA)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>exposureId</code></td>
+<td>
+<p>An integer used to identify the exposure in the exposure cohort table.</p>
+</td></tr>
+<tr valign="top"><td><code>exposureIdRef</code></td>
+<td>
+<p>A string used to refer to the exposure when defining covariates using the
+<code>createEraCovariateSettings()</code> function.</p>
+</td></tr>
+<tr valign="top"><td><code>trueEffectSize</code></td>
+<td>
+<p>For negative and positive controls: the known true effect size. To be
+used for empirical calibration. Negative controls have
+<code>trueEffectSize = 1</code>. If the true effect size is unknown, use
+<code>trueEffectSize = NA</code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Create an exposure definition, to be used with the <a href="../../SelfControlledCaseSeries/help/createExposuresOutcome.html">createExposuresOutcome</a> function.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of type <code>Exposure</code>.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>SelfControlledCaseSeries</em> version 4.2.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

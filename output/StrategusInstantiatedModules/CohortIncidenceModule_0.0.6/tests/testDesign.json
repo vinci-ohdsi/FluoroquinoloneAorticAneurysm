@@ -1,0 +1,67 @@
+{
+  "targetDefs": [
+    {
+      "id": 1,
+      "name": "Celecoxib"
+    },
+    {
+      "id": 2,
+      "name": "Diclofenac"
+    },
+    {
+      "id": 4,
+      "name": "NSAIDs"
+    }
+  ],
+  "outcomeDefs": [
+    {
+      "id": 1,
+      "name": "GI Bleed, first",
+      "cohortId": 3,
+      "cleanWindow": 9999
+    },
+    {
+      "id": 2,
+      "name": "GI Bleed, 0d clean",
+      "cohortId": 3,
+      "cleanWindow": 0
+    }
+  ],
+  "timeAtRiskDefs": [
+    {
+      "id": 1,
+      "start": {
+        "dateField": "start",
+        "offset": 0
+      },
+      "end": {
+        "dateField": "start",
+        "offset": 365
+      }
+    }
+  ],
+  "analysisList": [
+    {
+      "targets": [
+        1,
+        2,
+        4
+      ],
+      "outcomes": [
+        1
+      ],
+      "tars": [
+        1
+      ]
+    }
+  ],
+  "strataSettings": {
+    "byAge": true,
+    "byGender": true,
+    "byYear": true,
+    "ageBreaks": [
+      18,
+      65
+    ]
+  }
+}

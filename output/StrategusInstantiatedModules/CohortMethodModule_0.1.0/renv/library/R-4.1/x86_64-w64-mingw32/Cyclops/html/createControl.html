@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create a Cyclops control object</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for createControl {Cyclops}"><tr><td>createControl {Cyclops}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Create a Cyclops control object</h2>
+
+<h3>Description</h3>
+
+<p><code>createControl</code> creates a Cyclops control object for use with <code><a href="../../Cyclops/help/fitCyclopsModel.html">fitCyclopsModel</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+createControl(
+  maxIterations = 1000,
+  tolerance = 1e-06,
+  convergenceType = "gradient",
+  cvType = "auto",
+  fold = 10,
+  lowerLimit = 0.01,
+  upperLimit = 20,
+  gridSteps = 10,
+  cvRepetitions = 1,
+  minCVData = 100,
+  noiseLevel = "silent",
+  threads = 1,
+  seed = NULL,
+  resetCoefficients = FALSE,
+  startingVariance = -1,
+  useKKTSwindle = FALSE,
+  tuneSwindle = 10,
+  selectorType = "auto",
+  initialBound = 2,
+  maxBoundCount = 5,
+  algorithm = "ccd"
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>maxIterations</code></td>
+<td>
+<p>Integer: maximum iterations of Cyclops to attempt before returning a failed-to-converge error</p>
+</td></tr>
+<tr valign="top"><td><code>tolerance</code></td>
+<td>
+<p>Numeric: maximum relative change in convergence criterion from successive iterations to achieve convergence</p>
+</td></tr>
+<tr valign="top"><td><code>convergenceType</code></td>
+<td>
+<p>String: name of convergence criterion to employ (described in more detail below)</p>
+</td></tr>
+<tr valign="top"><td><code>cvType</code></td>
+<td>
+<p>String: name of cross validation search.
+Option <code>"auto"</code> selects an auto-search following BBR.
+Option <code>"grid"</code> selects a grid-search cross validation</p>
+</td></tr>
+<tr valign="top"><td><code>fold</code></td>
+<td>
+<p>Numeric: Number of random folds to employ in cross validation</p>
+</td></tr>
+<tr valign="top"><td><code>lowerLimit</code></td>
+<td>
+<p>Numeric: Lower prior variance limit for grid-search</p>
+</td></tr>
+<tr valign="top"><td><code>upperLimit</code></td>
+<td>
+<p>Numeric: Upper prior variance limit for grid-search</p>
+</td></tr>
+<tr valign="top"><td><code>gridSteps</code></td>
+<td>
+<p>Numeric: Number of steps in grid-search</p>
+</td></tr>
+<tr valign="top"><td><code>cvRepetitions</code></td>
+<td>
+<p>Numeric: Number of repetitions of X-fold cross validation</p>
+</td></tr>
+<tr valign="top"><td><code>minCVData</code></td>
+<td>
+<p>Numeric: Minimum number of data for cross validation</p>
+</td></tr>
+<tr valign="top"><td><code>noiseLevel</code></td>
+<td>
+<p>String: level of Cyclops screen output (<code>"silent"</code>, <code>"quiet"</code>, <code>"noisy"</code>)</p>
+</td></tr>
+<tr valign="top"><td><code>threads</code></td>
+<td>
+<p>Numeric: Specify number of CPU threads to employ in cross-validation; default = 1 (auto = -1)</p>
+</td></tr>
+<tr valign="top"><td><code>seed</code></td>
+<td>
+<p>Numeric: Specify random number generator seed. A null value sets seed via <code><a href="../../base/html/Sys.time.html">Sys.time</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>resetCoefficients</code></td>
+<td>
+<p>Logical: Reset all coefficients to 0 between model fits under cross-validation</p>
+</td></tr>
+<tr valign="top"><td><code>startingVariance</code></td>
+<td>
+<p>Numeric: Starting variance for auto-search cross-validation; default = -1 (use estimate based on data)</p>
+</td></tr>
+<tr valign="top"><td><code>useKKTSwindle</code></td>
+<td>
+<p>Logical: Use the Karush-Kuhn-Tucker conditions to limit search</p>
+</td></tr>
+<tr valign="top"><td><code>tuneSwindle</code></td>
+<td>
+<p>Numeric: Size multiplier for active set</p>
+</td></tr>
+<tr valign="top"><td><code>selectorType</code></td>
+<td>
+<p>String: name of exchangeable sampling unit.
+Option <code>"byPid"</code> selects entire strata.
+Option <code>"byRow"</code> selects single rows.
+If set to <code>"auto"</code>, <code>"byRow"</code> will be used for all models except conditional models where
+the average number of rows per stratum is smaller than the number of strata.</p>
+</td></tr>
+<tr valign="top"><td><code>initialBound</code></td>
+<td>
+<p>Numeric: Starting trust-region size</p>
+</td></tr>
+<tr valign="top"><td><code>maxBoundCount</code></td>
+<td>
+<p>Numeric: Maximum number of tries to decrease initial trust-region size</p>
+</td></tr>
+<tr valign="top"><td><code>algorithm</code></td>
+<td>
+<p>String: name of fitting algorithm to employ; default is 'ccd'
+</p>
+<p>Todo: Describe convegence types</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A Cyclops control object of class inheriting from <code>"cyclopsControl"</code> for use with <code><a href="../../Cyclops/help/fitCyclopsModel.html">fitCyclopsModel</a></code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+#Generate some simulated data:
+sim &lt;- simulateCyclopsData(nstrata = 1, nrows = 1000, ncovars = 2, eCovarsPerRow = 0.5, 
+                           model = "poisson")
+cyclopsData &lt;- convertToCyclopsData(sim$outcomes, sim$covariates, modelType = "pr", 
+                                    addIntercept = TRUE)
+
+#Define the prior and control objects to use cross-validation for finding the 
+#optimal hyperparameter:
+prior &lt;- createPrior("laplace", exclude = 0, useCrossValidation = TRUE)
+control &lt;- createControl(cvType = "auto", noiseLevel = "quiet")
+
+#Fit the model
+fit &lt;- fitCyclopsModel(cyclopsData,prior = prior, control = control)  
+
+#Find out what the optimal hyperparameter was:
+getHyperParameter(fit)
+
+#Extract the current log-likelihood, and coefficients
+logLik(fit)
+coef(fit)
+
+#We can only retrieve the confidence interval for unregularized coefficients:
+confint(fit, c(0))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>Cyclops</em> version 3.2.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

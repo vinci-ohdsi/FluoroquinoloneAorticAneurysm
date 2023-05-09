@@ -1,0 +1,232 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Load data for SCCS from the database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for getDbSccsData {SelfControlledCaseSeries}"><tr><td>getDbSccsData {SelfControlledCaseSeries}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Load data for SCCS from the database</h2>
+
+<h3>Description</h3>
+
+<p>Load all data needed to perform an SCCS analysis from the database.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+getDbSccsData(
+  connectionDetails,
+  cdmDatabaseSchema,
+  tempEmulationSchema = getOption("sqlRenderTempEmulationSchema"),
+  outcomeDatabaseSchema = cdmDatabaseSchema,
+  outcomeTable = "condition_era",
+  outcomeIds,
+  exposureDatabaseSchema = cdmDatabaseSchema,
+  exposureTable = "drug_era",
+  exposureIds = c(),
+  useCustomCovariates = FALSE,
+  customCovariateDatabaseSchema = cdmDatabaseSchema,
+  customCovariateTable = "cohort",
+  customCovariateIds = c(),
+  useNestingCohort = FALSE,
+  nestingCohortDatabaseSchema = cdmDatabaseSchema,
+  nestingCohortTable = "cohort",
+  nestingCohortId = NULL,
+  deleteCovariatesSmallCount = 0,
+  studyStartDate = "",
+  studyEndDate = "",
+  cdmVersion = "5",
+  maxCasesPerOutcome = 0
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>connectionDetails</code></td>
+<td>
+<p>An R object of type <code>ConnectionDetails</code> created using
+the function <code><a href="../../DatabaseConnector/help/createConnectionDetails.html">DatabaseConnector::createConnectionDetails()</a></code> function.</p>
+</td></tr>
+<tr valign="top"><td><code>cdmDatabaseSchema</code></td>
+<td>
+<p>The name of the database schema that contains the OMOP CDM
+instance.  Requires read permissions to this database. On SQL
+Server, this should specify both the database and the
+schema, so for example 'cdm_instance.dbo'.</p>
+</td></tr>
+<tr valign="top"><td><code>tempEmulationSchema</code></td>
+<td>
+<p>Some database platforms like Oracle and Impala do not truly support
+temp tables. To emulate temp tables, provide a schema with write
+privileges where temp tables can be created.</p>
+</td></tr>
+<tr valign="top"><td><code>outcomeDatabaseSchema</code></td>
+<td>
+<p>The name of the database schema that is the location where
+the data used to define the outcome cohorts is available. If
+<code>outcomeTable = "condition_era"</code>, <code>outcomeDatabaseSchema</code> is not
+used.  Requires read permissions to this database.</p>
+</td></tr>
+<tr valign="top"><td><code>outcomeTable</code></td>
+<td>
+<p>The table name that contains the outcome cohorts.  If
+<code>outcomeTable</code> is not <code>"condition_era"</code>,
+then expectation is <code>outcomeTable</code> has format of cohort table (see
+details).</p>
+</td></tr>
+<tr valign="top"><td><code>outcomeIds</code></td>
+<td>
+<p>A list of IDs used to define outcomes.  If <code>outcomeTable</code> is not
+<code>"condition_era"</code> the list contains records found in the
+<code>cohort_definition_id</code> field.</p>
+</td></tr>
+<tr valign="top"><td><code>exposureDatabaseSchema</code></td>
+<td>
+<p>The name of the database schema that is the location where
+the exposure data used to define the exposure eras is
+available. If <code>exposureTable = "drug_era"</code>,
+<code>exposureDatabaseSchema</code> is not used but assumed to be equal to
+<code>cdmDatabaseSchema</code>.  Requires read permissions to this database.</p>
+</td></tr>
+<tr valign="top"><td><code>exposureTable</code></td>
+<td>
+<p>The tablename that contains the exposure cohorts.  If
+<code>exposureTable</code> is not &quot;drug_era&quot;, then expectation is <code>exposureTable</code>
+has format of a cohort table (see details).</p>
+</td></tr>
+<tr valign="top"><td><code>exposureIds</code></td>
+<td>
+<p>A list of identifiers to extract from the exposure table. If
+exposureTable = DRUG_ERA, exposureIds should be CONCEPT_ID.
+If <code>exposureTable = "drug_era"</code>, <code>exposureIds</code> is used to select
+the <code>drug_concept_id</code>. If no exposure IDs are provided, all drugs
+or cohorts in the <code>exposureTable</code> are included as exposures.</p>
+</td></tr>
+<tr valign="top"><td><code>useCustomCovariates</code></td>
+<td>
+<p>Create covariates from a custom table?</p>
+</td></tr>
+<tr valign="top"><td><code>customCovariateDatabaseSchema</code></td>
+<td>
+<p>The name of the database schema that is the location where
+the custom covariate data is available.</p>
+</td></tr>
+<tr valign="top"><td><code>customCovariateTable</code></td>
+<td>
+<p>Name of the table holding the custom covariates. This table
+should have the same structure as the cohort table (see details).</p>
+</td></tr>
+<tr valign="top"><td><code>customCovariateIds</code></td>
+<td>
+<p>A list of cohort definition IDs identifying the records in
+the <code>customCovariateTable</code> to use for building custom
+covariates.</p>
+</td></tr>
+<tr valign="top"><td><code>useNestingCohort</code></td>
+<td>
+<p>Should the study be nested in a cohort (e.g. people with
+a specific indication)? If not, the study will be nested
+in the general population.</p>
+</td></tr>
+<tr valign="top"><td><code>nestingCohortDatabaseSchema</code></td>
+<td>
+<p>The name of the database schema that is the location
+where the nesting cohort is defined.</p>
+</td></tr>
+<tr valign="top"><td><code>nestingCohortTable</code></td>
+<td>
+<p>Name of the table holding the nesting cohort. This table
+should have the same structure as the cohort table (see details).</p>
+</td></tr>
+<tr valign="top"><td><code>nestingCohortId</code></td>
+<td>
+<p>A cohort definition ID identifying the records in the
+<code>nestingCohortTable</code> to use as nesting cohort.</p>
+</td></tr>
+<tr valign="top"><td><code>deleteCovariatesSmallCount</code></td>
+<td>
+<p>The minimum count for a covariate to appear in the data to be
+kept.</p>
+</td></tr>
+<tr valign="top"><td><code>studyStartDate</code></td>
+<td>
+<p>A character object specifying the minimum date where data is
+used. Date format is 'yyyymmdd'.</p>
+</td></tr>
+<tr valign="top"><td><code>studyEndDate</code></td>
+<td>
+<p>A character object specifying the maximum date where data is
+used. Date format is 'yyyymmdd'.</p>
+</td></tr>
+<tr valign="top"><td><code>cdmVersion</code></td>
+<td>
+<p>Define the OMOP CDM version used: currently supports &quot;5&quot;.</p>
+</td></tr>
+<tr valign="top"><td><code>maxCasesPerOutcome</code></td>
+<td>
+<p>If there are more than this number of cases for a single
+outcome cases will be sampled to this size. <code>maxCasesPerOutcome = 0</code>
+indicates no maximum size.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This function downloads several types of information:
+</p>
+
+<ul>
+<li><p> Information on the occurrences of the outcome(s) of interest. Note that information for
+multiple outcomes can be fetched in one go, and later the specific outcome can be specified
+for which we want to build a model.
+</p>
+</li>
+<li><p> Information on the observation time and age for the people with the outcomes.
+</p>
+</li>
+<li><p> Information on exposures of interest which we want to include in the model.
+</p>
+</li></ul>
+
+<p>Five different database schemas can be specified, for five different types of information: The
+</p>
+
+<ul>
+<li> <p><strong>cdmDatabaseSchema</strong> is used to extract patient age and observation period. The
+</p>
+</li>
+<li> <p><strong>outcomeDatabaseSchema</strong> is used to extract information about the outcomes, the
+</p>
+</li>
+<li> <p><strong>exposureDatabaseSchema</strong> is used to retrieve information on exposures, and the
+</p>
+</li>
+<li> <p><strong>customCovariateDatabaseSchema</strong> is optionally used to find additional, user-defined
+covariates. All four locations could point to the same database schema.
+</p>
+</li>
+<li> <p><strong>nestingCohortDatabaseSchema</strong> is optionally used to define a cohort in which the analysis is nested,
+for example a cohort of diabetics patients.
+</p>
+</li></ul>
+
+<p>All five locations could point to the same database schema.
+</p>
+<p>Cohort tables are assumed to have the following fields: <code>cohort_definition_id</code>, <code>subject_id</code>,
+<code>cohort_start_date</code>, and <code>cohort_end_date.</code>
+</p>
+
+
+<h3>Value</h3>
+
+<p>An <a href="../../SelfControlledCaseSeries/help/SccsData.html">SccsData</a> object.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>SelfControlledCaseSeries</em> version 4.2.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Builds the BuilderOptions jObject with the specified...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for buildOptions {CohortIncidence}"><tr><td>buildOptions {CohortIncidence}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Builds the BuilderOptions jObject with the specified paramaters</h2>
+
+<h3>Description</h3>
+
+<p>Builds the BuilderOptions jObject with the specified paramaters
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+buildOptions(
+  cohortTable,
+  outcomeCohortTable = cohortTable,
+  subgroupCohortTable = cohortTable,
+  sourceName,
+  cdmDatabaseSchema,
+  resultsDatabaseSchema,
+  vocabularySchema = cdmDatabaseSchema,
+  useTempTables = F,
+  refId
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>cohortTable</code></td>
+<td>
+<p>The name of table with cohorts</p>
+</td></tr>
+<tr valign="top"><td><code>outcomeCohortTable</code></td>
+<td>
+<p>The name of table with outcome cohorts, defaults to cohortTable param.</p>
+</td></tr>
+<tr valign="top"><td><code>subgroupCohortTable</code></td>
+<td>
+<p>The name of table with subgroup cohorts, defaults to cohortTable param.</p>
+</td></tr>
+<tr valign="top"><td><code>sourceName</code></td>
+<td>
+<p>A value to inject to the results table for the source name.</p>
+</td></tr>
+<tr valign="top"><td><code>cdmDatabaseSchema</code></td>
+<td>
+<p>the name of schema containing data in CDM format</p>
+</td></tr>
+<tr valign="top"><td><code>resultsDatabaseSchema</code></td>
+<td>
+<p>the name of schema where results would be placed</p>
+</td></tr>
+<tr valign="top"><td><code>vocabularySchema</code></td>
+<td>
+<p>the name of schema with vocabulary tables, defaults to cdmDatabaseSchema param</p>
+</td></tr>
+<tr valign="top"><td><code>useTempTables</code></td>
+<td>
+<p>use temp tables instead of a results schema.</p>
+</td></tr>
+<tr valign="top"><td><code>refId</code></td>
+<td>
+<p>A number tagged to the results for retrieval purposes.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>a BuilderOptions object used in buildQuery.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>CohortIncidence</em> version 3.1.2 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

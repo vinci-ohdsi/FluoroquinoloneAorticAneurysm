@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: How to download and use JDBC drivers for the various data...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for jdbcDrivers {DatabaseConnector}"><tr><td>jdbcDrivers {DatabaseConnector}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>How to download and use JDBC drivers for the various data platforms.</h2>
+
+<h3>Description</h3>
+
+<p>Below are instructions for downloading JDBC drivers for the various data platforms. Once downloaded
+use the <code>pathToDriver</code> argument in the <code><a href="../../DatabaseConnector/help/connect.html">connect</a></code> or <code><a href="../../DatabaseConnector/help/createConnectionDetails.html">createConnectionDetails</a></code>
+functions to point to the driver. Alternatively, you can set the 'DATABASECONNECTOR_JAR_FOLDER' environmental
+variable, for example in your .Renviron file (recommended).
+</p>
+
+
+<h3>SQL Server, Oracle, PostgreSQL, PDW, Snowflake, Spark RedShift, Azure Synapse</h3>
+
+<p>Use the <code><a href="../../DatabaseConnector/help/downloadJdbcDrivers.html">downloadJdbcDrivers</a></code> function to download these drivers
+from the OHDSI GitHub pages.
+</p>
+
+
+<h3>Netezza</h3>
+
+<p>Read the instructions
+<a href="https://www.ibm.com/docs/en/SSULQD_7.2.1/com.ibm.nz.datacon.doc/t_datacon_setup_JDBC.html">here</a>
+on how to obtain the Netezza JDBC driver.
+</p>
+
+
+<h3>BigQuery</h3>
+
+<p>Go to <a href="https://cloud.google.com/bigquery/docs/reference/odbc-jdbc-drivers">Google's site</a> and
+download the latest JDBC driver. Unzip the file, and locate the appropriate jar files.
+</p>
+
+
+<h3>Impala</h3>
+
+<p>Go to
+<a href="https://www.cloudera.com/downloads/connectors/impala/jdbc/2-5-5.html">Cloudera's site</a>, pick
+your OS version, and click &quot;GET IT NOW!'. Register, and you should be able to download the driver.
+</p>
+
+
+<h3>SQLite</h3>
+
+<p>For SQLite we actually don't use a JDBC driver. Instead, we use the RSQLite package, which can be installed
+using <code>install.packages("RSQLite")</code>.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>DatabaseConnector</em> version 5.1.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

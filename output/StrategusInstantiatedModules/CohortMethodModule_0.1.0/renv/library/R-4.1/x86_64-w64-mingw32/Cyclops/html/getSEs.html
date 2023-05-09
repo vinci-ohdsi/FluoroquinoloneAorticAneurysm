@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Extract standard errors</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for getSEs {Cyclops}"><tr><td>getSEs {Cyclops}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Extract standard errors</h2>
+
+<h3>Description</h3>
+
+<p><code>getSEs</code> extracts asymptotic standard errors for specific covariates from a Cyclops model fit object.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+getSEs(object, covariates)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>A Cyclops model fit object</p>
+</td></tr>
+<tr valign="top"><td><code>covariates</code></td>
+<td>
+<p>Integer or string vector: list of covariates for which asymptotic standard errors are wanted</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This function first computes the (partial) Fisher information matrix for
+just the requested covariates and then returns the square root of the diagonal elements of
+the inverse of the Fisher information matrix.  These are the asymptotic standard errors
+when all possible covariates are included.
+When the requested covariates do not equate to all coefficients in the model,
+then interpretation is more challenging.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Vector of standard error estimates
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>Cyclops</em> version 3.2.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

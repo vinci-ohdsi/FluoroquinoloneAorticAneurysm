@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create a Cyclops parameterized prior object</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for createParameterizedPrior {Cyclops}"><tr><td>createParameterizedPrior {Cyclops}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Create a Cyclops parameterized prior object</h2>
+
+<h3>Description</h3>
+
+<p><code>createParameterizedPrior</code> creates a Cyclops prior object for use with <code><a href="../../Cyclops/help/fitCyclopsModel.html">fitCyclopsModel</a></code>
+in which arbitrary <code>R</code> functions parameterize the prior location and variance.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+createParameterizedPrior(
+  priorType,
+  parameterize,
+  values,
+  useCrossValidation = FALSE,
+  forceIntercept = FALSE
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>priorType</code></td>
+<td>
+<p>Character vector: specifies prior distribution.  See below for options</p>
+</td></tr>
+<tr valign="top"><td><code>parameterize</code></td>
+<td>
+<p>Function list: parameterizes location and variance</p>
+</td></tr>
+<tr valign="top"><td><code>values</code></td>
+<td>
+<p>Numeric vector: initial parameter values</p>
+</td></tr>
+<tr valign="top"><td><code>useCrossValidation</code></td>
+<td>
+<p>Logical: Perform cross-validation to determine <code>parameters</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>forceIntercept</code></td>
+<td>
+<p>Logical: Force intercept coefficient into prior</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A Cyclops prior object of class inheriting from <code>"cyclopsPrior"</code> and <code>"cyclopsFunctionalPrior"</code>
+for use with <code>fitCyclopsModel</code>.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>Cyclops</em> version 3.2.1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

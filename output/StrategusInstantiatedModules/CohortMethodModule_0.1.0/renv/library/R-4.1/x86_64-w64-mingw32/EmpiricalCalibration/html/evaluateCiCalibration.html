@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Evaluate confidence interval calibration</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for evaluateCiCalibration {EmpiricalCalibration}"><tr><td>evaluateCiCalibration {EmpiricalCalibration}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Evaluate confidence interval calibration</h2>
+
+<h3>Description</h3>
+
+<p><code>evaluateCiCalibration</code> performs a leave-one-out cross-validation to evaluate the calibration
+confidence intervals.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+evaluateCiCalibration(
+  logRr,
+  seLogRr,
+  trueLogRr,
+  strata = as.factor(trueLogRr),
+  crossValidationGroup = 1:length(logRr),
+  legacy = FALSE
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>logRr</code></td>
+<td>
+<p>A numeric vector of effect estimates on the log scale.</p>
+</td></tr>
+<tr valign="top"><td><code>seLogRr</code></td>
+<td>
+<p>The standard error of the log of the effect estimates. Hint: often the
+standard error = (log(&lt;lower bound 95 percent confidence interval&gt;) -
+log(&lt;effect estimate&gt;))/qnorm(0.025).</p>
+</td></tr>
+<tr valign="top"><td><code>trueLogRr</code></td>
+<td>
+<p>The true log relative risk.</p>
+</td></tr>
+<tr valign="top"><td><code>strata</code></td>
+<td>
+<p>Variable used to stratify the plot. Set <code>strata = NULL</code> for no
+stratification.</p>
+</td></tr>
+<tr valign="top"><td><code>crossValidationGroup</code></td>
+<td>
+<p>What should be the unit for the cross-validation? By default the unit
+is a single control, but a different grouping can be provided, for
+example linking a negative control to synthetic positive controls
+derived from that negative control.</p>
+</td></tr>
+<tr valign="top"><td><code>legacy</code></td>
+<td>
+<p>If true, a legacy error model will be fitted, meaning standard
+deviation is linear on the log scale. If false, standard deviation
+is assumed to be simply linear.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The empirical calibration is performed using a leave-one-out design: The confidence interval of an
+effect is computed by fitting a null using all other controls.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A data frame specifying the coverage per strata (usually true effect size) for a wide range of widths
+of the confidence interval. The result also includes the fraction of estimates that was below and above
+the confidence interval.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## Not run: 
+data &lt;- simulateControls(n = 50 * 3, mean = 0.25, sd = 0.25, trueLogRr = log(c(1, 2, 4)))
+eval &lt;- evaluateCiCalibration(data$logRr, data$seLogRr, data$trueLogRr)
+
+## End(Not run)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>EmpiricalCalibration</em> version 3.1.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

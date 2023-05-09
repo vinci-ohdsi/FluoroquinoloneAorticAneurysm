@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create aggregate covariate study settings</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for createAggregateCovariateSettings {Characterization}"><tr><td>createAggregateCovariateSettings {Characterization}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Create aggregate covariate study settings</h2>
+
+<h3>Description</h3>
+
+<p>Create aggregate covariate study settings
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+createAggregateCovariateSettings(
+  targetIds,
+  outcomeIds,
+  minPriorObservation = 0,
+  riskWindowStart = 1,
+  startAnchor = "cohort start",
+  riskWindowEnd = 365,
+  endAnchor = "cohort start",
+  covariateSettings
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>targetIds</code></td>
+<td>
+<p>A list of cohortIds for the target cohorts</p>
+</td></tr>
+<tr valign="top"><td><code>outcomeIds</code></td>
+<td>
+<p>A list of cohortIds for the outcome cohorts</p>
+</td></tr>
+<tr valign="top"><td><code>minPriorObservation</code></td>
+<td>
+<p>The minimum time in the database a patient in the target cohorts must be observed prior to index</p>
+</td></tr>
+<tr valign="top"><td><code>riskWindowStart</code></td>
+<td>
+<p>The start of the risk window (in days) relative to the 'startAnchor'.</p>
+</td></tr>
+<tr valign="top"><td><code>startAnchor</code></td>
+<td>
+<p>The anchor point for the start of the risk window. Can be '&quot;cohort start&quot;'
+or '&quot;cohort end&quot;'.</p>
+</td></tr>
+<tr valign="top"><td><code>riskWindowEnd</code></td>
+<td>
+<p>The end of the risk window (in days) relative to the 'endAnchor'.</p>
+</td></tr>
+<tr valign="top"><td><code>endAnchor</code></td>
+<td>
+<p>The anchor point for the end of the risk window. Can be '&quot;cohort start&quot;'
+or '&quot;cohort end&quot;'.</p>
+</td></tr>
+<tr valign="top"><td><code>covariateSettings</code></td>
+<td>
+<p>An object created using <code>FeatureExtraction::createCovariateSettings</code></p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A list with the settings
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>Characterization</em> version 0.1.1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

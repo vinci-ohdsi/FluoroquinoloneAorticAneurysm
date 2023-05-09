@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Extract query times from a 'ParallelLogger' log file</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for extractQueryTimes {DatabaseConnector}"><tr><td>extractQueryTimes {DatabaseConnector}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Extract query times from a <code>ParallelLogger</code> log file</h2>
+
+<h3>Description</h3>
+
+<p>When using the <code>ParallelLogger</code> default file logger, and using <code>options(LOG_DATABASECONNECTOR_SQL = TRUE)</code>,
+<code>DatabaseConnector</code> will log all SQL sent to the server, and the time to get a response.
+</p>
+<p>This function parses the log file, producing a data frame with time per query.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+extractQueryTimes(logFileName)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>logFileName</code></td>
+<td>
+<p>Name of the <code>ParallelLogger</code> log file. Assumes the file was created using
+the default file logger.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A data frame with queries and their run times in milliseconds.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+connection &lt;- connect(dbms = "sqlite", server = ":memory:")
+logFile &lt;- tempfile(fileext = ".log")
+ParallelLogger::addDefaultFileLogger(fileName = logFile, name = "MY_LOGGER")
+options(LOG_DATABASECONNECTOR_SQL = TRUE)
+
+executeSql(connection, "CREATE TABLE test (x INT);")
+querySql(connection, "SELECT * FROM test;")
+
+extractQueryTimes(logFile)
+
+ParallelLogger::unregisterLogger("MY_LOGGER")
+unlink(logFile)
+disconnect(connection)
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>DatabaseConnector</em> version 6.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

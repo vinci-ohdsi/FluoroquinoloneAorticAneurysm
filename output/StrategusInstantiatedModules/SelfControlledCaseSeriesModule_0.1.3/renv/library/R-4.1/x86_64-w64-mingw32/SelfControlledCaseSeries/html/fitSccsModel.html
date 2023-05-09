@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Fit the SCCS model</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for fitSccsModel {SelfControlledCaseSeries}"><tr><td>fitSccsModel {SelfControlledCaseSeries}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Fit the SCCS model</h2>
+
+<h3>Description</h3>
+
+<p>Fit the SCCS model
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+fitSccsModel(
+  sccsIntervalData,
+  prior = createPrior("laplace", useCrossValidation = TRUE),
+  control = createControl(cvType = "auto", selectorType = "byPid", startingVariance =
+    0.1, seed = 1, resetCoefficients = TRUE, noiseLevel = "quiet"),
+  profileGrid = NULL,
+  profileBounds = c(log(0.1), log(10))
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>sccsIntervalData</code></td>
+<td>
+<p>An object of type <a href="../../SelfControlledCaseSeries/help/SccsIntervalData.html">SccsIntervalData</a> as created using the
+<a href="../../SelfControlledCaseSeries/help/createSccsIntervalData.html">createSccsIntervalData</a> function.</p>
+</td></tr>
+<tr valign="top"><td><code>prior</code></td>
+<td>
+<p>The prior used to fit the model. See <a href="../../Cyclops/help/createPrior.html">Cyclops::createPrior</a> for
+details.</p>
+</td></tr>
+<tr valign="top"><td><code>control</code></td>
+<td>
+<p>The control object used to control the cross-validation used to determine the
+hyperparameters of the prior (if applicable). See
+<a href="../../Cyclops/help/createControl.html">Cyclops::createControl</a> for details.</p>
+</td></tr>
+<tr valign="top"><td><code>profileGrid</code></td>
+<td>
+<p>A one-dimensional grid of points on the log(relative risk) scale where
+the likelihood for coefficient of variables is sampled. See details.</p>
+</td></tr>
+<tr valign="top"><td><code>profileBounds</code></td>
+<td>
+<p>The bounds (on the log relative risk scale) for the adaptive sampling
+of the likelihood function.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Fits the SCCS model as a conditional Poisson regression. When allowed, coefficients for some or all
+covariates can be regularized.
+</p>
+<p>Likelihood profiling is only done for variables for which <code>profileLikelihood</code> is set to <code>TRUE</code> when
+calling <code><a href="../../SelfControlledCaseSeries/help/createEraCovariateSettings.html">createEraCovariateSettings()</a></code>. Either specify the <code>profileGrid</code> for a completely user-
+defined grid, or <code>profileBounds</code> for an adaptive grid. Both should be defined on the log IRR scale.
+When both <code>profileGrid</code> and <code>profileGrid</code> are <code>NULL</code> likelihood profiling is disabled.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of type <code>SccsModel</code>. Generic functions <code>print</code>, <code>coef</code>, and
+<code>confint</code> are available.
+</p>
+
+
+<h3>References</h3>
+
+<p>Suchard, M.A., Simpson, S.E., Zorych, I., Ryan, P., and Madigan, D. (2013). Massive parallelization
+of serial inference algorithms for complex generalized linear models. ACM Transactions on Modeling
+and Computer Simulation 23, 10
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>SelfControlledCaseSeries</em> version 4.2.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

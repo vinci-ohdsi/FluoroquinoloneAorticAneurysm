@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Fit the null distribution</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for fitNull {EmpiricalCalibration}"><tr><td>fitNull {EmpiricalCalibration}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Fit the null distribution</h2>
+
+<h3>Description</h3>
+
+<p><code>fitNull</code> fits the null distribution to a set of negative controls
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+fitNull(logRr, seLogRr)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>logRr</code></td>
+<td>
+<p>A numeric vector of effect estimates on the log scale</p>
+</td></tr>
+<tr valign="top"><td><code>seLogRr</code></td>
+<td>
+<p>The standard error of the log of the effect estimates. Hint: often the standard
+error = (log(&lt;lower bound 95 percent confidence interval&gt;) - log(&lt;effect
+estimate&gt;))/qnorm(0.025)</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This function fits a Gaussian function to the negative control estimates as described in Schuemie
+et al (2014).
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object containing the parameters of the null distribution.
+</p>
+
+
+<h3>References</h3>
+
+<p>Schuemie MJ, Ryan PB, Dumouchel W, Suchard MA, Madigan D. Interpreting observational studies: why
+empirical calibration is needed to correct p-values. Statistics in Medicine 33(2):209-18,2014
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data(sccs)
+negatives &lt;- sccs[sccs$groundTruth == 0, ]
+null &lt;- fitNull(negatives$logRr, negatives$seLogRr)
+null
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>EmpiricalCalibration</em> version 3.1.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

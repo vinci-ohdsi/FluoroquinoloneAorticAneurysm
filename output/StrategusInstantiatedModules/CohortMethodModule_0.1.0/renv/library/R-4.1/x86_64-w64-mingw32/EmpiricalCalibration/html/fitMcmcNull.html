@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Fit the null distribution using MCMC</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for fitMcmcNull {EmpiricalCalibration}"><tr><td>fitMcmcNull {EmpiricalCalibration}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Fit the null distribution using MCMC</h2>
+
+<h3>Description</h3>
+
+<p><code>fitNull</code> fits the null distribution to a set of negative controls using Markov Chain Monte
+Carlo (MCMC).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+fitMcmcNull(logRr, seLogRr, iter = 1e+05)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>logRr</code></td>
+<td>
+<p>A numeric vector of effect estimates on the log scale</p>
+</td></tr>
+<tr valign="top"><td><code>seLogRr</code></td>
+<td>
+<p>The standard error of the log of the effect estimates. Hint: often the standard
+error = (log(&lt;lower bound 95 percent confidence interval&gt;) - log(&lt;effect
+estimate&gt;))/qnorm(0.025)</p>
+</td></tr>
+<tr valign="top"><td><code>iter</code></td>
+<td>
+<p>Number of iterations of the MCMC.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This is an experimental function for computing the 95 percent credible interval of a calibrated
+p-value using Markov-Chain Monte Carlo (MCMC).
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of type <code>mcmcNull</code> containing the mean and standard deviation (both on the log
+scale) of the null distribution, as well as the MCMC trace.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## Not run: 
+data(sccs)
+negatives &lt;- sccs[sccs$groundTruth == 0, ]
+null &lt;- fitMcmcNull(negatives$logRr, negatives$seLogRr)
+null
+plotMcmcTrace(null)
+positive &lt;- sccs[sccs$groundTruth == 1, ]
+calibrateP(null, positive$logRr, positive$seLogRr)
+
+## End(Not run)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>EmpiricalCalibration</em> version 3.1.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

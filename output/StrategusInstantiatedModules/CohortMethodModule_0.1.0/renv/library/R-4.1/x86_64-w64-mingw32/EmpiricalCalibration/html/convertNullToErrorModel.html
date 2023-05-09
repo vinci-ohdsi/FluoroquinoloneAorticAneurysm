@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Convert empirical null distribution to systematic error model</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for convertNullToErrorModel {EmpiricalCalibration}"><tr><td>convertNullToErrorModel {EmpiricalCalibration}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Convert empirical null distribution to systematic error model</h2>
+
+<h3>Description</h3>
+
+<p>This function converts an empirical null distribution, fitted using estimates only for negative controls,
+into a systematic error distribution that can be used to calibrate confidence intervals in addition to
+p-values.
+</p>
+<p>Whereas the <code><a href="../../EmpiricalCalibration/help/fitSystematicErrorModel.html">fitSystematicErrorModel</a></code> uses positive controls to determine how the error
+distribution changes with true effect size, this function requires the user to make an assumption. The
+default assumption, <code>meanSlope = 1</code> and <code>sdSlope = 0</code>, specify a belief that the error
+distribution is the same for all true effect sizes. In many cases this assumption is likely to be correct,
+however, if an estimation method is biased towards the null this assumption will be violated, causing the
+calibrated confidence intervals to have lower than nominal coverage.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+convertNullToErrorModel(null, meanSlope = 1, sdSlope = 0)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>null</code></td>
+<td>
+<p>The empirical null distribution fitted using either the <code><a href="../../EmpiricalCalibration/help/fitNull.html">fitNull</a></code>
+or the <code><a href="../../EmpiricalCalibration/help/fitMcmcNull.html">fitMcmcNull</a></code> function.</p>
+</td></tr>
+<tr valign="top"><td><code>meanSlope</code></td>
+<td>
+<p>The slope for the mean of the error distribution. A slope of 1 means the error
+is the same for different values of the true relative risk.</p>
+</td></tr>
+<tr valign="top"><td><code>sdSlope</code></td>
+<td>
+<p>The slope for the log of the standard deviation of the error distribution. A slope
+of 0 means the standard deviation is the same for different values of the true
+relative risk.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>An object of type <code>systematicErrorModel</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data(sccs)
+negatives &lt;- sccs[sccs$groundTruth == 0, ]
+null &lt;- fitNull(negatives$logRr, negatives$seLogRr)
+model &lt;- convertNullToErrorModel(null)
+positive &lt;- sccs[sccs$groundTruth == 1, ]
+calibrateConfidenceInterval(positive$logRr, positive$seLogRr, model)
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>EmpiricalCalibration</em> version 3.1.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

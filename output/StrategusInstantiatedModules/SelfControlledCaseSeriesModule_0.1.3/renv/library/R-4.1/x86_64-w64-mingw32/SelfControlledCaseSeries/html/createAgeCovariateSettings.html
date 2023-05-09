@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create age covariate settings</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for createAgeCovariateSettings {SelfControlledCaseSeries}"><tr><td>createAgeCovariateSettings {SelfControlledCaseSeries}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Create age covariate settings</h2>
+
+<h3>Description</h3>
+
+<p>Create age covariate settings
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+createAgeCovariateSettings(
+  ageKnots = 5,
+  allowRegularization = FALSE,
+  computeConfidenceIntervals = FALSE
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>ageKnots</code></td>
+<td>
+<p>If a single number is provided this is assumed to indicate the
+number of knots to use for the spline, and the knots are
+automatically spaced according to equal percentiles of the data.
+If more than one number is provided these are assumed to be the
+exact location of the knots in age-days</p>
+</td></tr>
+<tr valign="top"><td><code>allowRegularization</code></td>
+<td>
+<p>When fitting the model, should the covariates defined here be
+allowed to be regularized?</p>
+</td></tr>
+<tr valign="top"><td><code>computeConfidenceIntervals</code></td>
+<td>
+<p>Should confidence intervals be computed for the covariates
+defined here? Setting this to FALSE might save computing time
+when fitting the model. Will be turned to FALSE automatically
+when <code>allowRegularization = TRUE</code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Create an object specifying whether and how age should be included in the model. Age can be
+included by splitting patient time into calendar months. During a month, the relative risk
+attributed to age is assumed to be constant, and the risk from month to month is modeled using a
+cubic spline.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of type <code>AgeCovariateSettings</code>.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>SelfControlledCaseSeries</em> version 4.2.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

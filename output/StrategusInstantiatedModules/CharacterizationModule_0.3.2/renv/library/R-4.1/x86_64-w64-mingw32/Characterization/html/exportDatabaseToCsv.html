@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Exports all tables in the result database to csv files</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for exportDatabaseToCsv {Characterization}"><tr><td>exportDatabaseToCsv {Characterization}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Exports all tables in the result database to csv files</h2>
+
+<h3>Description</h3>
+
+<p>This function extracts the database tables into csv files
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+exportDatabaseToCsv(
+  connectionDetails,
+  resultSchema,
+  targetDialect,
+  tablePrefix = "c_",
+  filePrefix = NULL,
+  tempEmulationSchema = NULL,
+  saveDirectory
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>connectionDetails</code></td>
+<td>
+<p>The connection details to input into the
+function <code>connect</code> in the
+<code>DatabaseConnector</code> package.</p>
+</td></tr>
+<tr valign="top"><td><code>resultSchema</code></td>
+<td>
+<p>The name of the database schema that the result tables will be created.</p>
+</td></tr>
+<tr valign="top"><td><code>targetDialect</code></td>
+<td>
+<p>The database management system being used</p>
+</td></tr>
+<tr valign="top"><td><code>tablePrefix</code></td>
+<td>
+<p>The table prefix to apply to the characterization result tables</p>
+</td></tr>
+<tr valign="top"><td><code>filePrefix</code></td>
+<td>
+<p>The prefix to apply to the files</p>
+</td></tr>
+<tr valign="top"><td><code>tempEmulationSchema</code></td>
+<td>
+<p>The temp schema used when the database management system is oracle</p>
+</td></tr>
+<tr valign="top"><td><code>saveDirectory</code></td>
+<td>
+<p>The directory to save the csv results</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This function extracts the database tables into csv files
+</p>
+
+
+<h3>Value</h3>
+
+<p>csv file per table into the saveDirectory
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>Characterization</em> version 0.1.1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

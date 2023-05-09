@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create DBI connection details</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for createDbiConnectionDetails {DatabaseConnector}"><tr><td>createDbiConnectionDetails {DatabaseConnector}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Create DBI connection details</h2>
+
+<h3>Description</h3>
+
+<p>For advanced users only. This function will allow <code>DatabaseConnector</code> to wrap any DBI driver. Using a driver that
+<code>DatabaseConnector</code> hasn't been tested with may give unpredictable performance. Use at your own risk. No
+support will be provided.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+createDbiConnectionDetails(dbms, drv, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>dbms</code></td>
+<td>
+<p>The type of DBMS running on the server. Valid values are
+</p>
+
+<ul>
+<li><p> &quot;oracle&quot; for Oracle
+</p>
+</li>
+<li><p> &quot;postgresql&quot; for PostgreSQL
+</p>
+</li>
+<li><p> &quot;redshift&quot; for Amazon Redshift
+</p>
+</li>
+<li><p> &quot;sql server&quot; for Microsoft SQL Server
+</p>
+</li>
+<li><p> &quot;pdw&quot; for Microsoft Parallel Data Warehouse (PDW)
+</p>
+</li>
+<li><p> &quot;netezza&quot; for IBM Netezza
+</p>
+</li>
+<li><p> &quot;bigquery&quot; for Google BigQuery
+</p>
+</li>
+<li><p> &quot;sqlite&quot; for SQLite
+</p>
+</li>
+<li><p> &quot;sqlite extended&quot; for SQLite with extended types (DATE and DATETIME)
+</p>
+</li>
+<li><p> &quot;spark&quot; for Spark
+</p>
+</li>
+<li><p> &quot;snowflake&quot; for Snowflake
+</p>
+</li></ul>
+</td></tr>
+<tr valign="top"><td><code>drv</code></td>
+<td>
+<p>An object that inherits from DBIDriver, or an existing DBIConnection object
+(in order to clone an existing connection).</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>authentication arguments needed by the DBMS instance; these typically
+include user, password, host, port, dbname, etc. For details see the appropriate DBIDriver</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A list with all the details needed to connect to a database.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>DatabaseConnector</em> version 6.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

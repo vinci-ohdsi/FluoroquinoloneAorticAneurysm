@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Compute the expected absolute systematic error</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for computeExpectedAbsoluteSystematicError {EmpiricalCalibration}"><tr><td>computeExpectedAbsoluteSystematicError {EmpiricalCalibration}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Compute the expected absolute systematic error</h2>
+
+<h3>Description</h3>
+
+<p>For a random study estimate, what is the expected value of the absolute systematic error?
+Provides a single summary value for a null distribution. The expected systematic error of a null
+distribution is equal to its mean (mu), and is insensitive to the spread of the null distribution (sigma).
+</p>
+<p>Taking the absolute value of the expected systematic error we can express both mean and spread of the
+estimated null distribution.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+computeExpectedAbsoluteSystematicError(null, alpha = 0.05)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>null</code></td>
+<td>
+<p>An object of class <code>null</code> created using the <code>fitNull</code> function or an
+object of class <code>mcmcNull</code> created using the <code>fitMcmcNull</code> function.</p>
+</td></tr>
+<tr valign="top"><td><code>alpha</code></td>
+<td>
+<p>The expected type I error for computing the credible interval.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>The expected absolute systematic error. If the provided <code>null</code> argument is of type <code>mcmcNull</code>,
+the credible interval (defined by <code>alpha</code>) is also returned.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../EmpiricalCalibration/help/compareEase.html">compareEase</a></code> for comparing the expected absolute systematic error of two sets of estimates for the same negative controls.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data(sccs)
+negatives &lt;- sccs[sccs$groundTruth == 0, ]
+null &lt;- fitNull(negatives$logRr, negatives$seLogRr)
+computeExpectedAbsoluteSystematicError(null)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>EmpiricalCalibration</em> version 3.1.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

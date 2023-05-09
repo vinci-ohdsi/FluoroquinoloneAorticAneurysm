@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create a CohortMethod analysis specification</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for createCmAnalysis {CohortMethod}"><tr><td>createCmAnalysis {CohortMethod}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Create a CohortMethod analysis specification</h2>
+
+<h3>Description</h3>
+
+<p>Create a CohortMethod analysis specification
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+createCmAnalysis(
+  analysisId = 1,
+  description = "",
+  getDbCohortMethodDataArgs,
+  createStudyPopArgs,
+  createPsArgs = NULL,
+  trimByPsArgs = NULL,
+  trimByPsToEquipoiseArgs = NULL,
+  trimByIptwArgs = NULL,
+  truncateIptwArgs = NULL,
+  matchOnPsArgs = NULL,
+  matchOnPsAndCovariatesArgs = NULL,
+  stratifyByPsArgs = NULL,
+  stratifyByPsAndCovariatesArgs = NULL,
+  computeSharedCovariateBalanceArgs = NULL,
+  computeCovariateBalanceArgs = NULL,
+  fitOutcomeModelArgs = NULL
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>analysisId</code></td>
+<td>
+<p>An integer that will be used later to refer to this specific
+set of analysis choices.</p>
+</td></tr>
+<tr valign="top"><td><code>description</code></td>
+<td>
+<p>A short description of the analysis.</p>
+</td></tr>
+<tr valign="top"><td><code>getDbCohortMethodDataArgs</code></td>
+<td>
+<p>An object representing the arguments to be used when calling
+the <code><a href="../../CohortMethod/help/getDbCohortMethodData.html">getDbCohortMethodData()</a></code> function.</p>
+</td></tr>
+<tr valign="top"><td><code>createStudyPopArgs</code></td>
+<td>
+<p>An object representing the arguments to be used when calling
+the <code><a href="../../CohortMethod/help/createStudyPopulation.html">createStudyPopulation()</a></code> function.</p>
+</td></tr>
+<tr valign="top"><td><code>createPsArgs</code></td>
+<td>
+<p>An object representing the arguments to be used when calling
+the <code><a href="../../CohortMethod/help/createPs.html">createPs()</a></code> function.</p>
+</td></tr>
+<tr valign="top"><td><code>trimByPsArgs</code></td>
+<td>
+<p>An object representing the arguments to be used when calling
+the <code><a href="../../CohortMethod/help/trimByPs.html">trimByPs()</a></code> function.</p>
+</td></tr>
+<tr valign="top"><td><code>trimByPsToEquipoiseArgs</code></td>
+<td>
+<p>An object representing the arguments to be used when calling
+the <code><a href="../../CohortMethod/help/trimByPsToEquipoise.html">trimByPsToEquipoise()</a></code> function.</p>
+</td></tr>
+<tr valign="top"><td><code>trimByIptwArgs</code></td>
+<td>
+<p>An object representing the arguments to be used when calling
+the <code><a href="../../CohortMethod/help/trimByIptw.html">trimByIptw()</a></code> function.</p>
+</td></tr>
+<tr valign="top"><td><code>truncateIptwArgs</code></td>
+<td>
+<p>An object representing the arguments to be used when calling
+the <code><a href="../../CohortMethod/help/truncateIptw.html">truncateIptw()</a></code> function.</p>
+</td></tr>
+<tr valign="top"><td><code>matchOnPsArgs</code></td>
+<td>
+<p>An object representing the arguments to be used when calling
+the <code><a href="../../CohortMethod/help/matchOnPs.html">matchOnPs()</a></code> function.</p>
+</td></tr>
+<tr valign="top"><td><code>matchOnPsAndCovariatesArgs</code></td>
+<td>
+<p>An object representing the arguments to be used when calling
+the <code><a href="../../CohortMethod/help/matchOnPsAndCovariates.html">matchOnPsAndCovariates()</a></code> function.</p>
+</td></tr>
+<tr valign="top"><td><code>stratifyByPsArgs</code></td>
+<td>
+<p>An object representing the arguments to be used when calling
+the <code><a href="../../CohortMethod/help/stratifyByPs.html">stratifyByPs()</a></code> function.</p>
+</td></tr>
+<tr valign="top"><td><code>stratifyByPsAndCovariatesArgs</code></td>
+<td>
+<p>An object representing the arguments to be used when calling
+the <code><a href="../../CohortMethod/help/stratifyByPsAndCovariates.html">stratifyByPsAndCovariates()</a></code> function.</p>
+</td></tr>
+<tr valign="top"><td><code>computeSharedCovariateBalanceArgs</code></td>
+<td>
+<p>An object representing the arguments to be used when calling
+the <code><a href="../../CohortMethod/help/computeCovariateBalance.html">computeCovariateBalance()</a></code> function per target-comparator-analysis.</p>
+</td></tr>
+<tr valign="top"><td><code>computeCovariateBalanceArgs</code></td>
+<td>
+<p>An object representing the arguments to be used when calling
+the <code><a href="../../CohortMethod/help/computeCovariateBalance.html">computeCovariateBalance()</a></code> function per target-comparator-outcome-analysis.</p>
+</td></tr>
+<tr valign="top"><td><code>fitOutcomeModelArgs</code></td>
+<td>
+<p>An object representing the arguments to be used when calling
+the <code><a href="../../CohortMethod/help/fitOutcomeModel.html">fitOutcomeModel()</a></code> function.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Create a set of analysis choices, to be used with the <code><a href="../../CohortMethod/help/runCmAnalyses.html">runCmAnalyses()</a></code> function.
+</p>
+<p>Providing a NULL value for any of the argument applies the corresponding step will not be executed.
+For example, if <code>createPsArgs = NULL</code>, no propensity scores will be computed.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>CohortMethod</em> version 5.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

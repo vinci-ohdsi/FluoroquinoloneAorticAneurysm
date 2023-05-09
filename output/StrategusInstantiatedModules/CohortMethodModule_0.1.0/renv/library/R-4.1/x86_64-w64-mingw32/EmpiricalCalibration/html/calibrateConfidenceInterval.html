@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Calibrate confidence intervals</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for calibrateConfidenceInterval {EmpiricalCalibration}"><tr><td>calibrateConfidenceInterval {EmpiricalCalibration}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Calibrate confidence intervals</h2>
+
+<h3>Description</h3>
+
+<p>Calibrate confidence intervals
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+calibrateConfidenceInterval(logRr, seLogRr, model, ciWidth = 0.95)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>logRr</code></td>
+<td>
+<p>A numeric vector of effect estimates on the log scale.</p>
+</td></tr>
+<tr valign="top"><td><code>seLogRr</code></td>
+<td>
+<p>The standard error of the log of the effect estimates. Hint: often the standard
+error = (log(&lt;lower bound 95 percent confidence interval&gt;) - log(&lt;effect
+estimate&gt;))/qnorm(0.025).</p>
+</td></tr>
+<tr valign="top"><td><code>model</code></td>
+<td>
+<p>An object of type <code>systematicErrorModel</code> as created by the
+<code><a href="../../EmpiricalCalibration/help/fitSystematicErrorModel.html">fitSystematicErrorModel</a></code> function.</p>
+</td></tr>
+<tr valign="top"><td><code>ciWidth</code></td>
+<td>
+<p>The width of the confidence interval. Typically this would be .95, for the 95
+percent confidence interval.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Compute calibrated confidence intervals based on a model of the systematic error.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A data frame with calibrated confidence intervals and point estimates.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data &lt;- simulateControls(n = 50 * 3, mean = 0.25, sd = 0.25, trueLogRr = log(c(1, 2, 4)))
+model &lt;- fitSystematicErrorModel(data$logRr, data$seLogRr, data$trueLogRr)
+newData &lt;- simulateControls(n = 15, mean = 0.25, sd = 0.25, trueLogRr = log(c(1, 2, 4)))
+result &lt;- calibrateConfidenceInterval(newData$logRr, newData$seLogRr, model)
+result
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>EmpiricalCalibration</em> version 3.1.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

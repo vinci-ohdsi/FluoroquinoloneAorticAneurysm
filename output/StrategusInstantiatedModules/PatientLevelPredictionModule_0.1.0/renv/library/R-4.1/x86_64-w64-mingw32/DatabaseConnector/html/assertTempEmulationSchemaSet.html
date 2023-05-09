@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Assert the temp emulation schema is set</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for assertTempEmulationSchemaSet {DatabaseConnector}"><tr><td>assertTempEmulationSchemaSet {DatabaseConnector}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Assert the temp emulation schema is set</h2>
+
+<h3>Description</h3>
+
+<p>Asserts the temp emulation schema is set for DBMSs requiring temp table emulation.
+</p>
+<p>If you know your code uses temp tables, it is a good idea to call this function first,
+so it can throw an informative error if the user forgot to set the temp emulation schema.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+assertTempEmulationSchemaSet(
+  dbms,
+  tempEmulationSchema = getOption("sqlRenderTempEmulationSchema")
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>dbms</code></td>
+<td>
+<p>The type of DBMS running on the server. See <code><a href="../../DatabaseConnector/help/connect.html">connect()</a></code> or
+<code><a href="../../DatabaseConnector/help/createConnectionDetails.html">createConnectionDetails()</a></code> for valid values.</p>
+</td></tr>
+<tr valign="top"><td><code>tempEmulationSchema</code></td>
+<td>
+<p>The temp emulation schema specified by the user.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>Does not return anything. Throws an error if the DBMS requires temp emulation but the
+temp emulation schema is not set.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>DatabaseConnector</em> version 6.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

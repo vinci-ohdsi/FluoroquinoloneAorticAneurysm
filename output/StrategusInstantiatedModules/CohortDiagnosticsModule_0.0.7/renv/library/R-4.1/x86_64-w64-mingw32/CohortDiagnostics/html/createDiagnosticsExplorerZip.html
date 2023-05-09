@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create publishable shiny zip</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for createDiagnosticsExplorerZip {CohortDiagnostics}"><tr><td>createDiagnosticsExplorerZip {CohortDiagnostics}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Create publishable shiny zip</h2>
+
+<h3>Description</h3>
+
+<p>A utility designed for creating a published zip of a shiny app with an sqlite database.
+Designed for sharing projects on servers like data.ohdsi.org.
+</p>
+<p>Takes the shiny code from the R project and adds an sqlite file to a zip archive.
+Uncompressed cohort diagnostics sqlite databases can become large very quickly.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+createDiagnosticsExplorerZip(
+  outputZipfile = file.path(getwd(), "DiagnosticsExplorer.zip"),
+  sqliteDbPath = "MergedCohortDiagnosticsData.sqlite",
+  shinyDirectory = system.file(file.path("shiny", "DiagnosticsExplorer"), package =
+    "CohortDiagnostics"),
+  overwrite = FALSE
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>outputZipfile</code></td>
+<td>
+<p>The output path for the zip file</p>
+</td></tr>
+<tr valign="top"><td><code>sqliteDbPath</code></td>
+<td>
+<p>Merged Cohort Diagnostics sqlitedb created with <code><a href="../../CohortDiagnostics/help/createMergedResultsFile.html">createMergedResultsFile</a></code></p>
+</td></tr>
+<tr valign="top"><td><code>shinyDirectory</code></td>
+<td>
+<p>(optional) Path to the location where the shiny code is stored. By default,
+this is the package root</p>
+</td></tr>
+<tr valign="top"><td><code>overwrite</code></td>
+<td>
+<p>If the zip file already exists, overwrite it?</p>
+</td></tr>
+</table>
+
+<hr /><div style="text-align: center;">[Package <em>CohortDiagnostics</em> version 3.1.2 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Serialize the booster instance into R's raw vector.  The...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for xgb.serialize {xgboost}"><tr><td>xgb.serialize {xgboost}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Serialize the booster instance into R's raw vector.  The serialization method differs
+from <code><a href="../../xgboost/help/xgb.save.raw.html">xgb.save.raw</a></code> as the latter one saves only the model but not
+parameters.  This serialization format is not stable across different xgboost versions.</h2>
+
+<h3>Description</h3>
+
+<p>Serialize the booster instance into R's raw vector.  The serialization method differs
+from <code><a href="../../xgboost/help/xgb.save.raw.html">xgb.save.raw</a></code> as the latter one saves only the model but not
+parameters.  This serialization format is not stable across different xgboost versions.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+xgb.serialize(booster)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>booster</code></td>
+<td>
+<p>the booster instance</p>
+</td></tr>
+</table>
+
+
+<h3>Examples</h3>
+
+<pre>
+data(agaricus.train, package='xgboost')
+data(agaricus.test, package='xgboost')
+train &lt;- agaricus.train
+test &lt;- agaricus.test
+bst &lt;- xgboost(data = train$data, label = train$label, max_depth = 2,
+               eta = 1, nthread = 2, nrounds = 2,objective = "binary:logistic")
+raw &lt;- xgb.serialize(bst)
+bst &lt;- xgb.unserialize(raw)
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>xgboost</em> version 1.7.3.1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

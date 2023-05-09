@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Plot the age ranges spanned by each observation period.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for plotAgeSpans {SelfControlledCaseSeries}"><tr><td>plotAgeSpans {SelfControlledCaseSeries}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Plot the age ranges spanned by each observation period.</h2>
+
+<h3>Description</h3>
+
+<p>Plot the age ranges spanned by each observation period.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+plotAgeSpans(
+  studyPopulation,
+  maxPersons = 10000,
+  title = NULL,
+  fileName = NULL
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>studyPopulation</code></td>
+<td>
+<p>An object created using the <code><a href="../../SelfControlledCaseSeries/help/createStudyPopulation.html">createStudyPopulation()</a></code> function.</p>
+</td></tr>
+<tr valign="top"><td><code>maxPersons</code></td>
+<td>
+<p>The maximum number of persons to plot. If there are more than this number of persons
+a random sample will be taken to avoid visual clutter.</p>
+</td></tr>
+<tr valign="top"><td><code>title</code></td>
+<td>
+<p>Optional: the main title for the plot</p>
+</td></tr>
+<tr valign="top"><td><code>fileName</code></td>
+<td>
+<p>Name of the file where the plot should be saved, for example 'plot.png'.
+See the function <code><a href="../../ggplot2/help/ggsave.html">ggplot2::ggsave()</a></code> for supported file formats.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Plots a line per patient from their age at observation start to their age at observation end.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A ggplot object. Use the <code><a href="../../ggplot2/help/ggsave.html">ggplot2::ggsave()</a></code> function to save to file in a different
+format.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>SelfControlledCaseSeries</em> version 4.2.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

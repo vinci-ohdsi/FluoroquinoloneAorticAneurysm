@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Schema generator</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for generateSqlSchema {ResultModelManager}"><tr><td>generateSqlSchema {ResultModelManager}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Schema generator</h2>
+
+<h3>Description</h3>
+
+<p>Take a csv schema definition and create a basic sql script with it.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+generateSqlSchema(csvFilepath, sqlOutputPath = NULL, overwrite = FALSE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>csvFilepath</code></td>
+<td>
+<p>Path to schema file. Csv file must have the columns:
+&quot;table_name&quot;, &quot;colum_name&quot;, &quot;data_type&quot;, &quot;is_required&quot;, &quot;primary_key&quot;
+Note -</p>
+</td></tr>
+<tr valign="top"><td><code>sqlOutputPath</code></td>
+<td>
+<p>File to write sql to.</p>
+</td></tr>
+<tr valign="top"><td><code>overwrite</code></td>
+<td>
+<p>Boolean - overwrite existing file?</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>string containing the sql for the table
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>ResultModelManager</em> version 0.1.1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

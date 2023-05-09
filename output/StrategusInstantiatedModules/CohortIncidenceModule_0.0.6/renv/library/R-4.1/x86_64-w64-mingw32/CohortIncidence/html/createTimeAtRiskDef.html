@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Creates R6 object for TimeAtRisk</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for createTimeAtRiskDef {CohortIncidence}"><tr><td>createTimeAtRiskDef {CohortIncidence}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Creates R6 object for TimeAtRisk</h2>
+
+<h3>Description</h3>
+
+<p>Creates R6 object for TimeAtRisk
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+createTimeAtRiskDef(
+  id,
+  startWith = "start",
+  startOffset = 0,
+  endWith = "end",
+  endOffset = 0
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>id</code></td>
+<td>
+<p>the unique identifier for this outcome definition</p>
+</td></tr>
+<tr valign="top"><td><code>startWith</code></td>
+<td>
+<p>Specifies the field (start or end) to offset from for the TAR start.  Allowed values: 'start', 'end'</p>
+</td></tr>
+<tr valign="top"><td><code>startOffset</code></td>
+<td>
+<p>The number of days to offset for the TAR start, defaults to 0.</p>
+</td></tr>
+<tr valign="top"><td><code>endWith</code></td>
+<td>
+<p>Specifies the field (start or end) to offset from for the TAR end.  Allowed values: 'start', 'end'</p>
+</td></tr>
+<tr valign="top"><td><code>endOffset</code></td>
+<td>
+<p>The number of days to offset for the TAR start, defaults to 0.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>a R6 class: TimeAtRisk
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>CohortIncidence</em> version 3.1.2 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

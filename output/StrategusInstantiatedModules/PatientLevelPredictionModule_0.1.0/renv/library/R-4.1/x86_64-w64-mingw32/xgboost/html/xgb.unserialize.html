@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Load the instance back from 'xgb.serialize'</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for xgb.unserialize {xgboost}"><tr><td>xgb.unserialize {xgboost}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Load the instance back from <code><a href="../../xgboost/help/xgb.serialize.html">xgb.serialize</a></code></h2>
+
+<h3>Description</h3>
+
+<p>Load the instance back from <code><a href="../../xgboost/help/xgb.serialize.html">xgb.serialize</a></code>
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+xgb.unserialize(buffer, handle = NULL)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>buffer</code></td>
+<td>
+<p>the buffer containing booster instance saved by <code><a href="../../xgboost/help/xgb.serialize.html">xgb.serialize</a></code></p>
+</td></tr>
+<tr valign="top"><td><code>handle</code></td>
+<td>
+<p>An <code>xgb.Booster.handle</code> object which will be overwritten with
+the new deserialized object. Must be a null handle (e.g. when loading the model through
+'readRDS'). If not provided, a new handle will be created.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>An <code>xgb.Booster.handle</code> object.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>xgboost</em> version 1.7.3.1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

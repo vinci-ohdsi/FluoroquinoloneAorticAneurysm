@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Apply simple data reductions</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for reduce {Cyclops}"><tr><td>reduce {Cyclops}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Apply simple data reductions</h2>
+
+<h3>Description</h3>
+
+<p><code>reduce</code> reports the count of non-zero elements, sum and sum-of-squares for specified covariates in a Cyclops data object.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+reduce(object, covariates, groupBy, power = 1)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>A Cyclops data object</p>
+</td></tr>
+<tr valign="top"><td><code>covariates</code></td>
+<td>
+<p>Integer or string vector: list of covariates to report</p>
+</td></tr>
+<tr valign="top"><td><code>groupBy</code></td>
+<td>
+<p>Integer or string (optional): generates a segmented reduction stratified by this covariate.  Setting <code>groupBy = "stratum"</code> segments reduction for strataID</p>
+</td></tr>
+<tr valign="top"><td><code>power</code></td>
+<td>
+<p>Integer: 0 = non-zero count, 1 = sum, 2 = sum-of-squares</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>Specified reduction as number or <code>data.frame</code> if segmented.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>Cyclops</em> version 3.2.1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

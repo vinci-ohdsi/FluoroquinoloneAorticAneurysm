@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create a SelfControlledCaseSeries analysis specification</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for createSccsAnalysis {SelfControlledCaseSeries}"><tr><td>createSccsAnalysis {SelfControlledCaseSeries}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Create a SelfControlledCaseSeries analysis specification</h2>
+
+<h3>Description</h3>
+
+<p>Create a SelfControlledCaseSeries analysis specification
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+createSccsAnalysis(
+  analysisId = 1,
+  description = "",
+  getDbSccsDataArgs,
+  createStudyPopulationArgs,
+  createIntervalDataArgs = NULL,
+  fitSccsModelArgs
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>analysisId</code></td>
+<td>
+<p>An integer that will be used later to refer to this specific set
+of analysis choices.</p>
+</td></tr>
+<tr valign="top"><td><code>description</code></td>
+<td>
+<p>A short description of the analysis.</p>
+</td></tr>
+<tr valign="top"><td><code>getDbSccsDataArgs</code></td>
+<td>
+<p>An object representing the arguments to be used when calling the
+<a href="../../SelfControlledCaseSeries/help/getDbSccsData.html">getDbSccsData</a> function.</p>
+</td></tr>
+<tr valign="top"><td><code>createStudyPopulationArgs</code></td>
+<td>
+<p>An object representing the arguments to be used when calling the
+<a href="../../SelfControlledCaseSeries/help/getDbSccsData.html">getDbSccsData</a> function.</p>
+</td></tr>
+<tr valign="top"><td><code>createIntervalDataArgs</code></td>
+<td>
+<p>An object representing the arguments to be used when calling the
+<a href="../../SelfControlledCaseSeries/help/createSccsIntervalData.html">createSccsIntervalData</a> or <a href="../../SelfControlledCaseSeries/help/createScriIntervalData.html">createScriIntervalData</a> function.</p>
+</td></tr>
+<tr valign="top"><td><code>fitSccsModelArgs</code></td>
+<td>
+<p>An object representing the arguments to be used when calling the
+<a href="../../SelfControlledCaseSeries/help/fitSccsModel.html">fitSccsModel</a> function.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>An object of type <code>SccsAnalysis</code>, to be used with the <a href="../../SelfControlledCaseSeries/help/runSccsAnalyses.html">runSccsAnalyses</a> function.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>SelfControlledCaseSeries</em> version 4.2.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

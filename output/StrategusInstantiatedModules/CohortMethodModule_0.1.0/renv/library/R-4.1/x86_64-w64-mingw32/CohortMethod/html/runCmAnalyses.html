@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Run a list of analyses</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for runCmAnalyses {CohortMethod}"><tr><td>runCmAnalyses {CohortMethod}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Run a list of analyses</h2>
+
+<h3>Description</h3>
+
+<p>Run a list of analyses
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+runCmAnalyses(
+  connectionDetails,
+  cdmDatabaseSchema,
+  tempEmulationSchema = getOption("sqlRenderTempEmulationSchema"),
+  exposureDatabaseSchema = cdmDatabaseSchema,
+  exposureTable = "drug_era",
+  outcomeDatabaseSchema = cdmDatabaseSchema,
+  outcomeTable = "condition_occurrence",
+  cdmVersion = "5",
+  outputFolder = "./CohortMethodOutput",
+  cmAnalysisList,
+  targetComparatorOutcomesList,
+  analysesToExclude = NULL,
+  refitPsForEveryOutcome = FALSE,
+  refitPsForEveryStudyPopulation = TRUE,
+  multiThreadingSettings = createMultiThreadingSettings()
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>connectionDetails</code></td>
+<td>
+<p>An R object of type <code>connectionDetails</code> created using the
+<code><a href="../../DatabaseConnector/help/createConnectionDetails.html">DatabaseConnector::createConnectionDetails()</a></code> function.</p>
+</td></tr>
+<tr valign="top"><td><code>cdmDatabaseSchema</code></td>
+<td>
+<p>The name of the database schema that contains the OMOP CDM
+instance. Requires read permissions to this database. On SQL
+Server, this should specify both the database and the schema,
+so for example 'cdm_instance.dbo'.</p>
+</td></tr>
+<tr valign="top"><td><code>tempEmulationSchema</code></td>
+<td>
+<p>Some database platforms like Oracle and Impala do not truly support temp tables. To
+emulate temp tables, provide a schema with write privileges where temp tables
+can be created.</p>
+</td></tr>
+<tr valign="top"><td><code>exposureDatabaseSchema</code></td>
+<td>
+<p>The name of the database schema that is the location where the
+exposure data used to define the exposure cohorts is
+available. If exposureTable = DRUG_ERA, exposureDatabaseSchema
+is not used by assumed to be cdmSchema.  Requires read
+permissions to this database.</p>
+</td></tr>
+<tr valign="top"><td><code>exposureTable</code></td>
+<td>
+<p>The tablename that contains the exposure cohorts.  If
+exposureTable &lt;&gt; DRUG_ERA, then expectation is exposureTable
+has format of COHORT table: COHORT_DEFINITION_ID, SUBJECT_ID,
+COHORT_START_DATE, COHORT_END_DATE.</p>
+</td></tr>
+<tr valign="top"><td><code>outcomeDatabaseSchema</code></td>
+<td>
+<p>The name of the database schema that is the location where the
+data used to define the outcome cohorts is available. If
+exposureTable = CONDITION_ERA, exposureDatabaseSchema is not
+used by assumed to be cdmSchema.  Requires read permissions to
+this database.</p>
+</td></tr>
+<tr valign="top"><td><code>outcomeTable</code></td>
+<td>
+<p>The tablename that contains the outcome cohorts.  If
+outcomeTable &lt;&gt; CONDITION_OCCURRENCE, then expectation is
+outcomeTable has format of COHORT table: COHORT_DEFINITION_ID,
+SUBJECT_ID, COHORT_START_DATE, COHORT_END_DATE.</p>
+</td></tr>
+<tr valign="top"><td><code>cdmVersion</code></td>
+<td>
+<p>Define the OMOP CDM version used: currently support &quot;4&quot; and
+&quot;5&quot;.</p>
+</td></tr>
+<tr valign="top"><td><code>outputFolder</code></td>
+<td>
+<p>Name of the folder where all the outputs will written to.</p>
+</td></tr>
+<tr valign="top"><td><code>cmAnalysisList</code></td>
+<td>
+<p>A list of objects of type <code>cmAnalysis</code> as created using
+the '<a href="../../CohortMethod/help/createCmAnalysis.html">createCmAnalysis</a> function.</p>
+</td></tr>
+<tr valign="top"><td><code>targetComparatorOutcomesList</code></td>
+<td>
+<p>A list of objects of type <code>targetComparatorOutcomes</code> as
+created using the <a href="../../CohortMethod/help/createTargetComparatorOutcomes.html">createTargetComparatorOutcomes</a>
+function.</p>
+</td></tr>
+<tr valign="top"><td><code>analysesToExclude</code></td>
+<td>
+<p>Analyses to exclude. See the Analyses to Exclude section for details.</p>
+</td></tr>
+<tr valign="top"><td><code>refitPsForEveryOutcome</code></td>
+<td>
+<p>Should the propensity model be fitted for every outcome (i.e.
+after people who already had the outcome are removed)? If
+false, a single propensity model will be fitted, and people
+who had the outcome previously will be removed afterwards.</p>
+</td></tr>
+<tr valign="top"><td><code>refitPsForEveryStudyPopulation</code></td>
+<td>
+<p>Should the propensity model be fitted for every study population
+definition? If false, a single propensity model will be fitted,
+and the study population criteria will be applied afterwards.</p>
+</td></tr>
+<tr valign="top"><td><code>multiThreadingSettings</code></td>
+<td>
+<p>An object of type <code>CmMultiThreadingSettings</code> as created using
+the <code><a href="../../CohortMethod/help/createMultiThreadingSettings.html">createMultiThreadingSettings()</a></code> or
+<code><a href="../../CohortMethod/help/createDefaultMultiThreadingSettings.html">createDefaultMultiThreadingSettings()</a></code> functions.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Run a list of analyses for the target-comparator-outcomes of interest. This function will run all
+specified analyses against all hypotheses of interest, meaning that the total number of outcome
+models is <code>length(cmAnalysisList) * length(targetComparatorOutcomesList)</code> (if all analyses specify an
+outcome model should be fitted). When you provide several analyses it will determine whether any of
+the analyses have anything in common, and will take advantage of this fact. For example, if we
+specify several analyses that only differ in the way the outcome model is fitted, then this
+function will extract the data and fit the propensity model only once, and re-use this in all the
+analysis.
+</p>
+<p>After completion, a tibble containing references to all generated files can be obtained using the
+<code><a href="../../CohortMethod/help/getFileReference.html">getFileReference()</a></code> function. A summary of the analysis results can be obtained using the
+<code><a href="../../CohortMethod/help/getResultsSummary.html">getResultsSummary()</a></code> function.
+</p>
+
+
+<h4>Analyses to Exclude</h4>
+
+<p>Normally, <code>runCmAnalyses</code> will run all combinations of target-comparator-outcome-analyses settings.
+However, sometimes we may not need all those combinations. Using the <code>analysesToExclude</code> argument,
+we can remove certain items from the full matrix. This argument should be a data frame with at least
+one of the following columns:
+</p>
+
+<ul>
+<li><p> targetId
+</p>
+</li>
+<li><p> comparatorId
+</p>
+</li>
+<li><p> outcomeId
+</p>
+</li>
+<li><p> analysisId
+</p>
+</li></ul>
+
+<p>This data frame will be joined to the outcome model reference table before executing, and matching rows
+will be removed. For example, if one specifies only one target ID and analysis ID, then any analyses with
+that target and that analysis ID will be skipped.
+</p>
+
+
+
+<h3>Value</h3>
+
+<p>A tibble describing for each target-comparator-outcome-analysisId combination where the intermediary and
+outcome model files can be found, relative to the <code>outputFolder</code>.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>CohortMethod</em> version 5.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

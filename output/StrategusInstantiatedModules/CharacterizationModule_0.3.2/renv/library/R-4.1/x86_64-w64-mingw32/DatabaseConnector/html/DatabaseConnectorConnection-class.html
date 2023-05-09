@@ -1,0 +1,255 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: DatabaseConnectorConnection class.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for DatabaseConnectorConnection-class {DatabaseConnector}"><tr><td>DatabaseConnectorConnection-class {DatabaseConnector}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>DatabaseConnectorConnection class.</h2>
+
+<h3>Description</h3>
+
+<p>Returns the unquoted names of remote tables accessible through this
+connection.
+This should include views and temporary objects, but not all database backends
+(in particular <span class="pkg">RMariaDB</span> and <span class="pkg">RMySQL</span>) support this.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'DatabaseConnectorConnection'
+dbDisconnect(conn)
+
+## S4 method for signature 'DatabaseConnectorConnection'
+show(object)
+
+## S4 method for signature 'DatabaseConnectorConnection'
+dbGetInfo(dbObj, ...)
+
+## S4 method for signature 'DatabaseConnectorConnection,character'
+dbQuoteIdentifier(conn, x, ...)
+
+## S4 method for signature 'DatabaseConnectorConnection,character'
+dbQuoteString(conn, x, ...)
+
+## S4 method for signature 'DatabaseConnectorConnection,character'
+dbGetQuery(conn, statement, translate = TRUE, ...)
+
+## S4 method for signature 'DatabaseConnectorConnection,character'
+dbSendStatement(conn, statement, translate = TRUE, ...)
+
+## S4 method for signature 'DatabaseConnectorConnection,character'
+dbExecute(conn, statement, translate = TRUE, ...)
+
+## S4 method for signature 'DatabaseConnectorConnection,character'
+dbListFields(conn, name, databaseSchema = NULL, ...)
+
+## S4 method for signature 'DatabaseConnectorConnection,character'
+dbExistsTable(conn, name, databaseSchema = NULL, ...)
+
+## S4 method for signature 'DatabaseConnectorConnection,ANY'
+dbWriteTable(
+  conn,
+  name,
+  value,
+  databaseSchema = NULL,
+  overwrite = FALSE,
+  append = FALSE,
+  temporary = FALSE,
+  oracleTempSchema = NULL,
+  tempEmulationSchema = getOption("sqlRenderTempEmulationSchema"),
+  ...
+)
+
+## S4 method for signature 'DatabaseConnectorConnection,character'
+dbAppendTable(
+  conn,
+  name,
+  value,
+  databaseSchema = NULL,
+  temporary = FALSE,
+  oracleTempSchema = NULL,
+  tempEmulationSchema = getOption("sqlRenderTempEmulationSchema"),
+  ...,
+  row.names = NULL
+)
+
+## S4 method for signature 'DatabaseConnectorConnection'
+dbCreateTable(
+  conn,
+  name,
+  fields,
+  databaseSchema = NULL,
+  oracleTempSchema = NULL,
+  tempEmulationSchema = getOption("sqlRenderTempEmulationSchema"),
+  ...,
+  row.names = NULL,
+  temporary = FALSE
+)
+
+## S4 method for signature 'DatabaseConnectorConnection,character'
+dbReadTable(
+  conn,
+  name,
+  databaseSchema = NULL,
+  oracleTempSchema = NULL,
+  tempEmulationSchema = getOption("sqlRenderTempEmulationSchema"),
+  ...
+)
+
+## S4 method for signature 'DatabaseConnectorConnection,ANY'
+dbRemoveTable(
+  conn,
+  name,
+  databaseSchema = NULL,
+  oracleTempSchema = NULL,
+  tempEmulationSchema = getOption("sqlRenderTempEmulationSchema"),
+  ...
+)
+
+## S4 method for signature 'DatabaseConnectorConnection'
+dbListTables(conn, databaseSchema = NULL, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>conn</code></td>
+<td>
+<p>A <a href="../../DBI/html/DBIConnection-class.html">DBIConnection</a> object, as returned by
+<code><a href="../../DBI/help/dbConnect.html">dbConnect()</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Not used</p>
+</td></tr>
+<tr valign="top"><td><code>databaseSchema</code></td>
+<td>
+<p>The name of the database schema. See details for platform-specific details.</p>
+</td></tr>
+<tr valign="top"><td><code>overwrite</code></td>
+<td>
+<p>Overwrite an existing table (if exists)?</p>
+</td></tr>
+<tr valign="top"><td><code>append</code></td>
+<td>
+<p>Append to existing table?</p>
+</td></tr>
+<tr valign="top"><td><code>temporary</code></td>
+<td>
+<p>Should the table created as a temp table?</p>
+</td></tr>
+<tr valign="top"><td><code>oracleTempSchema</code></td>
+<td>
+<p>DEPRECATED: use <code>tempEmulationSchema</code> instead.</p>
+</td></tr>
+<tr valign="top"><td><code>tempEmulationSchema</code></td>
+<td>
+<p>Some database platforms like Oracle and Impala do not truly support temp tables. To
+emulate temp tables, provide a schema with write privileges where temp tables
+can be created.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The <code>databaseSchema</code> argument is interpreted differently according to the different platforms:
+SQL Server and PDW: The databaseSchema schema should specify both the database and the schema, e.g.
+'my_database.dbo'. Impala: the databaseSchema should specify the database. Oracle:
+The databaseSchema should specify the Oracle 'user'. All other : The databaseSchema should
+specify the schema.
+</p>
+<p>The <code>databaseSchema</code> argument is interpreted differently according to the different platforms:
+SQL Server and PDW: The databaseSchema schema should specify both the database and the schema, e.g.
+'my_database.dbo'. Impala: the databaseSchema should specify the database. Oracle:
+The databaseSchema should specify the Oracle 'user'. All other : The databaseSchema should
+specify the schema.
+</p>
+<p>The <code>databaseSchema</code> argument is interpreted differently according to the different platforms:
+SQL Server and PDW: The databaseSchema schema should specify both the database and the schema, e.g.
+'my_database.dbo'. Impala: the databaseSchema should specify the database. Oracle:
+The databaseSchema should specify the Oracle 'user'. All other : The databaseSchema should
+specify the schema.
+</p>
+<p>The <code>databaseSchema</code> argument is interpreted differently according to the different platforms:
+SQL Server and PDW: The databaseSchema schema should specify both the database and the schema, e.g.
+'my_database.dbo'. Impala: the databaseSchema should specify the database. Oracle:
+The databaseSchema should specify the Oracle 'user'. All other : The databaseSchema should
+specify the schema.
+</p>
+<p>The <code>databaseSchema</code> argument is interpreted differently according to the different platforms:
+SQL Server and PDW: The databaseSchema schema should specify both the database and the schema, e.g.
+'my_database.dbo'. Impala: the databaseSchema should specify the database. Oracle:
+The databaseSchema should specify the Oracle 'user'. All other : The databaseSchema should
+specify the schema.
+</p>
+<p>The <code>databaseSchema</code> argument is interpreted differently according to the different platforms:
+SQL Server and PDW: The databaseSchema schema should specify both the database and the schema, e.g.
+'my_database.dbo'. Impala: the databaseSchema should specify the database. Oracle:
+The databaseSchema should specify the Oracle 'user'. All other : The databaseSchema should
+specify the schema.
+</p>
+<p>The <code>databaseSchema</code> argument is interpreted differently according to the different platforms:
+SQL Server and PDW: The databaseSchema schema should specify both the database and the schema, e.g.
+'my_database.dbo'. Impala: the databaseSchema should specify the database. Oracle:
+The databaseSchema should specify the Oracle 'user'. All other : The databaseSchema should
+specify the schema.
+</p>
+<p>The <code>databaseSchema</code> argument is interpreted differently according to the different platforms:
+SQL Server and PDW: The databaseSchema schema should specify both the database and the schema, e.g.
+'my_database.dbo'. Impala: the databaseSchema should specify the database. Oracle:
+The databaseSchema should specify the Oracle 'user'. All other : The databaseSchema should
+specify the schema.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>dbListTables()</code>
+returns a character vector
+that enumerates all tables
+and views
+in the database.
+Tables added with <code><a href="../../DBI/help/dbWriteTable.html">dbWriteTable()</a></code>
+are part of the list.
+As soon a table is removed from the database,
+it is also removed from the list of database tables.
+</p>
+<p>The same applies to temporary tables if supported by the database.
+</p>
+<p>The returned names are suitable for quoting with <code>dbQuoteIdentifier()</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other DBIConnection generics: 
+<code><a href="../../DBI/help/DBIConnection-class.html">DBIConnection-class</a></code>,
+<code><a href="../../DBI/help/dbAppendTable.html">dbAppendTable</a>()</code>,
+<code><a href="../../DBI/help/dbCreateTable.html">dbCreateTable</a>()</code>,
+<code><a href="../../DBI/help/dbDataType.html">dbDataType</a>()</code>,
+<code><a href="../../DBI/help/dbDisconnect.html">dbDisconnect</a>()</code>,
+<code><a href="../../DBI/help/dbExecute.html">dbExecute</a>()</code>,
+<code><a href="../../DBI/help/dbExistsTable.html">dbExistsTable</a>()</code>,
+<code><a href="../../DBI/help/dbGetException.html">dbGetException</a>()</code>,
+<code><a href="../../DBI/help/dbGetInfo.html">dbGetInfo</a>()</code>,
+<code><a href="../../DBI/help/dbGetQuery.html">dbGetQuery</a>()</code>,
+<code><a href="../../DBI/help/dbIsReadOnly.html">dbIsReadOnly</a>()</code>,
+<code><a href="../../DBI/help/dbIsValid.html">dbIsValid</a>()</code>,
+<code><a href="../../DBI/help/dbListFields.html">dbListFields</a>()</code>,
+<code><a href="../../DBI/help/dbListObjects.html">dbListObjects</a>()</code>,
+<code><a href="../../DBI/help/dbListResults.html">dbListResults</a>()</code>,
+<code><a href="../../DBI/help/dbReadTable.html">dbReadTable</a>()</code>,
+<code><a href="../../DBI/help/dbRemoveTable.html">dbRemoveTable</a>()</code>,
+<code><a href="../../DBI/help/dbSendQuery.html">dbSendQuery</a>()</code>,
+<code><a href="../../DBI/help/dbSendStatement.html">dbSendStatement</a>()</code>,
+<code><a href="../../DBI/help/dbWriteTable.html">dbWriteTable</a>()</code>
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>DatabaseConnector</em> version 6.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

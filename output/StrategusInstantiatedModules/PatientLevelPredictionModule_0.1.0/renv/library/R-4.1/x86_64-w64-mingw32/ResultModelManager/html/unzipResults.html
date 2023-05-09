@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Unzips a results.zip file and enforces standards required by...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for unzipResults {ResultModelManager}"><tr><td>unzipResults {ResultModelManager}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Unzips a results.zip file and enforces standards required by
+<code>uploadResults</code></h2>
+
+<h3>Description</h3>
+
+<p>This function will unzip the zipFile to the resultsFolder and assert
+that the file resultsDataModelSpecification.csv exists in the resultsFolder
+to ensure that it will work with <code>uploadResults</code>
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+unzipResults(zipFile, resultsFolder)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>zipFile</code></td>
+<td>
+<p>The location of the .zip file that holds the results to upload</p>
+</td></tr>
+<tr valign="top"><td><code>resultsFolder</code></td>
+<td>
+<p>The folder to use when unzipping the .zip file. If this folder
+does not exist, this function will attempt to create the folder.</p>
+</td></tr>
+</table>
+
+<hr /><div style="text-align: center;">[Package <em>ResultModelManager</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

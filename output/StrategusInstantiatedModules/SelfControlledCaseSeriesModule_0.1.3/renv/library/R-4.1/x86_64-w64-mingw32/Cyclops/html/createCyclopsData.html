@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create a Cyclops data object</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for createCyclopsData {Cyclops}"><tr><td>createCyclopsData {Cyclops}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Create a Cyclops data object</h2>
+
+<h3>Description</h3>
+
+<p><code>createCyclopsData</code> creates a Cyclops data object from an R formula or data matrices.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+createCyclopsData(
+  formula,
+  sparseFormula,
+  indicatorFormula,
+  modelType,
+  data,
+  subset = NULL,
+  weights = NULL,
+  censorWeights = NULL,
+  offset = NULL,
+  time = NULL,
+  pid = NULL,
+  y = NULL,
+  type = NULL,
+  dx = NULL,
+  sx = NULL,
+  ix = NULL,
+  model = FALSE,
+  normalize = NULL,
+  floatingPoint = 64,
+  method = "cyclops.fit"
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>formula</code></td>
+<td>
+<p>An object of class <code>"<a href="../../stats/html/formula.html">formula</a>"</code> that provides a symbolic description of the numerically dense model response and terms.</p>
+</td></tr>
+<tr valign="top"><td><code>sparseFormula</code></td>
+<td>
+<p>An object of class <code>"<a href="../../stats/html/formula.html">formula</a>"</code> that provides a symbolic description of numerically sparse model terms.</p>
+</td></tr>
+<tr valign="top"><td><code>indicatorFormula</code></td>
+<td>
+<p>An object of class <code>"<a href="../../stats/html/formula.html">formula</a>"</code> that provides a symbolic description of {0,1} model terms.</p>
+</td></tr>
+<tr valign="top"><td><code>modelType</code></td>
+<td>
+<p>character string: Valid types are listed below.</p>
+</td></tr>
+<tr valign="top"><td><code>data</code></td>
+<td>
+<p>An optional data frame, list or environment containing the variables in the model.</p>
+</td></tr>
+<tr valign="top"><td><code>subset</code></td>
+<td>
+<p>Currently unused</p>
+</td></tr>
+<tr valign="top"><td><code>weights</code></td>
+<td>
+<p>Currently unused</p>
+</td></tr>
+<tr valign="top"><td><code>censorWeights</code></td>
+<td>
+<p>Vector of subject-specific censoring weights (between 0 and 1). Currently only supported in <code>modelType = "fgr"</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>offset</code></td>
+<td>
+<p>Currently unused</p>
+</td></tr>
+<tr valign="top"><td><code>time</code></td>
+<td>
+<p>Currently undocumented</p>
+</td></tr>
+<tr valign="top"><td><code>pid</code></td>
+<td>
+<p>Optional vector of integer stratum identifiers. If supplied, all rows must be sorted by increasing identifiers</p>
+</td></tr>
+<tr valign="top"><td><code>y</code></td>
+<td>
+<p>Currently undocumented</p>
+</td></tr>
+<tr valign="top"><td><code>type</code></td>
+<td>
+<p>Currently undocumented</p>
+</td></tr>
+<tr valign="top"><td><code>dx</code></td>
+<td>
+<p>Optional dense <code>"<a href="../../Matrix/html/Matrix.html">Matrix</a>"</code> of covariates</p>
+</td></tr>
+<tr valign="top"><td><code>sx</code></td>
+<td>
+<p>Optional sparse <code>"<a href="../../Matrix/html/Matrix.html">Matrix</a>"</code> of covariates</p>
+</td></tr>
+<tr valign="top"><td><code>ix</code></td>
+<td>
+<p>Optional {0,1} <code>"<a href="../../Matrix/html/Matrix.html">Matrix</a>"</code> of covariates</p>
+</td></tr>
+<tr valign="top"><td><code>model</code></td>
+<td>
+<p>Currently undocumented</p>
+</td></tr>
+<tr valign="top"><td><code>normalize</code></td>
+<td>
+<p>String: Name of normalization for all non-indicator covariates (possible values: stdev, max, median)</p>
+</td></tr>
+<tr valign="top"><td><code>floatingPoint</code></td>
+<td>
+<p>Integer: Floating-point representation size (32 or 64)</p>
+</td></tr>
+<tr valign="top"><td><code>method</code></td>
+<td>
+<p>Currently undocumented</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This function creates a Cyclops model data object from R <code>"<a href="../../stats/html/formula.html">formula</a>"</code> or directly from
+numeric vectors and matrices to define the model response and covariates.
+If specifying a model using a <code>"<a href="../../stats/html/formula.html">formula</a>"</code>, then the left-hand side define the model response and the
+right-hand side defines dense covariate terms.
+Objects provided with <code>"sparseFormula"</code> and <code>"indicatorFormula"</code> must be include left-hand side responses and terms are
+coersed into sparse and indicator representations for computational efficiency.
+</p>
+<p>Items to discuss:
+* Only use formula or (y,dx,...)
+* stratum() in formula
+* offset() in formula
+* when <code>"stratum"</code> (renamed from pid) are necessary
+* when <code>"time"</code> are necessary
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list that contains a Cyclops model data object pointer and an operation duration
+</p>
+
+
+<h3>Models</h3>
+
+<p>Currently supported model types are:
+</p>
+
+<table summary="Rd table">
+<tr>
+ <td style="text-align: left;">
+	<code style="white-space: pre;">	"ls"</code> </td><td style="text-align: left;"> Least squares </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+	<code style="white-space: pre;">	"pr"</code> </td><td style="text-align: left;"> Poisson regression </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+	<code style="white-space: pre;">	"lr"</code> </td><td style="text-align: left;"> Logistic regression </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+	<code style="white-space: pre;">	"clr"</code> </td><td style="text-align: left;"> Conditional logistic regression </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+ <code style="white-space: pre;">	"cpr"</code> </td><td style="text-align: left;"> Conditional Poisson regression </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+	<code style="white-space: pre;">	"sccs"</code> </td><td style="text-align: left;"> Self-controlled case series </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+	<code style="white-space: pre;">	"cox"</code> </td><td style="text-align: left;"> Cox proportional hazards regression </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+	<code style="white-space: pre;">	"fgr"</code> </td><td style="text-align: left;"> Fine-Gray proportional subdistribution hazards regression </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+</td>
+</tr>
+
+</table>
+
+
+
+<h3>Examples</h3>
+
+<pre>
+## Dobson (1990) Page 93: Randomized Controlled Trial :
+counts &lt;- c(18, 17, 15, 20, 10, 20, 25, 13, 12)
+outcome &lt;- gl(3, 1, 9)
+treatment &lt;- gl(3, 3)
+cyclopsData &lt;- createCyclopsData(
+     counts ~ outcome + treatment,
+     modelType = "pr")
+cyclopsFit &lt;- fitCyclopsModel(cyclopsData)
+
+cyclopsData2 &lt;- createCyclopsData(
+     counts ~ outcome,
+     indicatorFormula = ~ treatment,
+     modelType = "pr")
+summary(cyclopsData2)
+cyclopsFit2 &lt;- fitCyclopsModel(cyclopsData2)
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>Cyclops</em> version 3.2.1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

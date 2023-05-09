@@ -1,0 +1,416 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: createConnectionDetails</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for createConnectionDetails {DatabaseConnector}"><tr><td>createConnectionDetails {DatabaseConnector}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>createConnectionDetails</h2>
+
+<h3>Description</h3>
+
+<p>Creates a list containing all details needed to connect to a
+database. There are three ways to call this function:
+</p>
+
+<ul>
+<li> <p><code>createConnectionDetails(dbms, user, password, server, port, extraSettings, oracleDriver, pathToDriver)</code>
+</p>
+</li>
+<li> <p><code>createConnectionDetails(dbms, connectionString, pathToDriver)</code>
+</p>
+</li>
+<li> <p><code>createConnectionDetails(dbms, connectionString, user, password, pathToDriver)</code>
+</p>
+</li></ul>
+
+
+
+<h4>DBMS parameter details:</h4>
+
+<p>Depending on the DBMS, the function arguments have slightly different
+interpretations:
+</p>
+<p>Oracle:
+</p>
+
+<ul>
+<li> <p><code>user</code>. The user name used to access the server
+</p>
+</li>
+<li> <p><code>password</code>. The password for that user
+</p>
+</li>
+<li> <p><code>server</code>. This field contains the SID, or host and servicename, SID, or TNSName:
+'sid', 'host/sid', 'host/service name', or 'tnsname'
+</p>
+</li>
+<li> <p><code>port</code>. Specifies the port on the server (default = 1521)
+</p>
+</li>
+<li> <p><code>extraSettings</code>. The configuration settings for the connection (i.e. SSL Settings such
+as &quot;(PROTOCOL=tcps)&quot;)
+</p>
+</li>
+<li> <p><code>oracleDriver</code>. The driver to be used. Choose between &quot;thin&quot; or &quot;oci&quot;.
+</p>
+</li>
+<li> <p><code>pathToDriver</code>. The path to the folder containing the Oracle JDBC driver JAR files.
+</p>
+</li></ul>
+
+<p>Microsoft SQL Server:
+</p>
+
+<ul>
+<li> <p><code>user</code>. The user used to log in to the server. If the user is not specified, Windows
+Integrated Security will be used, which requires the SQL Server JDBC drivers to be installed
+(see details below).
+</p>
+</li>
+<li> <p><code>password</code>. The password used to log on to the server
+</p>
+</li>
+<li> <p><code>server</code>. This field contains the host name of the server
+</p>
+</li>
+<li> <p><code>port</code>. Not used for SQL Server
+</p>
+</li>
+<li> <p><code>extraSettings</code>. The configuration settings for the connection (i.e. SSL Settings such
+as &quot;encrypt=true; trustServerCertificate=false;&quot;)
+</p>
+</li>
+<li> <p><code>pathToDriver</code>. The path to the folder containing the SQL Server JDBC driver JAR files.
+</p>
+</li></ul>
+
+<p>Microsoft PDW:
+</p>
+
+<ul>
+<li> <p><code>user</code>. The user used to log in to the server. If the user is not specified, Windows
+Integrated Security will be used, which requires the SQL Server JDBC drivers to be installed
+(see details below).
+</p>
+</li>
+<li> <p><code>password</code>. The password used to log on to the server
+</p>
+</li>
+<li> <p><code>server</code>. This field contains the host name of the server
+</p>
+</li>
+<li> <p><code>port</code>. Not used for SQL Server
+</p>
+</li>
+<li> <p><code>extraSettings</code>. The configuration settings for the connection (i.e. SSL Settings such
+as &quot;encrypt=true; trustServerCertificate=false;&quot;)
+</p>
+</li>
+<li> <p><code>pathToDriver</code>. The path to the folder containing the SQL Server JDBC driver JAR files.
+</p>
+</li></ul>
+
+<p>PostgreSQL:
+</p>
+
+<ul>
+<li> <p><code>user</code>. The user used to log in to the server
+</p>
+</li>
+<li> <p><code>password</code>. The password used to log on to the server
+</p>
+</li>
+<li> <p><code>server</code>. This field contains the host name of the server and the database holding the
+relevant schemas: host/database
+</p>
+</li>
+<li> <p><code>port</code>. Specifies the port on the server (default = 5432)
+</p>
+</li>
+<li> <p><code>extraSettings</code>. The configuration settings for the connection (i.e. SSL Settings such
+as &quot;ssl=true&quot;)
+</p>
+</li>
+<li> <p><code>pathToDriver</code>. The path to the folder containing the PostgreSQL JDBC driver JAR files.
+</p>
+</li></ul>
+
+<p>Redshift:
+</p>
+
+<ul>
+<li> <p><code>user</code>. The user used to log in to the server
+</p>
+</li>
+<li> <p><code>password</code>. The password used to log on to the server
+</p>
+</li>
+<li> <p><code>server</code>. This field contains the host name of the server and the database holding the
+relevant schemas: host/database
+</p>
+</li>
+<li> <p><code>port</code>. Specifies the port on the server (default = 5439)
+</p>
+</li>
+<li><p> 'extraSettings The configuration settings for the connection (i.e. SSL Settings such
+as &quot;ssl=true&amp;sslfactory=com.amazon.redshift.ssl.NonValidatingFactory&quot;)
+</p>
+</li>
+<li> <p><code>pathToDriver</code>. The path to the folder containing the RedShift JDBC driver JAR files.
+</p>
+</li></ul>
+
+<p>Netezza:
+</p>
+
+<ul>
+<li> <p><code>user</code>. The user used to log in to the server
+</p>
+</li>
+<li> <p><code>password</code>. The password used to log on to the server
+</p>
+</li>
+<li> <p><code>server</code>. This field contains the host name of the server and the database holding the
+relevant schemas: host/database
+</p>
+</li>
+<li> <p><code>port</code>. Specifies the port on the server (default = 5480)
+</p>
+</li>
+<li> <p><code>extraSettings</code>. The configuration settings for the connection (i.e. SSL Settings such
+as &quot;ssl=true&quot;)
+</p>
+</li>
+<li> <p><code>pathToDriver</code>. The path to the folder containing the Netezza JDBC driver JAR file
+(nzjdbc.jar).
+</p>
+</li></ul>
+
+<p>Impala:
+</p>
+
+<ul>
+<li> <p><code>user</code>. The user name used to access the server
+</p>
+</li>
+<li> <p><code>password</code>. The password for that user
+</p>
+</li>
+<li> <p><code>server</code>. The host name of the server
+</p>
+</li>
+<li> <p><code>port</code>. Specifies the port on the server (default = 21050)
+</p>
+</li>
+<li> <p><code>extraSettings</code>. The configuration settings for the connection (i.e. SSL Settings such
+as &quot;SSLKeyStorePwd=*****&quot;)
+</p>
+</li>
+<li> <p><code>pathToDriver</code>. The path to the folder containing the Impala JDBC driver JAR files.
+</p>
+</li></ul>
+
+<p>SQLite:
+</p>
+
+<ul>
+<li> <p><code>server</code>. The path to the SQLIte file.
+</p>
+</li></ul>
+
+<p>Spark:
+</p>
+<p>Currently both JDBC and ODBC connections are supported for Spark. Set the
+<code>connectionString</code> argument to use JDBC, otherwise ODBC is used:
+</p>
+
+<ul>
+<li> <p><code>connectionString</code>. The JDBC connection string (e.g. starting with
+'jdbc:spark://my-org.dev.cloud.databricks.com...').
+</p>
+</li>
+<li> <p><code>user</code>. The user name used to access the server.
+</p>
+</li>
+<li> <p><code>password</code>. The password for that user.
+</p>
+</li>
+<li> <p><code>server</code>. The host name of the server (when using ODBC)
+</p>
+</li>
+<li> <p><code>port</code>. Specifies the port on the server (when using ODBC)
+</p>
+</li>
+<li> <p><code>extraSettings</code>. Additional settings for the ODBC connection, for example
+<code>extraSettings = list(HTTPPath = "http://databricks.server.com")</code>.
+</p>
+</li></ul>
+
+<p>Snowflake:
+</p>
+
+<ul>
+<li> <p><code>connectionString</code>. The connection string (e.g. starting with
+'jdbc:snowflake://host:port/?db=database').
+</p>
+</li>
+<li> <p><code>user</code>. The user name used to access the server.
+</p>
+</li>
+<li> <p><code>password</code>. The password for that user.
+</p>
+</li></ul>
+
+
+
+
+<h4>Windows authentication for SQL Server:</h4>
+
+<p>To be able to use Windows authentication for SQL Server (and PDW), you have to install the JDBC
+driver. Download the version 9.2.0 .zip from <a href="https://learn.microsoft.com/en-us/sql/connect/jdbc/release-notes-for-the-jdbc-driver?view=sql-server-ver15#92-releases">Microsoft</a>
+and extract its contents to a folder. In the extracted folder you will find the file
+sqljdbc_9.2/enu/auth/x64/mssql-jdbc_auth-9.2.0.x64.dll (64-bits) or
+ssqljdbc_9.2/enu/auth/x86/mssql-jdbc_auth-9.2.0.x86.dll (32-bits), which needs to be moved to
+location on the system path, for example to c:/windows/system32. If you not have write access to
+any folder in the system path, you can also specify the path to the folder containing the dll by
+setting the environmental variable PATH_TO_AUTH_DLL, so for example
+<code>Sys.setenv("PATH_TO_AUTH_DLL" = "c:/temp")</code> Note that the environmental variable needs to be
+set before calling <code><a href="../../DatabaseConnector/help/connect.html">connect()</a></code> for the first time.
+</p>
+
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>dbms</code></td>
+<td>
+<p>The type of DBMS running on the server. Valid values are
+</p>
+
+<ul>
+<li><p> &quot;oracle&quot; for Oracle
+</p>
+</li>
+<li><p> &quot;postgresql&quot; for PostgreSQL
+</p>
+</li>
+<li><p> &quot;redshift&quot; for Amazon Redshift
+</p>
+</li>
+<li><p> &quot;sql server&quot; for Microsoft SQL Server
+</p>
+</li>
+<li><p> &quot;pdw&quot; for Microsoft Parallel Data Warehouse (PDW)
+</p>
+</li>
+<li><p> &quot;netezza&quot; for IBM Netezza
+</p>
+</li>
+<li><p> &quot;bigquery&quot; for Google BigQuery
+</p>
+</li>
+<li><p> &quot;sqlite&quot; for SQLite
+</p>
+</li>
+<li><p> &quot;sqlite extended&quot; for SQLite with extended types (DATE and DATETIME)
+</p>
+</li>
+<li><p> &quot;spark&quot; for Spark
+</p>
+</li>
+<li><p> &quot;snowflake&quot; for Snowflake
+</p>
+</li></ul>
+</td></tr>
+<tr valign="top"><td><code>user</code></td>
+<td>
+<p>The user name used to access the server.</p>
+</td></tr>
+<tr valign="top"><td><code>password</code></td>
+<td>
+<p>The password for that user.</p>
+</td></tr>
+<tr valign="top"><td><code>server</code></td>
+<td>
+<p>The name of the server.</p>
+</td></tr>
+<tr valign="top"><td><code>port</code></td>
+<td>
+<p>(optional) The port on the server to connect to.</p>
+</td></tr>
+<tr valign="top"><td><code>extraSettings</code></td>
+<td>
+<p>(optional) Additional configuration settings specific to the database
+provider to configure things as security for SSL. For connections using
+JDBC these will be appended to end of the connection string. For
+connections using DBI, these settings will additionally be used to call
+<code><a href="../../DBI/html/dbConnect.html">dbConnect()</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>oracleDriver</code></td>
+<td>
+<p>Specify which Oracle drive you want to use. Choose between <code>"thin"</code>
+or <code>"oci"</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>connectionString</code></td>
+<td>
+<p>The JDBC connection string. If specified, the <code>server</code>, <code>port</code>,
+<code>extraSettings</code>, and <code>oracleDriver</code> fields are ignored. If
+<code>user</code> and <code>password</code> are not specified, they are assumed to
+already be included in the connection string.</p>
+</td></tr>
+<tr valign="top"><td><code>pathToDriver</code></td>
+<td>
+<p>Path to a folder containing the JDBC driver JAR files. See
+<code><a href="../../DatabaseConnector/help/downloadJdbcDrivers.html">downloadJdbcDrivers()</a></code> for instructions on how to download the
+relevant drivers.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This function creates a list containing all details needed to connect to a database. The list can
+then be used in the <code><a href="../../DatabaseConnector/help/connect.html">connect()</a></code> function.
+</p>
+<p>It is highly recommended to use a secure approach to storing credentials, so not to have your
+credentials in plain text in your R scripts. The examples demonstrate how to use the
+<code>keyring</code> package.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with all the details needed to connect to a database.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## Not run: 
+# Needs to be done only once on a machine. Credentials will then be stored in
+# the operating system's secure credential manager:
+keyring::key_set_with_value("server", password = "localhost/postgres")
+keyring::key_set_with_value("user", password = "root")
+keyring::key_set_with_value("password", password = "secret")
+
+# Create connection details using keyring. Note: the connection details will
+# not store the credentials themselves, but the reference to get the credentials.
+connectionDetails &lt;- createConnectionDetails(
+  dbms = "postgresql",
+  server = keyring::key_get("server"),
+  user = keyring::key_get("user"),
+  password = keyring::key_get("password"),
+)
+conn &lt;- connect(connectionDetails)
+dbGetQuery(conn, "SELECT COUNT(*) FROM person")
+disconnect(conn)
+
+## End(Not run)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>DatabaseConnector</em> version 6.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

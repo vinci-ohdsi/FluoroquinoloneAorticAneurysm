@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Add an interval to a date</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for dateAdd {DatabaseConnector}"><tr><td>dateAdd {DatabaseConnector}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Add an interval to a date</h2>
+
+<h3>Description</h3>
+
+<p>This function is provided primarily to be used together with <code>dbplyr</code> when querying
+a database. It will also work in <code>dplyr</code> against data frames.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+dateAdd(interval, number, date)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>interval</code></td>
+<td>
+<p>Unit for the interval. Can be &quot;day&quot;, &quot;week&quot;, &quot;month&quot;, &quot;year&quot;.</p>
+</td></tr>
+<tr valign="top"><td><code>number</code></td>
+<td>
+<p>The number of units to add to the date.</p>
+</td></tr>
+<tr valign="top"><td><code>date</code></td>
+<td>
+<p>The date to add to.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A new date.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+dateAdd("day", 10, as.Date("2000-01-01"))
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>DatabaseConnector</em> version 6.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

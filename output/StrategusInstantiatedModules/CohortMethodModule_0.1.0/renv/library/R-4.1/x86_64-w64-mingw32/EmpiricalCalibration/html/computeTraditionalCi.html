@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Compute the (traditional) confidence interval</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for computeTraditionalCi {EmpiricalCalibration}"><tr><td>computeTraditionalCi {EmpiricalCalibration}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Compute the (traditional) confidence interval</h2>
+
+<h3>Description</h3>
+
+<p><code>computeTraditionalCi</code> computes the traditional confidence interval based on the log of the
+relative risk and the standard error of the log of the relative risk.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+computeTraditionalCi(logRr, seLogRr, ciWidth = 0.95)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>logRr</code></td>
+<td>
+<p>A numeric vector of one or more effect estimates on the log scale</p>
+</td></tr>
+<tr valign="top"><td><code>seLogRr</code></td>
+<td>
+<p>The standard error of the log of the effect estimates. Hint: often the standard
+error = (log(&lt;lower bound 95 percent confidence interval&gt;) - log(&lt;effect
+estimate&gt;))/qnorm(0.025)</p>
+</td></tr>
+<tr valign="top"><td><code>ciWidth</code></td>
+<td>
+<p>The width of the confidence interval. Typically this would be .95, for the 95
+percent confidence interval.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>The point estimate and confidence interval
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data(sccs)
+positive &lt;- sccs[sccs$groundTruth == 1, ]
+computeTraditionalCi(positive$logRr, positive$seLogRr)
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>EmpiricalCalibration</em> version 3.1.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

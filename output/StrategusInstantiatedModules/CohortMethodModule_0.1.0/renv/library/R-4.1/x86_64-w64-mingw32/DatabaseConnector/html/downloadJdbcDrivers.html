@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Download DatabaseConnector JDBC Jar files</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for downloadJdbcDrivers {DatabaseConnector}"><tr><td>downloadJdbcDrivers {DatabaseConnector}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Download DatabaseConnector JDBC Jar files</h2>
+
+<h3>Description</h3>
+
+<p>Download the DatabaseConnector JDBC drivers from https://ohdsi.github.io/DatabaseConnectorJars/
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+downloadJdbcDrivers(
+  dbms,
+  pathToDriver = Sys.getenv("DATABASECONNECTOR_JAR_FOLDER"),
+  method = "auto",
+  ...
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>dbms</code></td>
+<td>
+<p>The type of DBMS to download Jar files for.
+</p>
+
+<ul>
+<li><p>&quot;postgresql&quot; for PostgreSQL
+</p>
+</li>
+<li><p>&quot;redshift&quot; for Amazon Redshift
+</p>
+</li>
+<li><p>&quot;sql server&quot;, &quot;pdw&quot; or &quot;synapse&quot; for Microsoft SQL Server
+</p>
+</li>
+<li><p>&quot;oracle&quot; for Oracle
+</p>
+</li>
+<li><p>&quot;spark&quot; for Spark
+</p>
+</li>
+<li><p>&quot;snowflake&quot; for Snowflake
+</p>
+</li></ul>
+</td></tr>
+<tr valign="top"><td><code>pathToDriver</code></td>
+<td>
+<p>The full path to the folder where the JDBC driver .jar files should be downloaded to.
+By default the value of the environment variable &quot;DATABASECONNECTOR_JAR_FOLDER&quot; is used.</p>
+</td></tr>
+<tr valign="top"><td><code>method</code></td>
+<td>
+<p>The method used for downloading files. See <code>?download.file</code> for details and options.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Further arguments passed on to <code>download.file</code></p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The following versions of the JDBC drivers are currently used:
+</p>
+
+<ul>
+<li><p>PostgreSQLV42.2.18
+</p>
+</li>
+<li><p>RedShiftV2.1.0.9
+</p>
+</li>
+<li><p>SQL ServerV8.4.1.zip
+</p>
+</li>
+<li><p>OracleV19.8
+</p>
+</li>
+<li><p>SparkV2.6.21
+</p>
+</li>
+<li><p>SnowflakeV3.13.22
+</p>
+</li></ul>
+
+
+
+<h3>Value</h3>
+
+<p>Invisibly returns the destination if the download was successful.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## Not run: 
+downloadJdbcDrivers("redshift")
+
+## End(Not run)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>DatabaseConnector</em> version 5.1.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

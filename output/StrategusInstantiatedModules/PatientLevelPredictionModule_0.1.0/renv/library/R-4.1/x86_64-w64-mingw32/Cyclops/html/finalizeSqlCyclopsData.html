@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: finalizeSqlCyclopsData</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for finalizeSqlCyclopsData {Cyclops}"><tr><td>finalizeSqlCyclopsData {Cyclops}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>finalizeSqlCyclopsData</h2>
+
+<h3>Description</h3>
+
+<p><code>finalizeSqlCyclopsData</code> finalizes a Cyclops data object
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+finalizeSqlCyclopsData(
+  object,
+  addIntercept = FALSE,
+  useOffsetCovariate = NULL,
+  offsetAlreadyOnLogScale = FALSE,
+  sortCovariates = FALSE,
+  makeCovariatesDense = NULL
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>Cyclops data object</p>
+</td></tr>
+<tr valign="top"><td><code>addIntercept</code></td>
+<td>
+<p>Add an intercept covariate if one was not imported through SQL</p>
+</td></tr>
+<tr valign="top"><td><code>useOffsetCovariate</code></td>
+<td>
+<p>Specify is a covariate should be used as an offset (fixed coefficient = 1).
+Set option to <code>-1</code> to specify the time-to-event column,
+otherwise include a single numeric or character covariate name.</p>
+</td></tr>
+<tr valign="top"><td><code>offsetAlreadyOnLogScale</code></td>
+<td>
+<p>Set to <code>TRUE</code> to indicate that offsets were log-transformed before importing into Cyclops data object.</p>
+</td></tr>
+<tr valign="top"><td><code>sortCovariates</code></td>
+<td>
+<p>Sort covariates in numeric-order with intercept first if it exists.</p>
+</td></tr>
+<tr valign="top"><td><code>makeCovariatesDense</code></td>
+<td>
+<p>List of numeric or character covariates names to densely represent in Cyclops data object.
+For efficiency, we suggest making at least the intercept dense.</p>
+</td></tr>
+</table>
+
+<hr /><div style="text-align: center;">[Package <em>Cyclops</em> version 3.2.1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

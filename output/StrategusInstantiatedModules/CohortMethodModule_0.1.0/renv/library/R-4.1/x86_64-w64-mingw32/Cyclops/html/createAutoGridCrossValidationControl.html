@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create a Cyclops control object that supports multiple...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for createAutoGridCrossValidationControl {Cyclops}"><tr><td>createAutoGridCrossValidationControl {Cyclops}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Create a Cyclops control object that supports multiple hyperparameters</h2>
+
+<h3>Description</h3>
+
+<p><code>createCrossValidationControl</code> creates a Cyclops control object for use with <code><a href="../../Cyclops/help/fitCyclopsModel.html">fitCyclopsModel</a></code>
+that supports multiple hyperparameters through an auto-search in one dimension and a grid-search over the remaining
+dimensions
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+createAutoGridCrossValidationControl(
+  outerGrid,
+  autoPosition = 1,
+  refitAtMaximum = TRUE,
+  cvType = "auto",
+  initialValue = 1,
+  ...
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>outerGrid</code></td>
+<td>
+<p>List or data.frame of grid parameters to explore</p>
+</td></tr>
+<tr valign="top"><td><code>autoPosition</code></td>
+<td>
+<p>Vector position for auto-search parameter (concatenated into outerGrid)</p>
+</td></tr>
+<tr valign="top"><td><code>refitAtMaximum</code></td>
+<td>
+<p>Logical: re-fit Cyclops object at maximal cross-validation parameters</p>
+</td></tr>
+<tr valign="top"><td><code>cvType</code></td>
+<td>
+<p>Must equal &quot;auto&quot;</p>
+</td></tr>
+<tr valign="top"><td><code>initialValue</code></td>
+<td>
+<p>Initial value for auto-search parameter</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Additional parameters passed through to <code><a href="../../Cyclops/help/createControl.html">createControl</a></code></p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A Cyclops prior object of class inheriting from <code>"cyclopsPrior"</code> and <code>"cyclopsFunctionalPrior"</code>
+for use with <code>fitCyclopsModel</code>.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>Cyclops</em> version 3.2.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

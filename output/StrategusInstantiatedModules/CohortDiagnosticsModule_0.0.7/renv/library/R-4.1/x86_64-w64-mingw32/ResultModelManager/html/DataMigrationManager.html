@@ -1,0 +1,342 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: DataMigrationManager (DMM)</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for DataMigrationManager {ResultModelManager}"><tr><td>DataMigrationManager {ResultModelManager}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>DataMigrationManager (DMM)</h2>
+
+<h3>Description</h3>
+
+<p>R6 class for management of database migration
+</p>
+
+
+<h3>Value</h3>
+
+<p>data frame all migrations, including file name, order and execution status
+Get connection handler
+</p>
+
+
+<h3>Public fields</h3>
+
+<div class="r6-fields">
+
+<dl>
+<dt><code>migrationPath</code></dt><dd><p>Path migrations exist in</p>
+</dd>
+<dt><code>databaseSchema</code></dt><dd><p>Path migrations exist in</p>
+</dd>
+<dt><code>packageName</code></dt><dd><p>packageName, can be null</p>
+</dd>
+<dt><code>tablePrefix</code></dt><dd><p>packageName, can be null</p>
+</dd>
+</dl>
+
+</div>
+
+
+<h3>Methods</h3>
+
+
+
+<h4>Public methods</h4>
+
+
+<ul>
+<li> <p><a href="#method-DataMigrationManager-new"><code>DataMigrationManager$new()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-DataMigrationManager-migrationTableExists"><code>DataMigrationManager$migrationTableExists()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-DataMigrationManager-getMigrationsPath"><code>DataMigrationManager$getMigrationsPath()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-DataMigrationManager-getStatus"><code>DataMigrationManager$getStatus()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-DataMigrationManager-getConnectionHandler"><code>DataMigrationManager$getConnectionHandler()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-DataMigrationManager-check"><code>DataMigrationManager$check()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-DataMigrationManager-executeMigrations"><code>DataMigrationManager$executeMigrations()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-DataMigrationManager-isPackage"><code>DataMigrationManager$isPackage()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-DataMigrationManager-finalize"><code>DataMigrationManager$finalize()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-DataMigrationManager-clone"><code>DataMigrationManager$clone()</code></a>
+</p>
+</li></ul>
+
+
+<hr>
+<a id="method-DataMigrationManager-new"></a>
+
+
+
+<h4>Method <code>new()</code></h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>DataMigrationManager$new(
+  connectionDetails,
+  databaseSchema,
+  tablePrefix = "",
+  migrationPath,
+  packageName = NULL,
+  migrationRegexp = .defaultMigrationRegexp
+)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>connectionDetails</code></dt><dd><p>DatabaseConnector connection details object</p>
+</dd>
+<dt><code>databaseSchema</code></dt><dd><p>Database Schema to execute on</p>
+</dd>
+<dt><code>tablePrefix</code></dt><dd><p>Optional table prefix for all tables (e.g. plp, cm, cd etc)</p>
+</dd>
+<dt><code>migrationPath</code></dt><dd><p>Path to location of migration sql files. If in package mode, this should just
+be a folder (e.g. &quot;migrations&quot;) that lives in the location &quot;sql/sql_server&quot; (and)
+other database platforms.
+If in folder model, the folder must include &quot;sql_server&quot; in the relative path,
+(e.g if  migrationPath = 'migrations' then the folder 'migrations/sql_server' should exists)</p>
+</dd>
+<dt><code>packageName</code></dt><dd><p>If in package mode, the name of the R package</p>
+</dd>
+<dt><code>migrationRegexp</code></dt><dd><p>(Optional) regular expression pattern default is <code style="white-space: pre;">(Migration_([0-9]+))-(.+).sql</code>
+Migration table exists</p>
+</dd>
+</dl>
+
+</div>
+
+
+<hr>
+<a id="method-DataMigrationManager-migrationTableExists"></a>
+
+
+
+<h4>Method <code>migrationTableExists()</code></h4>
+
+<p>Check if migration table is present in schema
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>DataMigrationManager$migrationTableExists()</pre></div>
+
+
+
+<h5>Returns</h5>
+
+<p>boolean
+Get path of migrations
+</p>
+
+
+<hr>
+<a id="method-DataMigrationManager-getMigrationsPath"></a>
+
+
+
+<h4>Method <code>getMigrationsPath()</code></h4>
+
+<p>Get path to sql migration files
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>DataMigrationManager$getMigrationsPath(dbms = "sql server")</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>dbms</code></dt><dd><p>Optionally specify the dbms that the migration fits under
+Get status of result model</p>
+</dd>
+</dl>
+
+</div>
+
+
+<hr>
+<a id="method-DataMigrationManager-getStatus"></a>
+
+
+
+<h4>Method <code>getStatus()</code></h4>
+
+<p>Get status of all migrations (executed or not)
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>DataMigrationManager$getStatus()</pre></div>
+
+
+<hr>
+<a id="method-DataMigrationManager-getConnectionHandler"></a>
+
+
+
+<h4>Method <code>getConnectionHandler()</code></h4>
+
+<p>Return connection handler instance
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>DataMigrationManager$getConnectionHandler()</pre></div>
+
+
+
+<h5>Returns</h5>
+
+<p>ConnectionHandler instance
+Check migrations in folder
+</p>
+
+
+<hr>
+<a id="method-DataMigrationManager-check"></a>
+
+
+
+<h4>Method <code>check()</code></h4>
+
+<p>Check if file names are valid for migrations
+Execute Migrations
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>DataMigrationManager$check()</pre></div>
+
+
+<hr>
+<a id="method-DataMigrationManager-executeMigrations"></a>
+
+
+
+<h4>Method <code>executeMigrations()</code></h4>
+
+<p>Execute any unexecuted migrations
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>DataMigrationManager$executeMigrations(stopMigrationVersion = NULL)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>stopMigrationVersion</code></dt><dd><p>(Optional) Migrate to a specific migration number
+isPackage</p>
+</dd>
+</dl>
+
+</div>
+
+
+<hr>
+<a id="method-DataMigrationManager-isPackage"></a>
+
+
+
+<h4>Method <code>isPackage()</code></h4>
+
+<p>is a package folder structure or not
+finalize
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>DataMigrationManager$isPackage()</pre></div>
+
+
+<hr>
+<a id="method-DataMigrationManager-finalize"></a>
+
+
+
+<h4>Method <code>finalize()</code></h4>
+
+<p>close database connection
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>DataMigrationManager$finalize()</pre></div>
+
+
+<hr>
+<a id="method-DataMigrationManager-clone"></a>
+
+
+
+<h4>Method <code>clone()</code></h4>
+
+<p>The objects of this class are cloneable with this method.
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>DataMigrationManager$clone(deep = FALSE)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p>
+</dd>
+</dl>
+
+</div>
+
+
+
+
+<h3>See Also</h3>
+
+<p><a href="../../ResultModelManager/help/ConnectionHandler.html">ConnectionHandler</a> for information on returned class
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>ResultModelManager</em> version 0.1.1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

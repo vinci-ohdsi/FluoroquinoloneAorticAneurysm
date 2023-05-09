@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Fit a Cyclops model</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for fitCyclopsModel {Cyclops}"><tr><td>fitCyclopsModel {Cyclops}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Fit a Cyclops model</h2>
+
+<h3>Description</h3>
+
+<p><code>fitCyclopsModel</code> fits a Cyclops model data object
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+fitCyclopsModel(
+  cyclopsData,
+  prior = createPrior("none"),
+  control = createControl(),
+  weights = NULL,
+  forceNewObject = FALSE,
+  returnEstimates = TRUE,
+  startingCoefficients = NULL,
+  fixedCoefficients = NULL,
+  warnings = TRUE,
+  computeDevice = "native"
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>cyclopsData</code></td>
+<td>
+<p>A Cyclops data object</p>
+</td></tr>
+<tr valign="top"><td><code>prior</code></td>
+<td>
+<p>A prior object. More details are given below.</p>
+</td></tr>
+<tr valign="top"><td><code>control</code></td>
+<td>
+<p>A <code>"cyclopsControl"</code> object constructed by <code><a href="../../Cyclops/help/createControl.html">createControl</a></code></p>
+</td></tr>
+<tr valign="top"><td><code>weights</code></td>
+<td>
+<p>Vector of 0/1 weights for each data row</p>
+</td></tr>
+<tr valign="top"><td><code>forceNewObject</code></td>
+<td>
+<p>Logical, forces the construction of a new Cyclops model fit object</p>
+</td></tr>
+<tr valign="top"><td><code>returnEstimates</code></td>
+<td>
+<p>Logical, return regression coefficient estimates in Cyclops model fit object</p>
+</td></tr>
+<tr valign="top"><td><code>startingCoefficients</code></td>
+<td>
+<p>Vector of starting values for optimization</p>
+</td></tr>
+<tr valign="top"><td><code>fixedCoefficients</code></td>
+<td>
+<p>Vector of booleans indicating if coefficient should be fix</p>
+</td></tr>
+<tr valign="top"><td><code>warnings</code></td>
+<td>
+<p>Logical, report regularization warnings</p>
+</td></tr>
+<tr valign="top"><td><code>computeDevice</code></td>
+<td>
+<p>String: Name of compute device to employ; defaults to <code>"native"</code> C++ on CPU</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This function performs numerical optimization to fit a Cyclops model data object.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list that contains a Cyclops model fit object pointer and an operation duration
+</p>
+
+
+<h3>Prior</h3>
+
+<p>Currently supported prior types are:
+</p>
+
+<table summary="Rd table">
+<tr>
+ <td style="text-align: left;">
+	<code style="white-space: pre;">	"none"</code> </td><td style="text-align: left;"> Useful for finding MLE </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+	<code style="white-space: pre;">	"laplace"</code> </td><td style="text-align: left;"> L_1 regularization </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+ <code style="white-space: pre;">  "normal"</code> </td><td style="text-align: left;"> L_2 regularization </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+</td>
+</tr>
+
+</table>
+
+
+
+<h3>References</h3>
+
+<p>Suchard MA, Simpson SE, Zorych I, Ryan P, Madigan D.
+Massive parallelization of serial inference algorithms for complex generalized linear models.
+ACM Transactions on Modeling and Computer Simulation, 23, 10, 2013.
+</p>
+<p>Simpson SE, Madigan D, Zorych I, Schuemie M, Ryan PB, Suchard MA.
+Multiple self-controlled case series for large-scale longitudinal observational databases.
+Biometrics, 69, 893-902, 2013.
+</p>
+<p>Mittal S, Madigan D, Burd RS, Suchard MA.
+High-dimensional, massive sample-size Cox proportional hazards regression for survival analysis.
+Biostatistics, 15, 207-221, 2014.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## Dobson (1990) Page 93: Randomized Controlled Trial :
+counts &lt;- c(18,17,15,20,10,20,25,13,12)
+outcome &lt;- gl(3,1,9)
+treatment &lt;- gl(3,3)
+cyclopsData &lt;- createCyclopsData(counts ~ outcome + treatment, modelType = "pr")
+cyclopsFit &lt;- fitCyclopsModel(cyclopsData, prior = createPrior("none"))
+coef(cyclopsFit)
+confint(cyclopsFit, c("outcome2","treatment3"))
+predict(cyclopsFit)
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>Cyclops</em> version 3.2.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

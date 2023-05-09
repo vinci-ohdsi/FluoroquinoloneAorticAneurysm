@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Executes IR analysis given a design, options, and connection...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for executeAnalysis {CohortIncidence}"><tr><td>executeAnalysis {CohortIncidence}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Executes IR analysis given a design, options, and connection settings.</h2>
+
+<h3>Description</h3>
+
+<p>Executes IR analysis given a design, options, and connection settings.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+executeAnalysis(
+  connectionDetails = NULL,
+  connection = NULL,
+  incidenceDesign,
+  buildOptions,
+  sourceName = "default"
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>connectionDetails</code></td>
+<td>
+<p>An R object of type <code>connectionDetails</code> created using the
+function <code>createConnectionDetails</code> in the
+<code>DatabaseConnector</code> package. Either the <code>connection</code> or
+<code>connectionDetails</code> argument should be specified.</p>
+</td></tr>
+<tr valign="top"><td><code>connection</code></td>
+<td>
+<p>A connection to the server containing the schema as created using the
+<code>connect</code> function in the <code>DatabaseConnector</code> package.
+Either the <code>connection</code> or <code>connectionDetails</code> argument
+should be specified.</p>
+</td></tr>
+<tr valign="top"><td><code>incidenceDesign</code></td>
+<td>
+<p>A string object containing valid JSON that represents cohort incidence design</p>
+</td></tr>
+<tr valign="top"><td><code>buildOptions</code></td>
+<td>
+<p>the parameters to use in building the analysis queries, created by buildOptions()</p>
+</td></tr>
+<tr valign="top"><td><code>sourceName</code></td>
+<td>
+<p>the source name to attach to the results</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This method performs the entire cohort incidence analysis in one step without the need for creating any permenant tables.
+</p>
+<p>The process for calculating the cohort incidence is as follows:
+- Create the time at risk episodes from the target cohorts, using the specified startWith, endWith and offsets
+- Calculate the excluded time by finding the overlap of TAR with the following:
+- 1. Outcome cohort episodes (adding the clean window to each outcome episode end date)
+- 2. Exclusion cohort that was specified in the outcome definition excludeCohortId.
+- Count the distinct persons, distinct persons with cases, total time at risk and total cases, and calcuate the proportion and rates.
+</p>
+<p>The resuting dataframe is described with the following table:
+|Name |Description|
+|&mdash;&ndash;|&mdash;&mdash;&ndash;|
+|REF_ID|The reference id specified in buildOptions() to track results to the analysis execution.|
+|SOURCE_NAME|The name of the source for these results|
+|TARGET_COHORT_DEFIITION_ID|The cohort ID of the target population|
+|TARGET_NAME|The name of the target cohort|
+|TAR_ID|The TAR identifier|
+|TAR_START_WITH|Indicates if the TAR starts with the 'start' or 'end' of the target cohort episode|
+|TAR_START_OFFSET|The days added to the date field specified in TAR_START_WITH|
+|TAR_END_WITH|Indicates if the TAR ends with the 'start' or 'end' of the target cohort episode|
+|TAR_END_OFFSET|The days added to the date field specified in TAR_END_WITH|
+|SUBGROUP_ID|The subgroup identifier|
+|SUBGROUP_NAME|The name of the subgroup|
+|OUTCOME_ID|The outcome identifier|
+|OUTCOME_COHORT_DEFINITION_ID|The cohort ID of the outcome population|
+|OUTCOME_NAME|The outcome name|
+|CLEAN_WINDOW|The clean window for this outcome definition|
+|AGE_ID|The age ID for this strata representing the age band specified in the strata settings|
+|AGE_GROUP_NAME|The name for this age group|
+|GENDER_ID| The gender concept ID for this gender strata|
+|GENDER_NAME| The name of the gender|
+|START_YEAR|The year strata, defined by using the year the TAR started|
+|PERSONS_AT_RISK_PE|Distinct persons at risk before removing excluded time from TAR|
+|PERSONS_AT_RISK|Distinct persons at risk after removing excluded time from TAR.  A person must have at least 1 day TAR to be included.|
+|PERSON_DAYS_PE|Total TAR (in days) before excluded time was removed from TAR.|
+|PERSON_DAYS|Total TAR (in days) after excluded time was removed from TAR.|
+|PERSON_OUTCOMES_PE|Distinct persons with outcome before removing excluded time from TAR|
+|PERSON_OUTCOMES|Distinct persons with outcome after removing excluded time from TAR.  A person must have at least 1 day TAR to be included.|
+|OUTCOMES_PE|Number of cases before excluding TAR.|
+|OUTCOMES|Number of cases after excluding TAR.|
+|INCIDENCE_PROPORTION_P100P|The Incidence Proportion (per 100 people), calculated by person_outcomes / persons_at_risk * 100|
+|INCIDENCE_RATE_P100PY|The Incidence Rate (per 100 person years), calculated by outcomes / person_days / 365.25 * 100|
+</p>
+
+
+<h3>Value</h3>
+
+<p>a <code>data.frame</code> containing the IR results
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>CohortIncidence</em> version 3.1.2 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

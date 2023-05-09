@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create target-comparator-outcomes combinations.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for createTargetComparatorOutcomes {CohortMethod}"><tr><td>createTargetComparatorOutcomes {CohortMethod}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Create target-comparator-outcomes combinations.</h2>
+
+<h3>Description</h3>
+
+<p>Create target-comparator-outcomes combinations.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+createTargetComparatorOutcomes(
+  targetId,
+  comparatorId,
+  outcomes,
+  excludedCovariateConceptIds = c(),
+  includedCovariateConceptIds = c()
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>targetId</code></td>
+<td>
+<p>A cohort ID identifying the target exposure in the exposure
+table.</p>
+</td></tr>
+<tr valign="top"><td><code>comparatorId</code></td>
+<td>
+<p>A cohort ID identifying the comparator exposure in the exposure
+table.</p>
+</td></tr>
+<tr valign="top"><td><code>outcomes</code></td>
+<td>
+<p>A list of object of type <code>outcome</code> as created by
+<code><a href="../../CohortMethod/help/createOutcome.html">createOutcome()</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>excludedCovariateConceptIds</code></td>
+<td>
+<p>A list of concept IDs that cannot be used to construct
+covariates. This argument is to be used only for exclusion
+concepts that are specific to the target-comparator combination.</p>
+</td></tr>
+<tr valign="top"><td><code>includedCovariateConceptIds</code></td>
+<td>
+<p>A list of concept IDs that must be used to construct
+covariates. This argument is to be used only for inclusion
+concepts that are specific to the target-comparator combination.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Create a set of hypotheses of interest, to be used with the <code><a href="../../CohortMethod/help/runCmAnalyses.html">runCmAnalyses()</a></code> function.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of type <code>targetComparatorOutcomes</code>.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>CohortMethod</em> version 5.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

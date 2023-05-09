@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create a parameter object for the function getDbSccsData</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for createGetDbSccsDataArgs {SelfControlledCaseSeries}"><tr><td>createGetDbSccsDataArgs {SelfControlledCaseSeries}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Create a parameter object for the function getDbSccsData</h2>
+
+<h3>Description</h3>
+
+<p>Create a parameter object for the function getDbSccsData
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+createGetDbSccsDataArgs(
+  useCustomCovariates = FALSE,
+  useNestingCohort = FALSE,
+  nestingCohortId = NULL,
+  deleteCovariatesSmallCount = 0,
+  studyStartDate = "",
+  studyEndDate = "",
+  maxCasesPerOutcome = 0,
+  exposureIds = "exposureId",
+  customCovariateIds = ""
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>useCustomCovariates</code></td>
+<td>
+<p>Create covariates from a custom table?</p>
+</td></tr>
+<tr valign="top"><td><code>useNestingCohort</code></td>
+<td>
+<p>Should the study be nested in a cohort (e.g. people with a specific indication)? If not, the study will be nested in the general population.</p>
+</td></tr>
+<tr valign="top"><td><code>nestingCohortId</code></td>
+<td>
+<p>A cohort definition ID identifying the records in the nestingCohortTable to use as nesting cohort.</p>
+</td></tr>
+<tr valign="top"><td><code>deleteCovariatesSmallCount</code></td>
+<td>
+<p>The minimum count for a covariate to appear in the data to be kept.</p>
+</td></tr>
+<tr valign="top"><td><code>studyStartDate</code></td>
+<td>
+<p>A character object specifying the minimum date where data is used. Date format is 'yyyymmdd'.</p>
+</td></tr>
+<tr valign="top"><td><code>studyEndDate</code></td>
+<td>
+<p>A character object specifying the maximum date where data is used. Date format is 'yyyymmdd'.</p>
+</td></tr>
+<tr valign="top"><td><code>maxCasesPerOutcome</code></td>
+<td>
+<p>If there are more than this number of cases for a single outcome cases will be sampled to this size. maxCasesPerOutcome = 0 indicates no maximum size.</p>
+</td></tr>
+<tr valign="top"><td><code>exposureIds</code></td>
+<td>
+<p>A list of identifiers to extract from the exposure table. If exposureTable = DRUG_ERA, exposureIds should be CONCEPT_ID. If exposureTable = &quot;drug_era&quot;, exposureIds is used to select the drug_concept_id. If no exposure IDs are provided, all drugs or cohorts in the exposureTable are included as exposures.</p>
+</td></tr>
+<tr valign="top"><td><code>customCovariateIds</code></td>
+<td>
+<p>A list of cohort definition IDs identifying the records in the customCovariateTable to use for building custom covariates.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Create an object defining the parameter values.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>SelfControlledCaseSeries</em> version 4.2.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

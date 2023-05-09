@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Compress files and/or folders into a single zip file</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for createZipFile {DatabaseConnector}"><tr><td>createZipFile {DatabaseConnector}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Compress files and/or folders into a single zip file</h2>
+
+<h3>Description</h3>
+
+<p>Compress files and/or folders into a single zip file
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+createZipFile(zipFile, files, rootFolder = getwd(), compressionLevel = 9)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>zipFile</code></td>
+<td>
+<p>The path to the zip file to be created.</p>
+</td></tr>
+<tr valign="top"><td><code>files</code></td>
+<td>
+<p>The files and/or folders to be included in the zip file. Folders will be included recursively.</p>
+</td></tr>
+<tr valign="top"><td><code>rootFolder</code></td>
+<td>
+<p>The root folder. All files will be stored with relative paths relative to this folder.</p>
+</td></tr>
+<tr valign="top"><td><code>compressionLevel</code></td>
+<td>
+<p>A number between 1 and 9. 9 compresses best, but it also takes the longest.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Uses Java's compression library to create a zip file. It is similar to <code>utils::zip</code>, except
+that it does not require an external zip tool to be available on the system path.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>DatabaseConnector</em> version 5.1.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Fit simulated data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for fitCyclopsSimulation {Cyclops}"><tr><td>fitCyclopsSimulation {Cyclops}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Fit simulated data</h2>
+
+<h3>Description</h3>
+
+<p><code>fitCyclopsSimulation</code> fits simulated Cyclops data using Cyclops or a standard routine.
+This function is useful for simulation studies comparing the performance of Cyclops when considering
+large, sparse datasets.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+fitCyclopsSimulation(
+  sim,
+  useCyclops = TRUE,
+  model = "logistic",
+  coverage = TRUE,
+  includePenalty = FALSE
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>sim</code></td>
+<td>
+<p>A simulated Cyclops dataset generated via <code>simulateCyclopsData</code></p>
+</td></tr>
+<tr valign="top"><td><code>useCyclops</code></td>
+<td>
+<p>Logical: use Cyclops or a standard routine</p>
+</td></tr>
+<tr valign="top"><td><code>model</code></td>
+<td>
+<p>String: Fitted regression model type</p>
+</td></tr>
+<tr valign="top"><td><code>coverage</code></td>
+<td>
+<p>Logical: report coverage statistics</p>
+</td></tr>
+<tr valign="top"><td><code>includePenalty</code></td>
+<td>
+<p>Logical: include regularized regression penalty in computing profile likelihood based confidence intervals</p>
+</td></tr>
+</table>
+
+<hr /><div style="text-align: center;">[Package <em>Cyclops</em> version 3.2.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

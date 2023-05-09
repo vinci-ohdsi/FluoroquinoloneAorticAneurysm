@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: SHAP contribution dependency summary plot</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for xgb.ggplot.shap.summary {xgboost}"><tr><td>xgb.ggplot.shap.summary {xgboost}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>SHAP contribution dependency summary plot</h2>
+
+<h3>Description</h3>
+
+<p>Compare SHAP contributions of different features.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+xgb.ggplot.shap.summary(
+  data,
+  shap_contrib = NULL,
+  features = NULL,
+  top_n = 10,
+  model = NULL,
+  trees = NULL,
+  target_class = NULL,
+  approxcontrib = FALSE,
+  subsample = NULL
+)
+
+xgb.plot.shap.summary(
+  data,
+  shap_contrib = NULL,
+  features = NULL,
+  top_n = 10,
+  model = NULL,
+  trees = NULL,
+  target_class = NULL,
+  approxcontrib = FALSE,
+  subsample = NULL
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>data</code></td>
+<td>
+<p>data as a <code>matrix</code> or <code>dgCMatrix</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>shap_contrib</code></td>
+<td>
+<p>a matrix of SHAP contributions that was computed earlier for the above
+<code>data</code>. When it is NULL, it is computed internally using <code>model</code> and <code>data</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>features</code></td>
+<td>
+<p>a vector of either column indices or of feature names to plot. When it is NULL,
+feature importance is calculated, and <code>top_n</code> high ranked features are taken.</p>
+</td></tr>
+<tr valign="top"><td><code>top_n</code></td>
+<td>
+<p>when <code>features</code> is NULL, top_n [1, 100] most important features in a model are taken.</p>
+</td></tr>
+<tr valign="top"><td><code>model</code></td>
+<td>
+<p>an <code>xgb.Booster</code> model. It has to be provided when either <code>shap_contrib</code>
+or <code>features</code> is missing.</p>
+</td></tr>
+<tr valign="top"><td><code>trees</code></td>
+<td>
+<p>passed to <code><a href="../../xgboost/help/xgb.importance.html">xgb.importance</a></code> when <code>features = NULL</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>target_class</code></td>
+<td>
+<p>is only relevant for multiclass models. When it is set to a 0-based class index,
+only SHAP contributions for that specific class are used.
+If it is not set, SHAP importances are averaged over all classes.</p>
+</td></tr>
+<tr valign="top"><td><code>approxcontrib</code></td>
+<td>
+<p>passed to <code><a href="../../xgboost/help/predict.xgb.Booster.html">predict.xgb.Booster</a></code> when <code>shap_contrib = NULL</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>subsample</code></td>
+<td>
+<p>a random fraction of data points to use for plotting. When it is NULL,
+it is set so that up to 100K data points are used.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>A point plot (each point representing one sample from <code>data</code>) is
+produced for each feature, with the points plotted on the SHAP value axis.
+Each point (observation) is coloured based on its feature value. The plot
+hence allows us to see which features have a negative / positive contribution
+on the model prediction, and whether the contribution is different for larger
+or smaller values of the feature. We effectively try to replicate the
+<code>summary_plot</code> function from https://github.com/slundberg/shap.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A <code>ggplot2</code> object.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../xgboost/help/xgb.plot.shap.html">xgb.plot.shap</a></code>, <code><a href="../../xgboost/help/xgb.ggplot.shap.summary.html">xgb.ggplot.shap.summary</a></code>,
+<a href="https://github.com/slundberg/shap">https://github.com/slundberg/shap</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# See \code{\link{xgb.plot.shap}}.
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>xgboost</em> version 1.7.3.1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

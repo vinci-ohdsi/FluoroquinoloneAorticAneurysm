@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Set and get global configuration</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for xgb.set.config, xgb.get.config {xgboost}"><tr><td>xgb.set.config, xgb.get.config {xgboost}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Set and get global configuration</h2>
+
+<h3>Description</h3>
+
+<p>Global configuration consists of a collection of parameters that can be applied in the global
+scope. See <a href="https://xgboost.readthedocs.io/en/stable/parameter.html">https://xgboost.readthedocs.io/en/stable/parameter.html</a> for the full list of
+parameters supported in the global configuration. Use <code>xgb.set.config</code> to update the
+values of one or more global-scope parameters. Use <code>xgb.get.config</code> to fetch the current
+values of all global-scope parameters (listed in
+<a href="https://xgboost.readthedocs.io/en/stable/parameter.html">https://xgboost.readthedocs.io/en/stable/parameter.html</a>).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+xgb.set.config(...)
+
+xgb.get.config()
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>List of parameters to be set, as keyword arguments</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p><code>xgb.set.config</code> returns <code>TRUE</code> to signal success. <code>xgb.get.config</code> returns
+a list containing all global-scope parameters and their values.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Set verbosity level to silent (0)
+xgb.set.config(verbosity = 0)
+# Now global verbosity level is 0
+config &lt;- xgb.get.config()
+print(config$verbosity)
+# Set verbosity level to warning (1)
+xgb.set.config(verbosity = 1)
+# Now global verbosity level is 1
+config &lt;- xgb.get.config()
+print(config$verbosity)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>xgboost</em> version 1.7.3.1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

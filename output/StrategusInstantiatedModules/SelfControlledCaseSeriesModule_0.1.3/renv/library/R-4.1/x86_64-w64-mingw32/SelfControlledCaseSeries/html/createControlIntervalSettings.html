@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create control interval settings</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for createControlIntervalSettings {SelfControlledCaseSeries}"><tr><td>createControlIntervalSettings {SelfControlledCaseSeries}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Create control interval settings</h2>
+
+<h3>Description</h3>
+
+<p>Create control interval settings
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+createControlIntervalSettings(
+  includeEraIds = NULL,
+  excludeEraIds = NULL,
+  start = 0,
+  startAnchor = "era start",
+  end = 0,
+  endAnchor = "era end",
+  firstOccurrenceOnly = FALSE
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>includeEraIds</code></td>
+<td>
+<p>One or more IDs of variables in the <a href="../../SelfControlledCaseSeries/help/SccsData.html">SccsData</a> object that should be
+used to construct this covariate. If no IDs are specified, all
+variables will be used.</p>
+</td></tr>
+<tr valign="top"><td><code>excludeEraIds</code></td>
+<td>
+<p>One or more IDs of variables in the [SccsData] object that should not
+be used to construct this covariate.</p>
+</td></tr>
+<tr valign="top"><td><code>start</code></td>
+<td>
+<p>The start of the control interval (in days) relative to the <code>startAnchor</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>startAnchor</code></td>
+<td>
+<p>The anchor point for the start of the control interval. Can be <code>"era start"</code>
+or <code>"era end"</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>end</code></td>
+<td>
+<p>The end of the control interval (in days) relative to the <code>endAnchor</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>endAnchor</code></td>
+<td>
+<p>The anchor point for the end of the control interval. Can be <code>"era start"</code>
+or <code>"era end"</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>firstOccurrenceOnly</code></td>
+<td>
+<p>Should only the first occurrence of the exposure be used?</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Create an object specifying how to create a control interval for the self-controlled risk interval (SCRI)
+design.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of type <code>ControlSettings</code>.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>SelfControlledCaseSeries</em> version 4.2.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

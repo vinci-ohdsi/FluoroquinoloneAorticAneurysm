@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Plot time from event to observation end for censored and...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for plotEventObservationDependence {SelfControlledCaseSeries}"><tr><td>plotEventObservationDependence {SelfControlledCaseSeries}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Plot time from event to observation end for censored and uncensored time.</h2>
+
+<h3>Description</h3>
+
+<p>Plot time from event to observation end for censored and uncensored time.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+plotEventObservationDependence(studyPopulation, title = NULL, fileName = NULL)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>studyPopulation</code></td>
+<td>
+<p>An object created using the <code><a href="../../SelfControlledCaseSeries/help/createStudyPopulation.html">createStudyPopulation()</a></code> function.</p>
+</td></tr>
+<tr valign="top"><td><code>title</code></td>
+<td>
+<p>Optional: the main title for the plot</p>
+</td></tr>
+<tr valign="top"><td><code>fileName</code></td>
+<td>
+<p>Name of the file where the plot should be saved, for example 'plot.png'.
+See the function <code><a href="../../ggplot2/help/ggsave.html">ggplot2::ggsave()</a></code> for supported file formats.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This plot shows whether there is a difference in time between (first) event and the observation period end for periods that are '
+censored' and those that are 'uncensored'. By 'censored' we mean periods that end before we would normally expect. Here, we define
+periods to be uncensored if they end at either the study end date (if specified), database end date (i.e. the date after which no
+data is captured in the database), or maximum age (if specified). All other periods are assumed to be censored.
+</p>
+<p>As proposed by Farrington et al., by comparing the two plots, we can gain some insight into whether the censoring is dependent
+on the occurrence of the event.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A ggplot object. Use the <code><a href="../../ggplot2/help/ggsave.html">ggplot2::ggsave()</a></code> function to save to file in a different
+format.
+</p>
+
+
+<h3>References</h3>
+
+<p>Farrington P, Whitaker H, Ghebremichael Weldeselassie Y (2018), Self-controlled case series studies: A modelling guide with R, Taylor &amp;
+Francis
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>SelfControlledCaseSeries</em> version 4.2.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Render, translate, and query to local Andromeda</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for renderTranslateQuerySqlToAndromeda {DatabaseConnector}"><tr><td>renderTranslateQuerySqlToAndromeda {DatabaseConnector}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Render, translate, and query to local Andromeda</h2>
+
+<h3>Description</h3>
+
+<p>This function renders, and translates SQL, sends it to the server, and returns the results as an
+ffdf object
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+renderTranslateQuerySqlToAndromeda(
+  connection,
+  sql,
+  andromeda,
+  andromedaTableName,
+  errorReportFile = file.path(getwd(), "errorReportSql.txt"),
+  snakeCaseToCamelCase = FALSE,
+  oracleTempSchema = NULL,
+  tempEmulationSchema = getOption("sqlRenderTempEmulationSchema"),
+  integerAsNumeric = getOption("databaseConnectorIntegerAsNumeric", default = TRUE),
+  integer64AsNumeric = getOption("databaseConnectorInteger64AsNumeric", default = TRUE),
+  ...
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>connection</code></td>
+<td>
+<p>The connection to the database server.</p>
+</td></tr>
+<tr valign="top"><td><code>sql</code></td>
+<td>
+<p>The SQL to be send.</p>
+</td></tr>
+<tr valign="top"><td><code>andromeda</code></td>
+<td>
+<p>An open Andromeda object, for example as created
+using <code><a href="../../Andromeda/help/andromeda.html">andromeda</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>andromedaTableName</code></td>
+<td>
+<p>The name of the table in the local Andromeda object where the
+results of the query will be stored.</p>
+</td></tr>
+<tr valign="top"><td><code>errorReportFile</code></td>
+<td>
+<p>The file where an error report will be written if an error occurs.
+Defaults to 'errorReportSql.txt' in the current working directory.</p>
+</td></tr>
+<tr valign="top"><td><code>snakeCaseToCamelCase</code></td>
+<td>
+<p>If true, field names are assumed to use snake_case, and are converted
+to camelCase.</p>
+</td></tr>
+<tr valign="top"><td><code>oracleTempSchema</code></td>
+<td>
+<p>DEPRECATED: use <code>tempEmulationSchema</code> instead.</p>
+</td></tr>
+<tr valign="top"><td><code>tempEmulationSchema</code></td>
+<td>
+<p>Some database platforms like Oracle and Impala do not truly support temp tables. To
+emulate temp tables, provide a schema with write privileges where temp tables
+can be created.</p>
+</td></tr>
+<tr valign="top"><td><code>integerAsNumeric</code></td>
+<td>
+<p>Logical: should 32-bit integers be converted to numeric (double)
+values? If FALSE 32-bit integers will be represented using R's native
+<code>Integer</code> class.</p>
+</td></tr>
+<tr valign="top"><td><code>integer64AsNumeric</code></td>
+<td>
+<p>Logical: should 64-bit integers be converted to numeric (double)
+values? If FALSE 64-bit integers will be represented using
+<code>bit64::integer64</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Parameters that will be used to render the SQL.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This function calls the <code>render</code> and <code>translate</code> functions in the SqlRender package
+before calling <code><a href="../../DatabaseConnector/help/querySqlToAndromeda.html">querySqlToAndromeda</a></code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Invisibly returns the andromeda. The Andromeda object will have a table added with the query
+results.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## Not run: 
+connectionDetails &lt;- createConnectionDetails(
+  dbms = "postgresql",
+  server = "localhost",
+  user = "root",
+  password = "blah",
+  schema = "cdm_v4"
+)
+conn &lt;- connect(connectionDetails)
+renderTranslatequerySqlToAndromeda(conn,
+  sql = "SELECT * FROM @schema.person",
+  schema = "cdm_synpuf",
+  andromeda = andromeda,
+  andromedaTableName = "foo"
+)
+disconnect(conn)
+
+andromeda$foo
+
+## End(Not run)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>DatabaseConnector</em> version 5.1.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

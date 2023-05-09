@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Low level function for retrieving data to a data frame</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for lowLevelQuerySql {DatabaseConnector}"><tr><td>lowLevelQuerySql {DatabaseConnector}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Low level function for retrieving data to a data frame</h2>
+
+<h3>Description</h3>
+
+<p>This is the equivalent of the <code><a href="../../DatabaseConnector/help/querySql.html">querySql</a></code> function, except no error report is written
+when an error occurs.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+lowLevelQuerySql(
+  connection,
+  query,
+  datesAsString = FALSE,
+  integerAsNumeric = getOption("databaseConnectorIntegerAsNumeric", default = TRUE),
+  integer64AsNumeric = getOption("databaseConnectorInteger64AsNumeric", default = TRUE)
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>connection</code></td>
+<td>
+<p>The connection to the database server.</p>
+</td></tr>
+<tr valign="top"><td><code>query</code></td>
+<td>
+<p>The SQL statement to retrieve the data</p>
+</td></tr>
+<tr valign="top"><td><code>datesAsString</code></td>
+<td>
+<p>Logical: Should dates be imported as character vectors, our should they be converted
+to R's date format?</p>
+</td></tr>
+<tr valign="top"><td><code>integerAsNumeric</code></td>
+<td>
+<p>Logical: should 32-bit integers be converted to numeric (double) values? If FALSE
+32-bit integers will be represented using R's native <code>Integer</code> class.</p>
+</td></tr>
+<tr valign="top"><td><code>integer64AsNumeric</code></td>
+<td>
+<p>Logical: should 64-bit integers be converted to numeric (double) values? If FALSE
+64-bit integers will be represented using <code>bit64::integer64</code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Retrieves data from the database server and stores it in a data frame. Null values in the database are converted
+to NA values in R.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A data frame containing the data retrieved from the server
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>DatabaseConnector</em> version 5.1.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

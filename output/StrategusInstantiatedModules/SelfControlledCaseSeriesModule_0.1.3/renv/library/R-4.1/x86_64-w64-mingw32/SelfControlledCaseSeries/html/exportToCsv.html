@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Export SCCSresults to CSV files</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for exportToCsv {SelfControlledCaseSeries}"><tr><td>exportToCsv {SelfControlledCaseSeries}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Export SCCSresults to CSV files</h2>
+
+<h3>Description</h3>
+
+<p>Export SCCSresults to CSV files
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+exportToCsv(
+  outputFolder,
+  exportFolder = file.path(outputFolder, "export"),
+  databaseId = 1,
+  minCellCount = 5,
+  sccsDiagnosticThresholds = createSccsDiagnosticThresholds()
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>outputFolder</code></td>
+<td>
+<p>The folder where runCmAnalyses() generated all results.</p>
+</td></tr>
+<tr valign="top"><td><code>exportFolder</code></td>
+<td>
+<p>The folder where the CSV files will written.</p>
+</td></tr>
+<tr valign="top"><td><code>databaseId</code></td>
+<td>
+<p>A unique ID for the database. This will be appended to
+most tables.</p>
+</td></tr>
+<tr valign="top"><td><code>minCellCount</code></td>
+<td>
+<p>To preserve privacy: the minimum number of subjects contributing
+to a count before it can be included in the results. If the
+count is below this threshold, it will be set to <code>-minCellCount</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>sccsDiagnosticThresholds</code></td>
+<td>
+<p>An object of type <code>SccsDiagnosticThresholds</code> as created using
+<code><a href="../../SelfControlledCaseSeries/help/createSccsDiagnosticThresholds.html">createSccsDiagnosticThresholds()</a></code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This requires that <code><a href="../../SelfControlledCaseSeries/help/runSccsAnalyses.html">runSccsAnalyses()</a></code> has been executed first. It exports
+all the results in the <code>outputFolder</code> to CSV files for sharing with other
+sites.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Does not return anything. Is called for the side-effect of populating the <code>exportFolder</code>
+with CSV files.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>SelfControlledCaseSeries</em> version 4.2.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

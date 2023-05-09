@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Read Cyclops data from file</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for readCyclopsData {Cyclops}"><tr><td>readCyclopsData {Cyclops}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Read Cyclops data from file</h2>
+
+<h3>Description</h3>
+
+<p><code>readCyclopsData</code> reads a Cyclops-formatted text file.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+readCyclopsData(fileName, modelType)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>fileName</code></td>
+<td>
+<p>Name of text file to be read. If fileName does not contain an absolute path,</p>
+</td></tr>
+<tr valign="top"><td><code>modelType</code></td>
+<td>
+<p>character string: Valid types are listed below.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This function reads a Cyclops-formatted text file and returns a Cyclops data object. The first line of the
+file may start with '<span class="samp">#</span>', indicating that it contains header options.  Valid header options are:
+</p>
+
+<table summary="Rd table">
+<tr>
+ <td style="text-align: left;">
+ <code style="white-space: pre;">	row_label</code>		</td><td style="text-align: left;"> (assume file contains a numeric column of unique row identifiers) </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+ <code style="white-space: pre;">	stratum_label</code></td><td style="text-align: left;"> (assume file contains a numeric column of stratum identifiers) </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+ <code style="white-space: pre;">	weight</code>				</td><td style="text-align: left;"> (assume file contains a column of row-specific model weights, currently unused) </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+	<code style="white-space: pre;">	offset</code>				</td><td style="text-align: left;"> (assume file contains a dense column of linear predictor offsets) </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+	<code style="white-space: pre;">	bbr_outcome</code>	</td><td style="text-align: left;"> (assume logistic outcomes are encoded -1/+1 following BBR) </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+	<code style="white-space: pre;">	log_offset</code>		</td><td style="text-align: left;"> (assume file contains a dense column of values x_i for which log(x_i) is the offset) </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+	<code style="white-space: pre;">	add_intercept</code></td><td style="text-align: left;"> (automatically include an intercept column of all 1s for each entry) </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+	<code style="white-space: pre;">	indicator_only</code></td><td style="text-align: left;">(assume all covariates 0/1-valued and only covariate name is given) </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+	<code style="white-space: pre;">	sparse</code>				</td><td style="text-align: left;"> (force all BBR formatted covariates to be represented as sparse, instead of </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+                             </td><td style="text-align: left;"> sparse-indicator, columns .. really only for debugging) </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+	<code style="white-space: pre;">	dense</code>				</td><td style="text-align: left;"> (force all BBR formatted covariates to be represented as dense columns.. really</td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+                             </td><td style="text-align: left;"> only for debugging) </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+</td>
+</tr>
+
+</table>
+
+<p>Successive lines of the file are white-space delimited and follow the format:
+</p>
+<pre>	[Row ID] {Stratum ID} [Weight] &lt;Outcome&gt; {Censored} {Offset} &lt;BBR covariates&gt;</pre>
+
+<ul>
+<li> <p><code style="white-space: pre;">[optional]</code>
+</p>
+</li>
+<li> <p><code style="white-space: pre;">&lt;required&gt;</code>
+</p>
+</li>
+<li> <p><code style="white-space: pre;">{required or optional depending on model}</code>
+</p>
+</li></ul>
+
+<p>Bayesian binary regression (BBR) covariates are white-space delimited and generally in a sparse
+<span class="samp">&lt;name&gt;:&lt;value&gt;</span> format, where <span class="samp">name</span> must (currently) be numeric and <span class="samp">value</span> is non-zero.
+If option <span class="samp">indicator_only</span> is specified, then format is simply <span class="samp">&lt;name&gt;</span>.
+<span class="samp">Row ID</span> and <span class="samp">Stratum ID</span> must be numeric, and rows must be sorted such that equal <span class="samp">Stratum ID</span>
+are consecutive.
+<span class="samp">Stratum ID</span> is required for <span class="samp">clr</span> and <span class="samp">sccs</span> models.
+<span class="samp">Censored</span> is required for a <span class="samp">cox</span> model.
+<span class="samp">Offset</span> is (currently) required for a <span class="samp">sccs</span> model.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list that contains a Cyclops model data object pointer and an operation duration
+</p>
+
+
+<h3>Models</h3>
+
+<p>Currently supported model types are:
+</p>
+
+<table summary="Rd table">
+<tr>
+ <td style="text-align: left;">
+	<code style="white-space: pre;">	"ls"</code> </td><td style="text-align: left;"> Least squares </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+	<code style="white-space: pre;">	"pr"</code> </td><td style="text-align: left;"> Poisson regression </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+	<code style="white-space: pre;">	"lr"</code> </td><td style="text-align: left;"> Logistic regression </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+	<code style="white-space: pre;">	"clr"</code> </td><td style="text-align: left;"> Conditional logistic regression </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+ <code style="white-space: pre;">	"cpr"</code> </td><td style="text-align: left;"> Conditional Poisson regression </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+	<code style="white-space: pre;">	"sccs"</code> </td><td style="text-align: left;"> Self-controlled case series </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+	<code style="white-space: pre;">	"cox"</code> </td><td style="text-align: left;"> Cox proportional hazards regression </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+	<code style="white-space: pre;">	"fgr"</code> </td><td style="text-align: left;"> Fine-Gray proportional subdistribution hazards regression </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+</td>
+</tr>
+
+</table>
+
+
+
+<h3>Examples</h3>
+
+<pre>
+## Not run: 
+dataPtr = readCyclopsData(system.file("extdata/infert_ccd.txt", package="Cyclops"), "clr")
+
+## End(Not run)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>Cyclops</em> version 3.2.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

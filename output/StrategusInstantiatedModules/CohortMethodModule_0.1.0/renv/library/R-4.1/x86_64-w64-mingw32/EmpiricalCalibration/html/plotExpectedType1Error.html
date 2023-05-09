@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Plot the expected type 1 error as a function of standard...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for plotExpectedType1Error {EmpiricalCalibration}"><tr><td>plotExpectedType1Error {EmpiricalCalibration}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Plot the expected type 1 error as a function of standard error</h2>
+
+<h3>Description</h3>
+
+<p><code>plotExpectedType1Error</code> creates a plot showing the expected type 1 error as a function of standard error.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+plotExpectedType1Error(
+  logRrNegatives,
+  seLogRrNegatives,
+  seLogRrPositives,
+  alpha = 0.05,
+  null = NULL,
+  xLabel = "Relative risk",
+  title,
+  showCis = FALSE,
+  showEffectSizes = FALSE,
+  fileName = NULL
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>logRrNegatives</code></td>
+<td>
+<p>A numeric vector of effect estimates of the negative controls on the log
+scale.</p>
+</td></tr>
+<tr valign="top"><td><code>seLogRrNegatives</code></td>
+<td>
+<p>The standard error of the log of the effect estimates of the negative
+controls.</p>
+</td></tr>
+<tr valign="top"><td><code>seLogRrPositives</code></td>
+<td>
+<p>The standard error of the log of the effect estimates of the positive
+controls.</p>
+</td></tr>
+<tr valign="top"><td><code>alpha</code></td>
+<td>
+<p>The alpha (nominal type 1 error) to be used.</p>
+</td></tr>
+<tr valign="top"><td><code>null</code></td>
+<td>
+<p>An object representing the fitted null distribution as created by the
+<code>fitNull</code> function. If not provided, a null will be fitted before
+plotting.</p>
+</td></tr>
+<tr valign="top"><td><code>xLabel</code></td>
+<td>
+<p>If showing effect sizes, what label should be used for the effect size axis?</p>
+</td></tr>
+<tr valign="top"><td><code>title</code></td>
+<td>
+<p>Optional: the main title for the plot</p>
+</td></tr>
+<tr valign="top"><td><code>showCis</code></td>
+<td>
+<p>Show 95 percent credible intervals for the expected type 1 error.</p>
+</td></tr>
+<tr valign="top"><td><code>showEffectSizes</code></td>
+<td>
+<p>Show the expected effect sizes alongside the expected type 1 error?</p>
+</td></tr>
+<tr valign="top"><td><code>fileName</code></td>
+<td>
+<p>Name of the file where the plot should be saved, for example 'plot.png'.
+See the function <code>ggsave</code> in the ggplot2 package for supported file
+formats.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Creates a plot with the standard error on the x-axis and the expected type 1 error on the y-axis. The
+red line indicates the expected type 1 error  given the estimated empirical null distribution if no
+calibration is performed. The dashed line indicated the nominal expected type 1 error rate, assuming
+the theoretical null distribution.
+</p>
+<p>If standard errors are provided for non-negative estimates these will be plotted on the red line as
+yellow diamonds.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A Ggplot object. Use the <code>ggsave</code> function to save to file.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data(sccs)
+negatives &lt;- sccs[sccs$groundTruth == 0, ]
+positive &lt;- sccs[sccs$groundTruth == 1, ]
+plotExpectedType1Error(negatives$logRr, negatives$seLogRr, positive$seLogRr)
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>EmpiricalCalibration</em> version 3.1.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

@@ -1,0 +1,421 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: ConnectionHandler</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for ConnectionHandler {ResultModelManager}"><tr><td>ConnectionHandler {ResultModelManager}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>ConnectionHandler</h2>
+
+<h3>Description</h3>
+
+<p>Class for handling DatabaseConnector:connection objects with consistent R6 interfaces for pooled and non-pooled connections.
+Allows a connection to cleanly be opened and closed and stored within class/object variables
+</p>
+
+
+<h3>Value</h3>
+
+<p>DatabaseConnector Connection instance
+close Connection
+</p>
+<p>boolean TRUE if connection is valid
+queryDb
+</p>
+<p>boolean TRUE if connection is valid
+executeSql
+</p>
+
+
+<h3>Public fields</h3>
+
+<div class="r6-fields">
+
+<dl>
+<dt><code>connectionDetails</code></dt><dd><p>DatabaseConnector connectionDetails object</p>
+</dd>
+<dt><code>con</code></dt><dd><p>DatabaseConnector connection object</p>
+</dd>
+<dt><code>isActive</code></dt><dd><p>Is connection active or not#'</p>
+</dd>
+<dt><code>snakeCaseToCamelCase</code></dt><dd><p>(Optional) Boolean. return the results columns in camel case (default)</p>
+</dd>
+</dl>
+
+</div>
+
+
+<h3>Methods</h3>
+
+
+
+<h4>Public methods</h4>
+
+
+<ul>
+<li> <p><a href="#method-ConnectionHandler-new"><code>ConnectionHandler$new()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ConnectionHandler-renderTranslateSql"><code>ConnectionHandler$renderTranslateSql()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ConnectionHandler-initConnection"><code>ConnectionHandler$initConnection()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ConnectionHandler-getConnection"><code>ConnectionHandler$getConnection()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ConnectionHandler-closeConnection"><code>ConnectionHandler$closeConnection()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ConnectionHandler-finalize"><code>ConnectionHandler$finalize()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ConnectionHandler-dbIsValid"><code>ConnectionHandler$dbIsValid()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ConnectionHandler-queryDb"><code>ConnectionHandler$queryDb()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ConnectionHandler-executeSql"><code>ConnectionHandler$executeSql()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ConnectionHandler-queryFunction"><code>ConnectionHandler$queryFunction()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ConnectionHandler-executeFunction"><code>ConnectionHandler$executeFunction()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ConnectionHandler-clone"><code>ConnectionHandler$clone()</code></a>
+</p>
+</li></ul>
+
+
+<hr>
+<a id="method-ConnectionHandler-new"></a>
+
+
+
+<h4>Method <code>new()</code></h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ConnectionHandler$new(
+  connectionDetails,
+  loadConnection = TRUE,
+  snakeCaseToCamelCase = TRUE
+)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>connectionDetails</code></dt><dd><p>DatabaseConnector::connectionDetails class</p>
+</dd>
+<dt><code>loadConnection</code></dt><dd><p>Boolean option to load connection right away</p>
+</dd>
+<dt><code>snakeCaseToCamelCase</code></dt><dd><p>(Optional) Boolean. return the results columns in camel case (default)
+Render Translate Sql.</p>
+</dd>
+</dl>
+
+</div>
+
+
+<hr>
+<a id="method-ConnectionHandler-renderTranslateSql"></a>
+
+
+
+<h4>Method <code>renderTranslateSql()</code></h4>
+
+<p>Masked call to SqlRender
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ConnectionHandler$renderTranslateSql(sql, ...)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>sql</code></dt><dd><p>Sql query string</p>
+</dd>
+<dt><code>...</code></dt><dd><p>Elipsis
+initConnection</p>
+</dd>
+</dl>
+
+</div>
+
+
+<hr>
+<a id="method-ConnectionHandler-initConnection"></a>
+
+
+
+<h4>Method <code>initConnection()</code></h4>
+
+<p>Load connection
+Get Connection
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ConnectionHandler$initConnection()</pre></div>
+
+
+<hr>
+<a id="method-ConnectionHandler-getConnection"></a>
+
+
+
+<h4>Method <code>getConnection()</code></h4>
+
+<p>Returns connection for use with standard DatabaseConnector calls.
+Connects automatically if it isn't yet loaded
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ConnectionHandler$getConnection()</pre></div>
+
+
+<hr>
+<a id="method-ConnectionHandler-closeConnection"></a>
+
+
+
+<h4>Method <code>closeConnection()</code></h4>
+
+<p>Closes connection (if active)
+close Connection
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ConnectionHandler$closeConnection()</pre></div>
+
+
+<hr>
+<a id="method-ConnectionHandler-finalize"></a>
+
+
+
+<h4>Method <code>finalize()</code></h4>
+
+<p>Closes connection (if active)
+db Is Valid
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ConnectionHandler$finalize()</pre></div>
+
+
+<hr>
+<a id="method-ConnectionHandler-dbIsValid"></a>
+
+
+
+<h4>Method <code>dbIsValid()</code></h4>
+
+<p>Masks call to DBI::dbIsValid. Returns False if connection is NULL
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ConnectionHandler$dbIsValid()</pre></div>
+
+
+<hr>
+<a id="method-ConnectionHandler-queryDb"></a>
+
+
+
+<h4>Method <code>queryDb()</code></h4>
+
+<p>query database and return the resulting data.frame
+</p>
+<p>If environment variable LIMIT_ROW_COUNT is set Returned rows are limited to this value (no default)
+Limit row count is intended for web applications that may cause a denial of service if they consume too many
+resources.
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ConnectionHandler$queryDb(
+  sql,
+  snakeCaseToCamelCase = self$snakeCaseToCamelCase,
+  overrideRowLimit = FALSE,
+  ...
+)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>sql</code></dt><dd><p>sql query string</p>
+</dd>
+<dt><code>snakeCaseToCamelCase</code></dt><dd><p>(Optional) Boolean. return the results columns in camel case (default)</p>
+</dd>
+<dt><code>overrideRowLimit</code></dt><dd><p>(Optional) Boolean. In some cases, where row limit is enforced on the system
+You may wish to ignore it.</p>
+</dd>
+<dt><code>...</code></dt><dd><p>Additional query parameters</p>
+</dd>
+</dl>
+
+</div>
+
+
+<hr>
+<a id="method-ConnectionHandler-executeSql"></a>
+
+
+
+<h4>Method <code>executeSql()</code></h4>
+
+<p>execute set of database queries
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ConnectionHandler$executeSql(sql, ...)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>sql</code></dt><dd><p>sql query string</p>
+</dd>
+<dt><code>...</code></dt><dd><p>Additional query parameters
+query Function</p>
+</dd>
+</dl>
+
+</div>
+
+
+<hr>
+<a id="method-ConnectionHandler-queryFunction"></a>
+
+
+
+<h4>Method <code>queryFunction()</code></h4>
+
+<p>queryFunction that can be overriden with subclasses (e.g. use different base function or intercept query)
+Does not translate or render sql.
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ConnectionHandler$queryFunction(
+  sql,
+  snakeCaseToCamelCase = self$snakeCaseToCamelCase
+)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>sql</code></dt><dd><p>sql query string</p>
+</dd>
+<dt><code>snakeCaseToCamelCase</code></dt><dd><p>(Optional) Boolean. return the results columns in camel case (default)
+execute Function</p>
+</dd>
+</dl>
+
+</div>
+
+
+<hr>
+<a id="method-ConnectionHandler-executeFunction"></a>
+
+
+
+<h4>Method <code>executeFunction()</code></h4>
+
+<p>exec query Function that can be overriden with subclasses (e.g. use different base function or intercept query)
+Does not translate or render sql.
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ConnectionHandler$executeFunction(sql)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>sql</code></dt><dd><p>sql query string</p>
+</dd>
+</dl>
+
+</div>
+
+
+<hr>
+<a id="method-ConnectionHandler-clone"></a>
+
+
+
+<h4>Method <code>clone()</code></h4>
+
+<p>The objects of this class are cloneable with this method.
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ConnectionHandler$clone(deep = FALSE)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p>
+</dd>
+</dl>
+
+</div>
+
+
+
+<hr /><div style="text-align: center;">[Package <em>ResultModelManager</em> version 0.1.1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

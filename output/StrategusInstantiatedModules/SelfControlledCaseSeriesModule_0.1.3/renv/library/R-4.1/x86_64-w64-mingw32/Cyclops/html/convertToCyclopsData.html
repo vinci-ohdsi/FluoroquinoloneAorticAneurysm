@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Convert data from two data frames or ffdf objects into a...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for convertToCyclopsData {Cyclops}"><tr><td>convertToCyclopsData {Cyclops}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Convert data from two data frames or ffdf objects into a CyclopsData object</h2>
+
+<h3>Description</h3>
+
+<p><code>convertToCyclopsData</code> loads data from two data frames or ffdf objects, and inserts it into a Cyclops data object.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+convertToCyclopsData(
+  outcomes,
+  covariates,
+  modelType = "lr",
+  addIntercept = TRUE,
+  checkSorting = NULL,
+  checkRowIds = TRUE,
+  normalize = NULL,
+  quiet = FALSE,
+  floatingPoint = 64
+)
+
+## S3 method for class 'data.frame'
+convertToCyclopsData(
+  outcomes,
+  covariates,
+  modelType = "lr",
+  addIntercept = TRUE,
+  checkSorting = NULL,
+  checkRowIds = TRUE,
+  normalize = NULL,
+  quiet = FALSE,
+  floatingPoint = 64
+)
+
+## S3 method for class 'tbl_dbi'
+convertToCyclopsData(
+  outcomes,
+  covariates,
+  modelType = "lr",
+  addIntercept = TRUE,
+  checkSorting = NULL,
+  checkRowIds = TRUE,
+  normalize = NULL,
+  quiet = FALSE,
+  floatingPoint = 64
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>outcomes</code></td>
+<td>
+<p>A data frame or ffdf object containing the outcomes with predefined columns (see below).</p>
+</td></tr>
+<tr valign="top"><td><code>covariates</code></td>
+<td>
+<p>A data frame or ffdf object containing the covariates with predefined columns (see below).</p>
+</td></tr>
+<tr valign="top"><td><code>modelType</code></td>
+<td>
+<p>Cyclops model type. Current supported types are &quot;pr&quot;, &quot;cpr&quot;, lr&quot;, &quot;clr&quot;, or &quot;cox&quot;</p>
+</td></tr>
+<tr valign="top"><td><code>addIntercept</code></td>
+<td>
+<p>Add an intercept to the model?</p>
+</td></tr>
+<tr valign="top"><td><code>checkSorting</code></td>
+<td>
+<p>(DEPRECATED) Check if the data are sorted appropriately, and if not, sort.</p>
+</td></tr>
+<tr valign="top"><td><code>checkRowIds</code></td>
+<td>
+<p>Check if all rowIds in the covariates appear in the outcomes.</p>
+</td></tr>
+<tr valign="top"><td><code>normalize</code></td>
+<td>
+<p>String: Name of normalization for all non-indicator covariates (possible values: stdev, max, median)</p>
+</td></tr>
+<tr valign="top"><td><code>quiet</code></td>
+<td>
+<p>If true, (warning) messages are suppressed.</p>
+</td></tr>
+<tr valign="top"><td><code>floatingPoint</code></td>
+<td>
+<p>Specified floating-point representation size (32 or 64)</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>These columns are expected in the outcome object:
+</p>
+
+<table summary="Rd table">
+<tr>
+ <td style="text-align: left;">
+  <code style="white-space: pre;">stratumId</code>    </td><td style="text-align: left;">(integer) </td><td style="text-align: left;"> (optional) Stratum ID for conditional regression models </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+  <code style="white-space: pre;">rowId</code>  	</td><td style="text-align: left;">(integer) </td><td style="text-align: left;"> Row ID is used to link multiple covariates (x) to a single outcome (y) </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+  <code style="white-space: pre;">y</code>    </td><td style="text-align: left;">(real) </td><td style="text-align: left;"> The outcome variable </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+  <code style="white-space: pre;">time</code>    </td><td style="text-align: left;">(real) </td><td style="text-align: left;"> For models that use time (e.g. Poisson or Cox regression) this contains time </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+                 </td><td style="text-align: left;">        </td><td style="text-align: left;">(e.g. number of days) </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+  <code style="white-space: pre;">weights</code> </td><td style="text-align: left;">(real) </td><td style="text-align: left;"> (optional) Non-negative weights to apply to outcome </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+  <code style="white-space: pre;">censorWeights</code> </td><td style="text-align: left;">(real) </td><td style="text-align: left;"> (optional) Non-negative censoring weights for competing risk model; will be computed if not provided.
+</td>
+</tr>
+
+</table>
+
+<p>These columns are expected in the covariates object:
+</p>
+
+<table summary="Rd table">
+<tr>
+ <td style="text-align: left;">
+  <code style="white-space: pre;">stratumId</code>    </td><td style="text-align: left;">(integer) </td><td style="text-align: left;"> (optional) Stratum ID for conditional regression models </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+  <code style="white-space: pre;">rowId</code>  	</td><td style="text-align: left;">(integer) </td><td style="text-align: left;"> Row ID is used to link multiple covariates (x) to a single outcome (y) </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+  <code style="white-space: pre;">covariateId</code>    </td><td style="text-align: left;">(integer) </td><td style="text-align: left;"> A numeric identifier of a covariate  </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+  <code style="white-space: pre;">covariateValue</code>    </td><td style="text-align: left;">(real) </td><td style="text-align: left;"> The value of the specified covariate </td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+</td>
+</tr>
+
+</table>
+
+
+
+<h3>Value</h3>
+
+<p>An object of type cyclopsData
+</p>
+
+
+<h3>Methods (by class)</h3>
+
+
+<ul>
+<li> <p><code>data.frame</code>: Convert data from two <code>data.frame</code>
+</p>
+</li>
+<li> <p><code>tbl_dbi</code>: Convert data from two <code>Andromeda</code> tables
+</p>
+</li></ul>
+
+
+<h3>Examples</h3>
+
+<pre>
+#Convert infert dataset to Cyclops format:
+covariates &lt;- data.frame(stratumId = rep(infert$stratum, 2),
+                         rowId = rep(1:nrow(infert), 2),
+                         covariateId = rep(1:2, each = nrow(infert)),
+                         covariateValue = c(infert$spontaneous, infert$induced))
+outcomes &lt;- data.frame(stratumId = infert$stratum,
+                       rowId = 1:nrow(infert),
+                       y = infert$case)
+#Make sparse:
+covariates &lt;- covariates[covariates$covariateValue != 0, ]
+
+#Create Cyclops data object:
+cyclopsData &lt;- convertToCyclopsData(outcomes, covariates, modelType = "clr",
+                                    addIntercept = FALSE)
+
+#Fit model:
+fit &lt;- fitCyclopsModel(cyclopsData, prior = createPrior("none"))
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>Cyclops</em> version 3.2.1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

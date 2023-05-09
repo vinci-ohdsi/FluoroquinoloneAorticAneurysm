@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create CohortMethod diagnostics thresholds</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for createCmDiagnosticThresholds {CohortMethod}"><tr><td>createCmDiagnosticThresholds {CohortMethod}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Create CohortMethod diagnostics thresholds</h2>
+
+<h3>Description</h3>
+
+<p>Threshold used when calling <code><a href="../../CohortMethod/help/exportToCsv.html">exportToCsv()</a></code> to determine if we pass or fail diagnostics.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+createCmDiagnosticThresholds(
+  mdrrThreshold = 10,
+  easeThreshold = 0.25,
+  sdmThreshold = 0.1,
+  equipoiseThreshold = 0.2,
+  attritionFractionThreshold = 1
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>mdrrThreshold</code></td>
+<td>
+<p>What is the maximum allowed minimum detectable relative risk
+(MDRR)?</p>
+</td></tr>
+<tr valign="top"><td><code>easeThreshold</code></td>
+<td>
+<p>What is the maximum allowed expected absolute systematic error
+(EASE).</p>
+</td></tr>
+<tr valign="top"><td><code>sdmThreshold</code></td>
+<td>
+<p>What is the maximum allowed standardized difference of mean (SDM)? If
+any covariate has an SDM exceeding this threshold, the diagnostic will
+fail.</p>
+</td></tr>
+<tr valign="top"><td><code>equipoiseThreshold</code></td>
+<td>
+<p>What is the minimum required equipoise?</p>
+</td></tr>
+<tr valign="top"><td><code>attritionFractionThreshold</code></td>
+<td>
+<p>What is the maximum allowed attrition fraction? If the attrition
+between the input target cohort and the target cohort entering the
+outcome model is greater than this fraction, the diagnostic will
+fail.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>An object of type <code>CmDiagnosticThresholds</code>.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>CohortMethod</em> version 5.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

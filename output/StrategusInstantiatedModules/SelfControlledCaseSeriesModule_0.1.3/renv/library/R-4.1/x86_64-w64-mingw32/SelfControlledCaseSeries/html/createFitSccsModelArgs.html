@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create a parameter object for the function fitSccsModel</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for createFitSccsModelArgs {SelfControlledCaseSeries}"><tr><td>createFitSccsModelArgs {SelfControlledCaseSeries}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Create a parameter object for the function fitSccsModel</h2>
+
+<h3>Description</h3>
+
+<p>Create a parameter object for the function fitSccsModel
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+createFitSccsModelArgs(
+  prior = createPrior("laplace", useCrossValidation = TRUE),
+  control = createControl(cvType = "auto", selectorType = "byPid", startingVariance =
+    0.1, seed = 1, resetCoefficients = TRUE, noiseLevel = "quiet"),
+  profileGrid = NULL,
+  profileBounds = c(log(0.1), log(10))
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>prior</code></td>
+<td>
+<p>The prior used to fit the model. See Cyclops::createPrior for details.</p>
+</td></tr>
+<tr valign="top"><td><code>control</code></td>
+<td>
+<p>The control object used to control the cross-validation used to determine the hyperparameters of the prior (if applicable). See Cyclops::createControl for details.</p>
+</td></tr>
+<tr valign="top"><td><code>profileGrid</code></td>
+<td>
+<p>A one-dimensional grid of points on the log(relative risk) scale where the likelihood for coefficient of variables is sampled. See details.</p>
+</td></tr>
+<tr valign="top"><td><code>profileBounds</code></td>
+<td>
+<p>The bounds (on the log relative risk scale) for the adaptive sampling of the likelihood function.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Create an object defining the parameter values.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>SelfControlledCaseSeries</em> version 4.2.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

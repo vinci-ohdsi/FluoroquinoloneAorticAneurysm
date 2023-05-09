@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create a Cyclops prior object</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for createPrior {Cyclops}"><tr><td>createPrior {Cyclops}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Create a Cyclops prior object</h2>
+
+<h3>Description</h3>
+
+<p><code>createPrior</code> creates a Cyclops prior object for use with <code><a href="../../Cyclops/help/fitCyclopsModel.html">fitCyclopsModel</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+createPrior(
+  priorType,
+  variance = 1,
+  exclude = c(),
+  graph = NULL,
+  neighborhood = NULL,
+  useCrossValidation = FALSE,
+  forceIntercept = FALSE
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>priorType</code></td>
+<td>
+<p>Character: specifies prior distribution.  See below for options</p>
+</td></tr>
+<tr valign="top"><td><code>variance</code></td>
+<td>
+<p>Numeric: prior distribution variance</p>
+</td></tr>
+<tr valign="top"><td><code>exclude</code></td>
+<td>
+<p>A vector of numbers or covariateId names to exclude from prior</p>
+</td></tr>
+<tr valign="top"><td><code>graph</code></td>
+<td>
+<p>Child-to-parent mapping for a hierarchical prior</p>
+</td></tr>
+<tr valign="top"><td><code>neighborhood</code></td>
+<td>
+<p>A list of first-order neighborhoods for a partially fused prior</p>
+</td></tr>
+<tr valign="top"><td><code>useCrossValidation</code></td>
+<td>
+<p>Logical: Perform cross-validation to determine prior <code>variance</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>forceIntercept</code></td>
+<td>
+<p>Logical: Force intercept coefficient into prior</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A Cyclops prior object of class inheriting from <code>"cyclopsPrior"</code> for use with <code>fitCyclopsModel</code>.
+</p>
+
+
+<h3>Prior types</h3>
+
+<p>We specify all priors in terms of their variance parameters.
+Similar fitting tools for regularized regression often parameterize the Laplace distribution
+in terms of a rate <code>"lambda"</code> per observation.
+See <code>"glmnet"</code>, for example.
+</p>
+<p>variance = 2 * / (nobs * lambda)^2 or lambda = sqrt(2 / variance) / nobs
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+#Generate some simulated data:
+sim &lt;- simulateCyclopsData(nstrata = 1, nrows = 1000, ncovars = 2, eCovarsPerRow = 0.5, 
+                           model = "poisson")
+cyclopsData &lt;- convertToCyclopsData(sim$outcomes, sim$covariates, modelType = "pr", 
+                                    addIntercept = TRUE)
+
+#Define the prior and control objects to use cross-validation for finding the 
+#optimal hyperparameter:
+prior &lt;- createPrior("laplace", exclude = 0, useCrossValidation = TRUE)
+control &lt;- createControl(cvType = "auto", noiseLevel = "quiet")
+
+#Fit the model
+fit &lt;- fitCyclopsModel(cyclopsData,prior = prior, control = control)  
+
+#Find out what the optimal hyperparameter was:
+getHyperParameter(fit)
+
+#Extract the current log-likelihood, and coefficients
+logLik(fit)
+coef(fit)
+
+#We can only retrieve the confidence interval for unregularized coefficients:
+confint(fit, c(0))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>Cyclops</em> version 3.2.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

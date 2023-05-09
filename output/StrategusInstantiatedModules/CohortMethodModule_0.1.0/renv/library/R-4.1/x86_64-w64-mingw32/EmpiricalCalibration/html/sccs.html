@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Incidence rate ratios from Self-Controlled Case Series</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for sccs {EmpiricalCalibration}"><tr><td>sccs {EmpiricalCalibration}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Incidence rate ratios from Self-Controlled Case Series</h2>
+
+<h3>Description</h3>
+
+<p>Incidence rate ratios from Self-Controlled Case Series
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+data(sccs)
+</pre>
+
+
+<h3>Format</h3>
+
+<p>A data frame with 46 rows and 4 variables: </p>
+ <dl>
+<dt>drugName</dt><dd><p>Name of the drug</p>
+</dd>
+<dt>groundTruth</dt><dd><p>Whether the drug is a positive (1) or negative (0) control</p>
+</dd> <dt>logRr</dt><dd><p>The log
+of the incidence rate ratio</p>
+</dd> <dt>seLogRr</dt><dd><p>The standard error of the log of the incidence rate
+ratio</p>
+</dd> </dl>
+
+
+
+<h3>Details</h3>
+
+<p>A dataset containing the incidence rate ratios (and standard errors) produced using a
+Self-Controlled Case Series (SCCS) design. The outcome is upper GI bleeding, the drug of interest
+(groundTruth = 1) is sertraline. Also included are 45 negative control drugs, for which we believe
+there to be no causal relation with upper GI bleeding. We used a database of medical records from
+general practices in the USA, the General Electric (GE) Centricity database, which contains data on
+11.2 million subjects. We restricted on study period (start of 1990 through November 2003), age
+requirements (18 years or older), available time prior to event (180 days), and risk definition
+window (30 days following the prescription). Time 30 days prior to the first prescription was
+removed to account for possible contra-indications. Cases of upper GI bleeding were identified on
+the basis of the occurrence of ICD-9 diagnosis codes in the problem list. These codes pertain to
+esophageal, gastric, duodenal, peptic, and gastrojejunal ulceration, perforation, and hemorrhage,
+as well as gastritis and non-specific gastrointestinal hemorrhage. For more information on this set
+see Schuemie et al (2014).
+</p>
+
+
+<h3>References</h3>
+
+<p>Schuemie MJ, Ryan PB, Dumouchel W, Suchard MA, Madigan D. Interpreting observational studies: why
+empirical calibration is needed to correct p-values. Statistics in Medicine 33(2):209-18,2014
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>EmpiricalCalibration</em> version 3.1.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

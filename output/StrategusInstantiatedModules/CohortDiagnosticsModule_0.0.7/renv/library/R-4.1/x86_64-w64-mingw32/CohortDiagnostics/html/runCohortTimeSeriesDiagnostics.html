@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Given a set of instantiated cohorts get time series for the...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for runCohortTimeSeriesDiagnostics {CohortDiagnostics}"><tr><td>runCohortTimeSeriesDiagnostics {CohortDiagnostics}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Given a set of instantiated cohorts get time series for the cohorts.</h2>
+
+<h3>Description</h3>
+
+<p>This function first generates a calendar period table, that has
+calendar intervals between the <code>timeSeriesMinDate</code> and <code>timeSeriesMaxDate</code>.
+Calendar Month, Quarter and year are supported.
+For each of the calendar interval, time series data are computed. The returned
+object is a R dataframe that will need to be converted to a time series object
+to perform time series analysis.
+</p>
+<p>Data Source time series: computes time series at the data source level i.e. observation
+period table. This output is NOT limited to individuals in the cohort table
+but is for ALL people in the datasource (i.e. present in observation period table)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+runCohortTimeSeriesDiagnostics(
+  connectionDetails = NULL,
+  connection = NULL,
+  tempEmulationSchema = NULL,
+  cdmDatabaseSchema,
+  cohortDatabaseSchema = cdmDatabaseSchema,
+  cohortTable = "cohort",
+  runCohortTimeSeries = TRUE,
+  runDataSourceTimeSeries = FALSE,
+  timeSeriesMinDate = as.Date("1980-01-01"),
+  timeSeriesMaxDate = as.Date(Sys.Date()),
+  stratifyByGender = TRUE,
+  stratifyByAgeGroup = TRUE,
+  cohortIds = NULL
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>connectionDetails</code></td>
+<td>
+<p>An object of type <code>connectionDetails</code> as created using the
+<code><a href="../../DatabaseConnector/help/createConnectionDetails.html">createConnectionDetails</a></code> function in the
+DatabaseConnector package. Can be left NULL if <code>connection</code> is
+provided.</p>
+</td></tr>
+<tr valign="top"><td><code>connection</code></td>
+<td>
+<p>An object of type <code>connection</code> as created using the
+<code><a href="../../DatabaseConnector/help/connect.html">connect</a></code> function in the
+DatabaseConnector package. Can be left NULL if <code>connectionDetails</code>
+is provided, in which case a new connection will be opened at the start
+of the function, and closed when the function finishes.</p>
+</td></tr>
+<tr valign="top"><td><code>tempEmulationSchema</code></td>
+<td>
+<p>Some database platforms like Oracle and Impala do not truly support temp tables. To emulate temp 
+tables, provide a schema with write privileges where temp tables can be created.</p>
+</td></tr>
+<tr valign="top"><td><code>cdmDatabaseSchema</code></td>
+<td>
+<p>Schema name where your patient-level data in OMOP CDM format resides.
+Note that for SQL Server, this should include both the database and
+schema name, for example 'cdm_data.dbo'.</p>
+</td></tr>
+<tr valign="top"><td><code>cohortDatabaseSchema</code></td>
+<td>
+<p>Schema name where your cohort table resides. Note that for SQL Server,
+this should include both the database and schema name, for example
+'scratch.dbo'.</p>
+</td></tr>
+<tr valign="top"><td><code>cohortTable</code></td>
+<td>
+<p>Name of the cohort table.</p>
+</td></tr>
+<tr valign="top"><td><code>runCohortTimeSeries</code></td>
+<td>
+<p>Generate and export the cohort level time series?</p>
+</td></tr>
+<tr valign="top"><td><code>runDataSourceTimeSeries</code></td>
+<td>
+<p>Generate and export the Data source level time series? i.e.
+using all persons found in observation period table.</p>
+</td></tr>
+<tr valign="top"><td><code>timeSeriesMinDate</code></td>
+<td>
+<p>(optional) Minimum date for time series. Default value January 1st 1980.</p>
+</td></tr>
+<tr valign="top"><td><code>timeSeriesMaxDate</code></td>
+<td>
+<p>(optional) Maximum date for time series. Default value System date.</p>
+</td></tr>
+<tr valign="top"><td><code>stratifyByGender</code></td>
+<td>
+<p>Do you want to stratify by Gender</p>
+</td></tr>
+<tr valign="top"><td><code>stratifyByAgeGroup</code></td>
+<td>
+<p>Do you want to stratify by Age group</p>
+</td></tr>
+<tr valign="top"><td><code>cohortIds</code></td>
+<td>
+<p>A vector of one or more Cohort Ids to compute time distribution for.</p>
+</td></tr>
+</table>
+
+<hr /><div style="text-align: center;">[Package <em>CohortDiagnostics</em> version 3.1.2 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

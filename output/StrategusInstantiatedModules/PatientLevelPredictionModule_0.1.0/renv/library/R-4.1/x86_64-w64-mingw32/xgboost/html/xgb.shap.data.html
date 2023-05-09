@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Prepare data for SHAP plots. To be used in xgb.plot.shap,...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for xgb.shap.data {xgboost}"><tr><td>xgb.shap.data {xgboost}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Prepare data for SHAP plots. To be used in xgb.plot.shap, xgb.plot.shap.summary, etc.
+Internal utility function.</h2>
+
+<h3>Description</h3>
+
+<p>Prepare data for SHAP plots. To be used in xgb.plot.shap, xgb.plot.shap.summary, etc.
+Internal utility function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+xgb.shap.data(
+  data,
+  shap_contrib = NULL,
+  features = NULL,
+  top_n = 1,
+  model = NULL,
+  trees = NULL,
+  target_class = NULL,
+  approxcontrib = FALSE,
+  subsample = NULL,
+  max_observations = 1e+05
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>data</code></td>
+<td>
+<p>data as a <code>matrix</code> or <code>dgCMatrix</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>shap_contrib</code></td>
+<td>
+<p>a matrix of SHAP contributions that was computed earlier for the above
+<code>data</code>. When it is NULL, it is computed internally using <code>model</code> and <code>data</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>features</code></td>
+<td>
+<p>a vector of either column indices or of feature names to plot. When it is NULL,
+feature importance is calculated, and <code>top_n</code> high ranked features are taken.</p>
+</td></tr>
+<tr valign="top"><td><code>top_n</code></td>
+<td>
+<p>when <code>features</code> is NULL, top_n [1, 100] most important features in a model are taken.</p>
+</td></tr>
+<tr valign="top"><td><code>model</code></td>
+<td>
+<p>an <code>xgb.Booster</code> model. It has to be provided when either <code>shap_contrib</code>
+or <code>features</code> is missing.</p>
+</td></tr>
+<tr valign="top"><td><code>trees</code></td>
+<td>
+<p>passed to <code><a href="../../xgboost/help/xgb.importance.html">xgb.importance</a></code> when <code>features = NULL</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>target_class</code></td>
+<td>
+<p>is only relevant for multiclass models. When it is set to a 0-based class index,
+only SHAP contributions for that specific class are used.
+If it is not set, SHAP importances are averaged over all classes.</p>
+</td></tr>
+<tr valign="top"><td><code>approxcontrib</code></td>
+<td>
+<p>passed to <code><a href="../../xgboost/help/predict.xgb.Booster.html">predict.xgb.Booster</a></code> when <code>shap_contrib = NULL</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>subsample</code></td>
+<td>
+<p>a random fraction of data points to use for plotting. When it is NULL,
+it is set so that up to 100K data points are used.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A list containing: 'data', a matrix containing sample observations
+and their feature values; 'shap_contrib', a matrix containing the SHAP contribution
+values for these observations.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>xgboost</em> version 1.7.3.1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

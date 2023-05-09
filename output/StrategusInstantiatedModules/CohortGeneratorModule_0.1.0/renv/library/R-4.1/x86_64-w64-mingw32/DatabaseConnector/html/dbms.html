@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Get the database platform from a connection</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for dbms {DatabaseConnector}"><tr><td>dbms {DatabaseConnector}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Get the database platform from a connection</h2>
+
+<h3>Description</h3>
+
+<p>The SqlRender package provides functions that translate SQL from OHDSI-SQL to
+a target SQL dialect. These function need the name of the database platform to
+translate to. The <code>dbms</code> function returns the dbms for any DBI
+connection that can be passed along to SqlRender translation functions (see example).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+dbms(connection)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>connection</code></td>
+<td>
+<p>The connection to the database server created using either
+<code><a href="../../DatabaseConnector/help/connect.html">connect()</a></code> or <code><a href="../../DBI/html/dbConnect.html">dbConnect()</a></code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>The name of the database (dbms) used by SqlRender
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+library(DatabaseConnector)
+con &lt;- connect(dbms = "sqlite", server = ":memory:")
+dbms(con)
+#&gt; [1] "sqlite"
+SqlRender::translate("DATEADD(d, 365, dateColumn)", targetDialect = dbms(con))
+#&gt; "CAST(STRFTIME('%s', DATETIME(dateColumn, 'unixepoch', (365)||' days')) AS REAL)"
+disconnect(con)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>DatabaseConnector</em> version 6.0.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

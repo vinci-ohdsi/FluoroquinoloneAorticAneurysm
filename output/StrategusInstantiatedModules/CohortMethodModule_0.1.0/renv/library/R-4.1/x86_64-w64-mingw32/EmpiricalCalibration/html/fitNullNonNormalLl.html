@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Fit the null distribution using non-normal log-likelihood...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for fitNullNonNormalLl {EmpiricalCalibration}"><tr><td>fitNullNonNormalLl {EmpiricalCalibration}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Fit the null distribution using non-normal log-likelihood approximations</h2>
+
+<h3>Description</h3>
+
+<p><code>fitNullNonNormalLl</code> fits the null distribution to a set of negative controls
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+fitNullNonNormalLl(likelihoodApproximations)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>likelihoodApproximations</code></td>
+<td>
+<p>Either a data frame containing normal, skew-normal, or custom parametric likelihood
+approximations, or a list of (adaptive) grid likelihood profiles.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This function fits a Gaussian function to the negative control estimates, using non-normal
+approximations of the per-negative control log likelihood.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object containing the parameters of the null distribution.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data(sccs)
+negatives &lt;- sccs[sccs$groundTruth == 0, ]
+null &lt;- fitNullNonNormalLl(negatives)
+null
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>EmpiricalCalibration</em> version 3.1.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

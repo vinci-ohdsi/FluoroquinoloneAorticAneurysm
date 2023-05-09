@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: execute a large-scale characterization study</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for runCharacterizationAnalyses {Characterization}"><tr><td>runCharacterizationAnalyses {Characterization}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>execute a large-scale characterization study</h2>
+
+<h3>Description</h3>
+
+<p>Specify the database connection containing the CDM data, the cohort database schemas/tables,
+the characterization settings and the directory to save the results to
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+runCharacterizationAnalyses(
+  connectionDetails,
+  targetDatabaseSchema,
+  targetTable,
+  outcomeDatabaseSchema,
+  outcomeTable,
+  tempEmulationSchema = NULL,
+  cdmDatabaseSchema,
+  characterizationSettings,
+  saveDirectory,
+  tablePrefix = "c_",
+  databaseId = "1",
+  showSubjectId = F
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>connectionDetails</code></td>
+<td>
+<p>The connection details to the database containing the OMOP CDM data</p>
+</td></tr>
+<tr valign="top"><td><code>targetDatabaseSchema</code></td>
+<td>
+<p>Schema name where your target cohort table resides. Note that for SQL Server,
+this should include both the database and schema name, for example
+'scratch.dbo'.</p>
+</td></tr>
+<tr valign="top"><td><code>targetTable</code></td>
+<td>
+<p>Name of the target cohort table.</p>
+</td></tr>
+<tr valign="top"><td><code>outcomeDatabaseSchema</code></td>
+<td>
+<p>Schema name where your outcome cohort table resides. Note that for SQL Server,
+this should include both the database and schema name, for example
+'scratch.dbo'.</p>
+</td></tr>
+<tr valign="top"><td><code>outcomeTable</code></td>
+<td>
+<p>Name of the outcome cohort table.</p>
+</td></tr>
+<tr valign="top"><td><code>tempEmulationSchema</code></td>
+<td>
+<p>Some database platforms like Oracle and Impala do not truly support temp tables.
+To emulate temp tables, provide a schema with write privileges where temp tables
+can be created</p>
+</td></tr>
+<tr valign="top"><td><code>cdmDatabaseSchema</code></td>
+<td>
+<p>The schema with the OMOP CDM data</p>
+</td></tr>
+<tr valign="top"><td><code>characterizationSettings</code></td>
+<td>
+<p>The study settings created using <code>createCharacterizationSettings</code></p>
+</td></tr>
+<tr valign="top"><td><code>saveDirectory</code></td>
+<td>
+<p>The location to save the results to</p>
+</td></tr>
+<tr valign="top"><td><code>tablePrefix</code></td>
+<td>
+<p>A string to append the tables in the results</p>
+</td></tr>
+<tr valign="top"><td><code>databaseId</code></td>
+<td>
+<p>The unqiue identifier for the cdm database</p>
+</td></tr>
+<tr valign="top"><td><code>showSubjectId</code></td>
+<td>
+<p>Whether to include subjectId of failed rechallenge case series or hide</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The results of the characterization will be saved into an sqlite database inside the
+specified saveDirectory
+</p>
+
+
+<h3>Value</h3>
+
+<p>An sqlite database with the results is saved into the saveDirectory and a csv file named tacker.csv
+details which analyses have run to completion.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>Characterization</em> version 0.1.1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

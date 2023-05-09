@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create a parameter object for the function...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for createCreateStudyPopulationArgs {SelfControlledCaseSeries}"><tr><td>createCreateStudyPopulationArgs {SelfControlledCaseSeries}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Create a parameter object for the function createStudyPopulation</h2>
+
+<h3>Description</h3>
+
+<p>Create a parameter object for the function createStudyPopulation
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+createCreateStudyPopulationArgs(
+  firstOutcomeOnly = FALSE,
+  naivePeriod = 0,
+  minAge = NULL,
+  maxAge = NULL,
+  genderConceptIds = NULL
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>firstOutcomeOnly</code></td>
+<td>
+<p>Whether only the first occurrence of an outcome should be considered.</p>
+</td></tr>
+<tr valign="top"><td><code>naivePeriod</code></td>
+<td>
+<p>The number of days at the start of a patient's observation period that should not be included in the risk calculations. Note that the naive period can be used to determine current covariate status right after the naive period, and whether an outcome is the first one.</p>
+</td></tr>
+<tr valign="top"><td><code>minAge</code></td>
+<td>
+<p>Minimum age at which patient time will be included in the analysis. Note that information prior to the min age is still used to determine exposure status after the minimum age (e.g. when a prescription was started just prior to reaching the minimum age). Also, outcomes occurring before the minimum age is reached will be considered as prior outcomes when using first outcomes only. Age should be specified in years, but non-integer values are allowed. If not specified, no age restriction will be applied.</p>
+</td></tr>
+<tr valign="top"><td><code>maxAge</code></td>
+<td>
+<p>Maximum age at which patient time will be included in the analysis. Age should be specified in years, but non-integer values are allowed. If not specified, no age restriction will be applied.</p>
+</td></tr>
+<tr valign="top"><td><code>genderConceptIds</code></td>
+<td>
+<p>Set of gender concept IDs to restrict the population to. If not specified,
+no restriction on gender will be applied.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Create an object defining the parameter values.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>SelfControlledCaseSeries</em> version 4.2.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create a study population</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for createStudyPopulation {SelfControlledCaseSeries}"><tr><td>createStudyPopulation {SelfControlledCaseSeries}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Create a study population</h2>
+
+<h3>Description</h3>
+
+<p>Create a study population
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+createStudyPopulation(
+  sccsData,
+  outcomeId = NULL,
+  firstOutcomeOnly = FALSE,
+  naivePeriod = 0,
+  minAge = NULL,
+  maxAge = NULL,
+  genderConceptIds = NULL
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>sccsData</code></td>
+<td>
+<p>An object of type <a href="../../SelfControlledCaseSeries/help/SccsData.html">SccsData</a> as created using the
+<a href="../../SelfControlledCaseSeries/help/getDbSccsData.html">getDbSccsData</a> function.</p>
+</td></tr>
+<tr valign="top"><td><code>outcomeId</code></td>
+<td>
+<p>The outcome to create the era data for. If not specified it is
+assumed to be the one outcome for which the data was loaded from
+the database.</p>
+</td></tr>
+<tr valign="top"><td><code>firstOutcomeOnly</code></td>
+<td>
+<p>Whether only the first occurrence of an outcome should be
+considered.</p>
+</td></tr>
+<tr valign="top"><td><code>naivePeriod</code></td>
+<td>
+<p>The number of days at the start of a patient's observation period
+that should not be included in the risk calculations. Note that
+the naive period can be used to determine current covariate
+status right after the naive period, and whether an outcome is
+the first one.</p>
+</td></tr>
+<tr valign="top"><td><code>minAge</code></td>
+<td>
+<p>Minimum age at which patient time will be included in the analysis. Note
+that information prior to the min age is still used to determine exposure
+status after the minimum age (e.g. when a prescription was started just prior
+to reaching the minimum age). Also, outcomes occurring before the minimum age
+is reached will be considered as prior outcomes when using first outcomes only.
+Age should be specified in years, but non-integer values are allowed. If not
+specified, no age restriction will be applied.</p>
+</td></tr>
+<tr valign="top"><td><code>maxAge</code></td>
+<td>
+<p>Maximum age at which patient time will be included in the analysis. Age should
+be specified in years, but non-integer values are allowed. If not
+specified, no age restriction will be applied.</p>
+</td></tr>
+<tr valign="top"><td><code>genderConceptIds</code></td>
+<td>
+<p>Set of gender concept IDs to restrict the population to. If not specified,
+no restriction on gender will be applied.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Create a study population for a specific outcome, applying several restrictions.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A <code>list</code> specifying the study population, with the following items:
+</p>
+
+<ul>
+<li> <p><code>cases</code>: A <code>tibble</code> with one row per observation period of a person with the outcome.
+</p>
+</li>
+<li> <p><code>outcomes</code>: A <code>tibble</code> listing the days when a case has the outcome.
+</p>
+</li>
+<li> <p><code>metaData</code>: A <code>list</code> with meta data about the study population, including the attrition.
+</p>
+</li></ul>
+
+
+<hr /><div style="text-align: center;">[Package <em>SelfControlledCaseSeries</em> version 4.2.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

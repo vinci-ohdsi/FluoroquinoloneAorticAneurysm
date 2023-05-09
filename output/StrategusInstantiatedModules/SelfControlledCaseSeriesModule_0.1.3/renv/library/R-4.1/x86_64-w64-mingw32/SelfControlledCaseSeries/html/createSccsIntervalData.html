@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create SCCS era data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for createSccsIntervalData {SelfControlledCaseSeries}"><tr><td>createSccsIntervalData {SelfControlledCaseSeries}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Create SCCS era data</h2>
+
+<h3>Description</h3>
+
+<p>Create SCCS era data
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+createSccsIntervalData(
+  studyPopulation,
+  sccsData,
+  eraCovariateSettings,
+  ageCovariateSettings = NULL,
+  seasonalityCovariateSettings = NULL,
+  calendarTimeCovariateSettings = NULL,
+  minCasesForAgeSeason = NULL,
+  minCasesForTimeCovariates = 10000,
+  eventDependentObservation = FALSE
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>studyPopulation</code></td>
+<td>
+<p>An object created using the <code><a href="../../SelfControlledCaseSeries/help/createStudyPopulation.html">createStudyPopulation()</a></code> function.</p>
+</td></tr>
+<tr valign="top"><td><code>sccsData</code></td>
+<td>
+<p>An object of type <a href="../../SelfControlledCaseSeries/help/SccsData.html">SccsData</a> as created using the
+<a href="../../SelfControlledCaseSeries/help/getDbSccsData.html">getDbSccsData</a> function.</p>
+</td></tr>
+<tr valign="top"><td><code>eraCovariateSettings</code></td>
+<td>
+<p>Either an object of type <code>EraCovariateSettings</code> as created
+using the <code><a href="../../SelfControlledCaseSeries/help/createEraCovariateSettings.html">createEraCovariateSettings()</a></code> function, or a
+list of such objects.</p>
+</td></tr>
+<tr valign="top"><td><code>ageCovariateSettings</code></td>
+<td>
+<p>An object of type <code>ageCovariateSettings</code> as created using the
+<code><a href="../../SelfControlledCaseSeries/help/createAgeCovariateSettings.html">createAgeCovariateSettings()</a></code> function.</p>
+</td></tr>
+<tr valign="top"><td><code>seasonalityCovariateSettings</code></td>
+<td>
+<p>An object of type <code>seasonalityCovariateSettings</code> as created using the
+<code><a href="../../SelfControlledCaseSeries/help/createSeasonalityCovariateSettings.html">createSeasonalityCovariateSettings()</a></code> function.</p>
+</td></tr>
+<tr valign="top"><td><code>calendarTimeCovariateSettings</code></td>
+<td>
+<p>An object of type <code>calendarTimeCovariateSettings</code> as created using the
+<code><a href="../../SelfControlledCaseSeries/help/createCalendarTimeCovariateSettings.html">createCalendarTimeCovariateSettings()</a></code> function.</p>
+</td></tr>
+<tr valign="top"><td><code>minCasesForAgeSeason</code></td>
+<td>
+<p>DEPRECATED: Use <code>minCasesForTimeCovariates</code> instead.</p>
+</td></tr>
+<tr valign="top"><td><code>minCasesForTimeCovariates</code></td>
+<td>
+<p>Minimum number of cases to use to fit age, season and calendar time splines. If
+needed (and available), cases that are not exposed will be included.</p>
+</td></tr>
+<tr valign="top"><td><code>eventDependentObservation</code></td>
+<td>
+<p>Should the extension proposed by Farrington et al. be used to
+adjust for event-dependent observation time?</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This function creates covariates based on the data in the <code>sccsData</code> argument, according to the
+provided settings. It chops patient time into periods during which all covariates remain constant.
+The output details these periods, their durations, and a sparse representation of the covariate
+values.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of type <a href="../../SelfControlledCaseSeries/help/SccsIntervalData.html">SccsIntervalData</a>.
+</p>
+
+
+<h3>References</h3>
+
+<p>Farrington, C. P., Anaya-Izquierdo, A., Whitaker, H. J., Hocine, M.N., Douglas, I., and Smeeth, L.
+(2011). Self-Controlled case series analysis with event-dependent observation periods. Journal of
+the American Statistical Association 106 (494), 417-426
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>SelfControlledCaseSeries</em> version 4.2.0 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

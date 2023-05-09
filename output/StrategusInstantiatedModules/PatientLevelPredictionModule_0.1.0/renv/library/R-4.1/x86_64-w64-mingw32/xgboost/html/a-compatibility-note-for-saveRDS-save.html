@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Do not use 'saveRDS' or 'save' for long-term archival of...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for a-compatibility-note-for-saveRDS-save {xgboost}"><tr><td>a-compatibility-note-for-saveRDS-save {xgboost}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Do not use <code><a href="../../base/help/saveRDS.html">saveRDS</a></code> or <code><a href="../../base/help/save.html">save</a></code> for long-term archival of
+models. Instead, use <code><a href="../../xgboost/help/xgb.save.html">xgb.save</a></code> or <code><a href="../../xgboost/help/xgb.save.raw.html">xgb.save.raw</a></code>.</h2>
+
+<h3>Description</h3>
+
+<p>It is a common practice to use the built-in <code><a href="../../base/help/saveRDS.html">saveRDS</a></code> function (or
+<code><a href="../../base/help/save.html">save</a></code>) to persist R objects to the disk. While it is possible to persist
+<code>xgb.Booster</code> objects using <code><a href="../../base/help/saveRDS.html">saveRDS</a></code>, it is not advisable to do so if
+the model is to be accessed in the future. If you train a model with the current version of
+XGBoost and persist it with <code><a href="../../base/help/saveRDS.html">saveRDS</a></code>, the model is not guaranteed to be
+accessible in later releases of XGBoost. To ensure that your model can be accessed in future
+releases of XGBoost, use <code><a href="../../xgboost/help/xgb.save.html">xgb.save</a></code> or <code><a href="../../xgboost/help/xgb.save.raw.html">xgb.save.raw</a></code> instead.
+</p>
+
+
+<h3>Details</h3>
+
+<p>Use <code><a href="../../xgboost/help/xgb.save.html">xgb.save</a></code> to save the XGBoost model as a stand-alone file. You may opt into
+the JSON format by specifying the JSON extension. To read the model back, use
+<code><a href="../../xgboost/help/xgb.load.html">xgb.load</a></code>.
+</p>
+<p>Use <code><a href="../../xgboost/help/xgb.save.raw.html">xgb.save.raw</a></code> to save the XGBoost model as a sequence (vector) of raw bytes
+in a future-proof manner. Future releases of XGBoost will be able to read the raw bytes and
+re-construct the corresponding model. To read the model back, use <code><a href="../../xgboost/help/xgb.load.raw.html">xgb.load.raw</a></code>.
+The <code><a href="../../xgboost/help/xgb.save.raw.html">xgb.save.raw</a></code> function is useful if you'd like to persist the XGBoost model
+as part of another R object.
+</p>
+<p>Note: Do not use <code><a href="../../xgboost/help/xgb.serialize.html">xgb.serialize</a></code> to store models long-term. It persists not only the
+model but also internal configurations and parameters, and its format is not stable across
+multiple XGBoost versions. Use <code><a href="../../xgboost/help/xgb.serialize.html">xgb.serialize</a></code> only for checkpointing.
+</p>
+<p>For more details and explanation about model persistence and archival, consult the page
+<a href="https://xgboost.readthedocs.io/en/latest/tutorials/saving_model.html">https://xgboost.readthedocs.io/en/latest/tutorials/saving_model.html</a>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data(agaricus.train, package='xgboost')
+bst &lt;- xgboost(data = agaricus.train$data, label = agaricus.train$label, max_depth = 2,
+               eta = 1, nthread = 2, nrounds = 2, objective = "binary:logistic")
+
+# Save as a stand-alone file; load it with xgb.load()
+xgb.save(bst, 'xgb.model')
+bst2 &lt;- xgb.load('xgb.model')
+
+# Save as a stand-alone file (JSON); load it with xgb.load()
+xgb.save(bst, 'xgb.model.json')
+bst2 &lt;- xgb.load('xgb.model.json')
+if (file.exists('xgb.model.json')) file.remove('xgb.model.json')
+
+# Save as a raw byte vector; load it with xgb.load.raw()
+xgb_bytes &lt;- xgb.save.raw(bst)
+bst2 &lt;- xgb.load.raw(xgb_bytes)
+
+# Persist XGBoost model as part of another R object
+obj &lt;- list(xgb_model_bytes = xgb.save.raw(bst), description = "My first XGBoost model")
+# Persist the R object. Here, saveRDS() is okay, since it doesn't persist
+# xgb.Booster directly. What's being persisted is the future-proof byte representation
+# as given by xgb.save.raw().
+saveRDS(obj, 'my_object.rds')
+# Read back the R object
+obj2 &lt;- readRDS('my_object.rds')
+# Re-construct xgb.Booster object from the bytes
+bst2 &lt;- xgb.load.raw(obj2$xgb_model_bytes)
+if (file.exists('my_object.rds')) file.remove('my_object.rds')
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>xgboost</em> version 1.7.3.1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

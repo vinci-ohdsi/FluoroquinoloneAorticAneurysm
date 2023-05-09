@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create a fastIHT Cyclops prior object</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for createFastIhtPrior {IterativeHardThresholding}"><tr><td>createFastIhtPrior {IterativeHardThresholding}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Create a fastIHT Cyclops prior object</h2>
+
+<h3>Description</h3>
+
+<p><code>createFastIhtPrior</code> creates a fastIHT Cyclops prior object for use with <code><a href="../../Cyclops/html/fitCyclopsModel.html">fitCyclopsModel</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+createFastIhtPrior(
+  K,
+  penalty = 0,
+  exclude = c(),
+  forceIntercept = FALSE,
+  fitBestSubset = FALSE,
+  initialRidgeVariance = 10000,
+  tolerance = 1e-08,
+  maxIterations = 10000,
+  threshold = 1e-06
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>K</code></td>
+<td>
+<p>Maximum # of non-zero covariates</p>
+</td></tr>
+<tr valign="top"><td><code>penalty</code></td>
+<td>
+<p>Specifies the IHT penalty</p>
+</td></tr>
+<tr valign="top"><td><code>exclude</code></td>
+<td>
+<p>A vector of numbers or covariateId names to exclude from prior</p>
+</td></tr>
+<tr valign="top"><td><code>forceIntercept</code></td>
+<td>
+<p>Logical: Force intercept coefficient into regularization</p>
+</td></tr>
+<tr valign="top"><td><code>fitBestSubset</code></td>
+<td>
+<p>Logical: Fit final subset with no regularization</p>
+</td></tr>
+<tr valign="top"><td><code>initialRidgeVariance</code></td>
+<td>
+<p>Numeric: variance used for algorithm initiation</p>
+</td></tr>
+<tr valign="top"><td><code>tolerance</code></td>
+<td>
+<p>Numeric: maximum abs change in coefficient estimates from successive iterations to achieve convergence</p>
+</td></tr>
+<tr valign="top"><td><code>maxIterations</code></td>
+<td>
+<p>Numeric: maximum iterations to achieve convergence</p>
+</td></tr>
+<tr valign="top"><td><code>threshold</code></td>
+<td>
+<p>Numeric: absolute threshold at which to force coefficient to 0</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>An IHT Cyclops prior object of class inheriting from
+<code>"cyclopsPrior"</code> for use with <code>fitCyclopsModel</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+nobs = 500; ncovs = 100
+prior &lt;- createFastIhtPrior(K = 3, penalty = log(ncovs), initialRidgeVariance = 1 / log(ncovs))
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>IterativeHardThresholding</em> version 1.0.2 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

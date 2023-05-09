@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Creates R6 object for IncidenceDesign</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for createIncidenceDesign {CohortIncidence}"><tr><td>createIncidenceDesign {CohortIncidence}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Creates R6 object for IncidenceDesign</h2>
+
+<h3>Description</h3>
+
+<p>Creates R6 object for IncidenceDesign
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+createIncidenceDesign(
+  cohortDefs,
+  targetDefs,
+  outcomeDefs,
+  tars,
+  analysisList,
+  conceptSets,
+  subgroups,
+  strataSettings,
+  studyWindow
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>cohortDefs</code></td>
+<td>
+<p>The set of cohort definitions.  Optional.</p>
+</td></tr>
+<tr valign="top"><td><code>targetDefs</code></td>
+<td>
+<p>A list of target definitions, each element must be class CohortReference.</p>
+</td></tr>
+<tr valign="top"><td><code>outcomeDefs</code></td>
+<td>
+<p>A list of outcome definitions, each element must be class Outcome</p>
+</td></tr>
+<tr valign="top"><td><code>tars</code></td>
+<td>
+<p>A list of TAR definitions, each element must be class TimeAtRisk</p>
+</td></tr>
+<tr valign="top"><td><code>analysisList</code></td>
+<td>
+<p>A list of analysis definitions, each element must be class IncidenceAnalysis</p>
+</td></tr>
+<tr valign="top"><td><code>conceptSets</code></td>
+<td>
+<p>A list of concept sets, currently unused.</p>
+</td></tr>
+<tr valign="top"><td><code>subgroups</code></td>
+<td>
+<p>A list of cohort subgroups, each element must be class Subgroup.</p>
+</td></tr>
+<tr valign="top"><td><code>strataSettings</code></td>
+<td>
+<p>The strata settings used in the anlaysis, must be class StrataSettings.</p>
+</td></tr>
+<tr valign="top"><td><code>studyWindow</code></td>
+<td>
+<p>Limits time at risk to the specified study window. Must be class DateRange.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>a R6 class: IncidenceDesign.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>CohortIncidence</em> version 3.1.2 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

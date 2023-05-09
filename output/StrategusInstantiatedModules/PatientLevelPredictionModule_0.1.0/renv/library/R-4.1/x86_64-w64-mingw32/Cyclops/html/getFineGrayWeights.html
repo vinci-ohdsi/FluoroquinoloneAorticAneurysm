@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Creates a 'Surv' object that forces in competing risks and...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for getFineGrayWeights {Cyclops}"><tr><td>getFineGrayWeights {Cyclops}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Creates a <code>Surv</code> object that forces in competing risks and the IPCW needed for Fine-Gray estimation.</h2>
+
+<h3>Description</h3>
+
+<p><code>getFineGrayWeights</code> creates a list <code>Surv</code> object and vector of weights required for estimation.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+getFineGrayWeights(ftime, fstatus, cencode = 0, failcode = 1)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>ftime</code></td>
+<td>
+<p>Numeric: Observed event (failure) times</p>
+</td></tr>
+<tr valign="top"><td><code>fstatus</code></td>
+<td>
+<p>Numeric: Observed event (failure) types</p>
+</td></tr>
+<tr valign="top"><td><code>cencode</code></td>
+<td>
+<p>Numeric: Code to denote censored observations (Default is 0)</p>
+</td></tr>
+<tr valign="top"><td><code>failcode</code></td>
+<td>
+<p>Numeric: Code to denote event of interest (Default is 1)</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A list that returns both an object of class <code>Surv</code> that forces in the competing risks indicators and a vector of weights needed for parameter estimation.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+ftime &lt;- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+fstatus &lt;- c(1, 2, 0, 1, 2, 0, 1, 2, 0, 1)
+getFineGrayWeights(ftime, fstatus, cencode = 0, failcode = 1)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>Cyclops</em> version 3.2.1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>
