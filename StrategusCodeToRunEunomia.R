@@ -4,33 +4,33 @@
 install.packages("renv")
 renv::init(bare = T) 
 
-# install the network package
-# renv::install('remotes')
-# renv::install("renv")
-# remotes::install_github("OHDSI/Strategus", ref="results-upload",
-#                         INSTALL_opts = "--no-multiarch")
-# remotes::install_github("OHDSI/Eunomia",
-#                         INSTALL_opts = "-no-multiarch")
-
 renv::install("OHDSI/Strategus@results-upload")
+renv::install("OHDSI/CohortGenerator")
 renv::install("OHDSI/Eunomia")
+renv::install("keyring")
 
 renv::snapshot()
 
 library(Strategus)
 
-##=========== START OF INPUTS ==========
-
-connectionDetailsReference <- "Eunomia"
-workDatabaseSchema <- 'main'
-cdmDatabaseSchema <- 'main'
-outputLocation <- "C:/Users/msuch/Documents/FluoroquinoloneAorticAneurysm/output"
+connectionDetailsReference <- "Build"
+workDatabaseSchema <- 'temp'
+cdmDatabaseSchema <- 'cdm'
+outputLocation <- "C:/Users/msuch/Documents/FAA2/output"
 minCellCount <- 10
 cohortTableName <- "sos_fq_aa"
 
-connectionDetails <- Eunomia::getEunomiaConnectionDetails(
-  databaseFile = file.path(outputLocation, "cdm.sqlite")
+Sys.setenv(DATABASECONNECTOR_JAR_FOLDER="C:/Db")
+
+connectionDetails <- DatabaseConnector::createConnectionDetails(
+  dbms = "postgresql",
+  server = keyring::key_get("buildServer"),
+  user = keyring::key_get("buildUser"),
+  password = keyring::key_get("buildPassword"),
+  port = 5432
 )
+
+dir.create(outputLocation)
 
 ##=========== END OF INPUTS ==========
 ##################################
