@@ -1,0 +1,37 @@
+Package: Strategus
+Type: Package
+Title: Coordinating and Executing Analytics Using HADES Modules
+Version: 0.0.6
+Date: 2023-04-25
+Authors@R: c( person("Martijn", "Schuemie", email = "schuemie@ohdsi.org", role = c("aut", "cre")), person("Anthony", "Sena", email = "sena@ohdsi.org", role = c("aut")), person("Observational Health Data Science and Informatics", role = c("cph")) )
+Maintainer: Anthony Sena <sena@ohdsi.org>
+Description: An R package for coordinating and executing analytics using HADES modules.
+License: Apache License 2.0
+URL: https://ohdsi.github.io/Strategus, https://github.com/OHDSI/Strategus
+BugReports: https://github.com/OHDSI/Strategus/issues
+Depends: R (>= 4.0.0), CohortGenerator (>= 0.7.0), DatabaseConnector (>=
+    5.1.0)
+Imports: targets, renv (>= 0.15.5), ParallelLogger (>= 3.1.0), dplyr,
+    checkmate, keyring, rlang, utils, R.utils, digest, methods, tibble,
+    ResultModelManager (>= 0.3.0), SqlRender (>= 1.11.0)
+Suggests: testthat (>= 3.0.0), fs, knitr, rmarkdown, Eunomia, withr
+VignetteBuilder: knitr
+NeedsCompilation: no
+RoxygenNote: 7.2.3
+Roxygen: list(markdown = TRUE)
+Encoding: UTF-8
+Config/testthat/edition: 3
+Author: Martijn Schuemie [aut, cre], Anthony Sena [aut], Observational Health Data Science and Informatics [cph]
+Built: R 4.1.3; ; 2023-05-06 00:19:30 UTC; windows
+RemoteType: github
+RemoteHost: api.github.com
+RemoteUsername: OHDSI
+RemoteRepo: Strategus
+RemoteRef: results-upload
+RemoteSha: 0846de661aaf4374c428f7cf8ca7f3b8774c197c
+GithubHost: api.github.com
+GithubRepo: Strategus
+GithubUsername: OHDSI
+GithubRef: results-upload
+GithubSHA1: 0846de661aaf4374c428f7cf8ca7f3b8774c197c
+Remotes: ohdsi/CohortGenerator, ohdsi/ResultModelManager, ohdsi/Eunomia
