@@ -11,13 +11,13 @@
   "Packages": {
     "VaTools": {
       "Package": "VaTools",
-      "Version": "0.2.0",
+      "Version": "0.2.1",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteRepo": "VaTools",
       "RemoteUsername": "suchard-group",
-      "RemoteRef": "v0.2.0",
+      "RemoteRef": "v0.2.1",
       "Requirements": []
     },    
     "CirceR": {
